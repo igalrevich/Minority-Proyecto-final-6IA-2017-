@@ -1,0 +1,9 @@
+Activities: 
+Generales: 3
+Usuarios:5
+Admin: 7
+Total: 15
+
+ABM:
+
+Baja y Modificacion-1eraParte son iguales para preguntas y categorias
