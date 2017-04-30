@@ -10,12 +10,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Timer;
+
 public class Activity_Jugabilidad extends AppCompatActivity {
     Button btnOpcion1,btnOpcion2, btnVotar;
     TextView tvSegundosTimer;
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
-    String VotoFinal;
+    String VotoFinal,NombreBoton;
+    int Idbtn;
+    CountDownTimer Timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void SetearTimer()
     {
-        new CountDownTimer(30000, 1000) {
+        Timer=new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvSegundosTimer.setText(String.valueOf(millisUntilFinished/1000));
@@ -62,54 +66,52 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private View.OnClickListener btnOpcion_click= new View.OnClickListener(){
         @Override
         public void onClick(View view) {
-            int Id= view.getId();
-            String NombreBoton=getResources().getResourceName(Id);
-
-            if(NombreBoton=="btnOpcion1")
+            Idbtn= view.getId();
+            int idbtnOpcion1=R.id.btnOpcion1;
+            int idbtnOpcion2=R.id.btnOpcion2;
+            if(Idbtn==idbtnOpcion1)
             {
-                CambiarColorBotonOpcion(btnOpcion1,VotoOpcion1);
-                if(VotoOpcion1)
+                if(VotoOpcion1==false)
                 {
-                  VotoOpcion1=false;
-                }
-                else
-                {
+                  CambiarColorBotonOpcion(btnOpcion1,btnOpcion2);
                     VotoOpcion1=true;
+                    VotoOpcion2=false;
                 }
             }
             else
             {
-                CambiarColorBotonOpcion(btnOpcion2,VotoOpcion2);
-                if(VotoOpcion2)
+                if(VotoOpcion2==false)
                 {
-                    VotoOpcion2=false;
-                }
-                else
-                {
+                    CambiarColorBotonOpcion(btnOpcion2,btnOpcion1);
                     VotoOpcion2=true;
+                    VotoOpcion1=false;
                 }
             }
          }
     };
 
-    private void CambiarColorBotonOpcion(Button btn, boolean Voto)
+    private void CambiarColorBotonOpcion(Button btnClickeado,Button btnNoClickeado)
     {
-       if(Voto==false)
-       {
-           btn.setBackgroundColor(Color.parseColor("#FF000000"));
-           btn.setTextColor(Color.parseColor("#FFFFFFFF"));
-       }
-        else
-       {
-           btn.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
-           btn.setTextColor(Color.parseColor("#FF000000"));
-       }
+
+           BotonVotado(btnClickeado);
+           BotonNoVotado(btnNoClickeado);
+    }
+    private void BotonVotado(Button btn)
+    {
+        btn.setBackgroundColor(Color.parseColor("#FF000000"));
+        btn.setTextColor(Color.parseColor("#FFFFFFFF"));
+    }
+    private void BotonNoVotado(Button btn)
+    {
+        btn.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+        btn.setTextColor(Color.parseColor("#FF000000"));
     }
     private View.OnClickListener btnVotar_click= new View.OnClickListener(){
         @Override
         public void onClick(View view)
         {
-           DeterminarVotoFinal();
+            Timer.cancel();
+            DeterminarVotoFinal();
         }
     };
     private void DeterminarVotoFinal()
