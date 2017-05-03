@@ -1,6 +1,7 @@
 package com.revich.mobile.minority;
 
 import android.app.ActionBar;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,11 @@ import java.util.Timer;
 
 public class Activity_Jugabilidad extends AppCompatActivity {
     Button btnOpcion1,btnOpcion2, btnVotar;
-    TextView tvSegundosTimer;
+    TextView tvSegundosTimer,tvVotoFinal;
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
-    String VotoFinal,NombreBoton;
+    boolean VotoFinalmente=false;
+    String VotoFinal,NombreBoton,SegundosTimer;
     int Idbtn;
     CountDownTimer Timer;
 
@@ -34,12 +36,54 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            setContentView(R.layout.layout_jugabilidad_landscape);
+            ReestablecerCondicionesLayout();
+        }
+        else
+        {
+            setContentView(R.layout.layout_jugabilidad);
+            ReestablecerCondicionesLayout();
+        }
+    }
+
+    private void ReestablecerCondicionesLayout()
+    {
+        ObtenerReferencias();
+        if(VotoOpcion1)
+        {
+            btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));
+            btnOpcion1.setTextColor(Color.parseColor("#FFFFFFFF"));
+        }
+        else
+        { if(VotoOpcion2)
+        {
+            btnOpcion2.setBackgroundColor(Color.parseColor("#FF000000"));
+            btnOpcion2.setTextColor(Color.parseColor("#FFFFFFFF"));
+        }
+        }
+        if(SegundosTimer=="1")
+        {
+            DeterminarVotoFinal();
+            tvSegundosTimer.setText("1");
+        }
+        if(VotoFinalmente)
+        {
+            tvSegundosTimer.setText(SegundosTimer);
+            DeterminarVotoFinal();
+        }
+    }
     private void SetearTimer()
     {
         Timer=new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvSegundosTimer.setText(String.valueOf(millisUntilFinished/1000));
+                SegundosTimer=tvSegundosTimer.getText().toString();
                 SetearListeners();
             }
 
@@ -54,7 +98,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         btnOpcion2=(Button)findViewById(R.id.btnOpcion2);
         btnVotar=(Button) findViewById(R.id.btnVotar);
         tvSegundosTimer=(TextView) findViewById(R.id.tvSegundosTimer);
-
+        tvVotoFinal= (TextView) findViewById(R.id.tvVotoFinal);
 
     }
     private void SetearListeners()
@@ -112,6 +156,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         {
             Timer.cancel();
             DeterminarVotoFinal();
+            VotoFinalmente=true;
         }
     };
     private void DeterminarVotoFinal()
@@ -133,5 +178,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 VotoFinal=btnOpcion2.getText().toString();
             }
         }
+        tvVotoFinal.setText(VotoFinal);
+
+
     }
 }
