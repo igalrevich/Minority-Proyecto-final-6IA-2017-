@@ -1,0 +1,2 @@
+USE minoritydatabase;
+INSERT INTO 
