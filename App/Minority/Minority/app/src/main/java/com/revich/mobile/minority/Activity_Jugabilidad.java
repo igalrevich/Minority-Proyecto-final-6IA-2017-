@@ -3,19 +3,32 @@ package com.revich.mobile.minority;
 import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Activity_Jugabilidad extends AppCompatActivity {
     Button btnOpcion1,btnOpcion2, btnVotar;
-    TextView tvSegundosTimer,tvVotoFinal;
+    TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala;
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
@@ -29,7 +42,73 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad);
         getSupportActionBar().hide();
         ObtenerReferencias();
+        String url ="http://localhost:53630/api/Rest/1";
+        new BuscarDatosTask().execute(url);
         SetearTimer();
+    }
+    private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {
+        private  OkHttpClient client= new OkHttpClient();
+        @Override
+        protected void onPostExecute(SalasDeJuego MiSalaDeJuego) {
+            super.onPostExecute(MiSalaDeJuego);
+            tvSala.setText(MiSalaDeJuego.Nombre);
+            tvCantJugadores.setText(MiSalaDeJuego.CantJugadores);
+            tvNRonda.setText(MiSalaDeJuego.NRonda);
+
+        }
+
+        @Override
+        protected SalasDeJuego doInBackground(String... parametros) {
+            String url = parametros[0];
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                return parsearResultado(response.body().string());
+
+            } catch (IOException | JSONException e) {
+                Log.d("Error", e.getMessage());
+                return new SalasDeJuego();
+            }
+        }
+
+        SalasDeJuego parsearResultado(String JSONstr) throws JSONException {
+            SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+            int CantJugadores=0;
+            int MontoAGanar=0;
+            int NRonda=0;
+            int Id=0;
+            String Nombre="";
+            boolean Disponible=false;
+            JSONObject json = new JSONObject(JSONstr);
+            JSONArray jsonDatosSala = json.getJSONArray("MiSalaDeJuego");
+            for (int i = 0; i < jsonDatosSala.length(); i++) {
+                JSONObject jsonResultado = jsonDatosSala.getJSONObject(i);
+                switch(i) {
+                    case 0:
+                        CantJugadores=jsonResultado.getInt("CantJugadores");
+                        break;
+                    case 1:
+                        Disponible=jsonResultado.getBoolean("Disponible");
+                        break;
+                    case 2:
+                        Id=jsonResultado.getInt("Id");
+                        break;
+                    case 3:
+                        MontoAGanar=jsonResultado.getInt("MontoAGanar");
+                        break;
+                    case 4:
+                        NRonda=jsonResultado.getInt("NRonda");
+                        break;
+                    case 5:
+                        Nombre=jsonResultado.getString("Nombre");
+                        break;
+                }
+            }
+            MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre);
+            return MiSalaDeJuego;
+        }
     }
 
     @Override
@@ -50,6 +129,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private void ReestablecerCondicionesLayout()
     {
         ObtenerReferencias();
+        String url ="http://localhost:53630/api/Rest/1";
+        new BuscarDatosTask().execute(url);
         if(VotoOpcion1)
         {
             btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));
@@ -95,6 +176,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         btnVotar=(Button) findViewById(R.id.btnVotar);
         tvSegundosTimer=(TextView) findViewById(R.id.tvSegundosTimer);
         tvVotoFinal= (TextView) findViewById(R.id.tvVotoFinal);
+        tvMontoGanador= (TextView) findViewById(R.id.tvMontoGanador);
+        tvCantJugadores= (TextView) findViewById(R.id.tvCantJugadores);
+        tvSala= (TextView) findViewById(R.id.tvSala);
+
 
     }
     private void SetearListeners()
