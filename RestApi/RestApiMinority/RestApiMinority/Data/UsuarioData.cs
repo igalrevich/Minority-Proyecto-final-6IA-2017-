@@ -41,5 +41,31 @@ namespace RestApiMinority.Data
             MiUsuario.SalasDeJuego = row.Field<string>("SalasDeJuego");
             return MiUsuario;
         }
+        public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
+        {
+            string select = "select * from salasdejuegos where id=" + id.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            SalasDeJuego MiSalaDeJuego;
+            if (dt.Rows.Count > 0)
+            {
+                MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
+                return MiSalaDeJuego;
+            }
+            return null;
+        }
+
+
+
+        private static SalasDeJuego ObtenerPorRowSalaDeJuego(DataRow row)
+        {
+            SalasDeJuego MiSalaDeJuego = new SalasDeJuego();
+            MiSalaDeJuego.Id = row.Field<int>("Id");
+            MiSalaDeJuego.Nombre = row.Field<string>("Nombre");
+            MiSalaDeJuego.CantJugadores = row.Field<int>("CantJugadores");
+            MiSalaDeJuego.MontoAGanar= row.Field<int>("MontoAGanar");
+            MiSalaDeJuego.Disponible = row.Field<bool>("Disponible");
+            MiSalaDeJuego.NRonda = row.Field<int>("NRonda");
+            return MiSalaDeJuego;
+        }
     }
 }

@@ -19,16 +19,17 @@ namespace RestApiMinority.Controllers
         }
 
         // GET: api/Rest/5
-        [ResponseType(typeof(Usuario))]
+        [ResponseType(typeof(SalasDeJuego))]
         public IHttpActionResult Get(int id)
         {
-            Usuario MiUsuario= UsuarioData.ObtenerPorId(id);
-            if (MiUsuario == null)
+            SalasDeJuego MiSalaDeJuego = UsuarioData.ObtenerPorIdSalaDeJuego(id);
+            if (MiSalaDeJuego == null)
             {
                 return NotFound();
             }
-            return Ok(MiUsuario);
+            return Ok(MiSalaDeJuego);
         }
+       
 
 
         // POST: api/Rest

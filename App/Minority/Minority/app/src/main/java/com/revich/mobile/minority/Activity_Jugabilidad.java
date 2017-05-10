@@ -30,12 +30,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         getSupportActionBar().hide();
         ObtenerReferencias();
         SetearTimer();
-
-
-
-
-
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
