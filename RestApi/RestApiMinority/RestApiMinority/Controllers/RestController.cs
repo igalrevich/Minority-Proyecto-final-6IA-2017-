@@ -12,15 +12,15 @@ namespace RestApiMinority.Controllers
 {
     public class RestController : ApiController
     {
-        // GET: api/Rest
-        public IEnumerable<string> Get()
+        // GET: api/Rest/GetHolaMundo
+        public IEnumerable<string> GetHolaMundo()
         {
             return new string[] { "Hola mundo" };
         }
 
-        // GET: api/Rest/5
+        // GET: api/Rest/GetSala/5
         [ResponseType(typeof(SalasDeJuego))]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult GetSala(int id)
         {
             SalasDeJuego MiSalaDeJuego = UsuarioData.ObtenerPorIdSalaDeJuego(id);
             if (MiSalaDeJuego == null)
@@ -42,8 +42,8 @@ namespace RestApiMinority.Controllers
         {
         }
 
-        // DELETE: api/Rest/5
-        public IHttpActionResult Delete(int id)
+        // DELETE: api/Rest/DeleteSala/5
+        public IHttpActionResult DeleteSala(int id)
         {
             if (UsuarioData.ObtenerPorId(id) == null)
             {
