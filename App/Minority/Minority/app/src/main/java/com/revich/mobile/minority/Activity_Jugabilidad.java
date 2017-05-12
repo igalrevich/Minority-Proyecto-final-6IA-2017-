@@ -39,10 +39,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_jugabilidad);
+        setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        String url ="http://localhost:53630/api/Rest/1";
+        String url ="http://localhost:53630/api/Rest/GetSala/1";
         new BuscarDatosTask().execute(url);
         SetearTimer();
     }
@@ -65,7 +65,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     .build();
             try {
                 Response response = client.newCall(request).execute();
-                return parsearResultado(response.body().string());
+                String jsonStr= response.body().string();
+                return parsearResultado(jsonStr);
 
             } catch (IOException | JSONException e) {
                 Log.d("Error", e.getMessage());

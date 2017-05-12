@@ -1,3 +1,4 @@
+CREATE SCHEMA `minoritydatabase` ;
 USE minoritydatabase;
 CREATE TABLE `categorias` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
