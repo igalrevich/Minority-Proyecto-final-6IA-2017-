@@ -43,7 +43,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         getSupportActionBar().hide();
         ObtenerReferencias();
         String url ="http://localhost:53630/api/Rest/GetSala/1";
-        new BuscarDatosTask().execute(url);
+        //new BuscarDatosTask().execute(url);
         SetearTimer();
     }
     private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {
@@ -122,7 +122,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
         else
         {
-            setContentView(R.layout.layout_jugabilidad);
+            setContentView(R.layout.layout_jugabilidad_landscape);
             ReestablecerCondicionesLayout();
         }
     }
@@ -131,7 +131,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     {
         ObtenerReferencias();
         String url ="http://localhost:53630/api/Rest/1";
-        new BuscarDatosTask().execute(url);
+        //new BuscarDatosTask().execute(url);
         if(VotoOpcion1)
         {
             btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));

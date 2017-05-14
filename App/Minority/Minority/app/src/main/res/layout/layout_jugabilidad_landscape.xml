@@ -145,32 +145,31 @@
 
         <Button
             android:id="@+id/btnOpcion2"
-            android:layout_width="105dp"
-            android:layout_height="246dp"
-            android:layout_marginBottom="0dp"
+            android:layout_width="79dp"
+            android:layout_height="189dp"
+            android:layout_gravity="center_horizontal|right"
+            android:layout_marginBottom="-11dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:background="#ffffff"
+            android:gravity="center"
             android:text="Pepsi"
-            android:textSize="25dp"
-            android:layout_gravity="center_horizontal|right"
-            android:gravity="center" />
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/btnOpcion1"
-            android:layout_width="105dp"
-            android:layout_height="246dp"
+            android:layout_width="79dp"
+            android:layout_height="189dp"
+            android:layout_gravity="left"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="-180dp"
             android:background="#ffffff"
             android:clickable="false"
-            android:text="Coca"
-            android:textSize="25dp"
             android:gravity="center"
-            android:layout_gravity="left"
-            android:layout_marginTop="-250dp" />
+            android:text="Coca"
+            android:textSize="25dp" />
 
         <Button
             android:layout_width="123dp"
