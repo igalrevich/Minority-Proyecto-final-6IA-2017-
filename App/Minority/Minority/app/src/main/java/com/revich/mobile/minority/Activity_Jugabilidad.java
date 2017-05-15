@@ -1,6 +1,7 @@
 package com.revich.mobile.minority;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -260,8 +261,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 VotoFinal=btnOpcion2.getText().toString();
             }
         }
-        tvVotoFinal.setText(VotoFinal);
-
-
+        //tvVotoFinal.setText(VotoFinal);
+        IniciarActivityResultados();
+    }
+    private void IniciarActivityResultados()
+    {
+        Intent MiIntent= new Intent(Activity_Jugabilidad.this,Activity_Resultados.class);
+        Bundle ElBundle= new Bundle();
+        ElBundle.putString("Voto",VotoFinal);
+        MiIntent.putExtras(ElBundle);
+        startActivity(MiIntent);
     }
 }

@@ -94,6 +94,34 @@
             android:text="10"
             android:textSize="35dp" />
 
+        <TextView
+            android:id="@+id/tvGanastePerdiste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Ganaste!!"
+            android:textAllCaps="false"
+            android:textSize="35dp" />
+
+        <TextView
+            android:id="@+id/tvIndicacion1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Sos parte de la minoria"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/tvIndicacion2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Pasaste de ronda!!!"
+            android:textSize="25dp" />
+
     </LinearLayout>
 
 </RelativeLayout>
