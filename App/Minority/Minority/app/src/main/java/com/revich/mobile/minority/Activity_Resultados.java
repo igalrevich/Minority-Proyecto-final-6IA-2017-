@@ -11,26 +11,48 @@ import java.util.Random;
 
 public class Activity_Resultados extends AppCompatActivity {
      TextView tvOpcion1,tvOpcion2,tvVotosOpcion1,tvVotosOpcion2,tvGanastePerdiste,tvIndicacion1,tvIndicacion2;
-     String Opcion1,Opcion2,ResultadoUsuario;
+     String Opcion1,Opcion2,ResultadoUsuario,VotoJugador;
      boolean MayoriaOpcion1=false,VotoOpcion1=false;
-     int CantVotosOpcion1=0,CantVotosOpcion2=0;
+     int CantVotosOpcion1=0,CantVotosOpcion2=0,CantVotosEnBlanco,CantVotosOpciones;
+     Random rand;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__resultados);
         getSupportActionBar().hide();
         ObtenerReferencias();
+        GenerarVotosAlAzar();
+        GenerarResultadoUsuario();
+        ImprimirResultadosPantalla(ResultadoUsuario);
+    }
+
+
+    private void ObtenerReferencias()
+    {
+        tvOpcion1= (TextView) findViewById(R.id.tvOpcion1);
+        tvOpcion2= (TextView) findViewById(R.id.tvOpcion2);
+        tvVotosOpcion1= (TextView) findViewById(R.id.tvVotosOpcion1);
+        tvVotosOpcion2= (TextView) findViewById(R.id.tvVotosOpcion2);
+        tvGanastePerdiste= (TextView) findViewById(R.id.tvGanastePerdiste);
+        tvIndicacion1= (TextView) findViewById(R.id.tvIndicacion1);
+        tvIndicacion2= (TextView) findViewById(R.id.tvIndicacion2);
+    }
+    private void GenerarVotosAlAzar()
+    {
         Opcion1=tvOpcion1.getText().toString();
         Opcion2=tvOpcion2.getText().toString();
         Intent ELIntentQueVino= getIntent();
         Bundle ElBundle= ELIntentQueVino.getExtras();
-        String VotoJugador= ElBundle.getString("Voto");
-        Random rand = new Random();
-        int CantVotosEnBlanco= rand.nextInt(50);
-        int CantVotosOpciones=49-CantVotosEnBlanco;
+        VotoJugador= ElBundle.getString("Voto");
+        rand = new Random();
+        CantVotosEnBlanco= rand.nextInt(50);
+        CantVotosOpciones=49-CantVotosEnBlanco;
         CantVotosOpcion1=rand.nextInt(CantVotosOpciones+1);
         CantVotosOpcion2=CantVotosOpciones-CantVotosOpcion1;
-        if(VotoJugador!="")
+    }
+    private void GenerarResultadoUsuario()
+    {
+        if(VotoJugador.equals("")==false)
         {
             if(VotoJugador.equals(Opcion1))
             {
@@ -46,34 +68,20 @@ public class Activity_Resultados extends AppCompatActivity {
             {
                 if(CantVotosOpcion1>CantVotosOpcion2)
                 {
-                  MayoriaOpcion1=true;
+                    MayoriaOpcion1=true;
                 }
                 ResultadoUsuario=CheckearResultados(MayoriaOpcion1,VotoJugador);
 
             }
             else
             {
-              ResultadoUsuario="Empato";
+                ResultadoUsuario="Empato";
             }
         }
         else
         {
             ResultadoUsuario="Perdio";
         }
-        ImprimirResultadosPantalla(ResultadoUsuario);
-
-    }
-
-
-    private void ObtenerReferencias()
-    {
-        tvOpcion1= (TextView) findViewById(R.id.tvOpcion1);
-        tvOpcion2= (TextView) findViewById(R.id.tvOpcion2);
-        tvVotosOpcion1= (TextView) findViewById(R.id.tvVotosOpcion1);
-        tvVotosOpcion2= (TextView) findViewById(R.id.tvVotosOpcion2);
-        tvGanastePerdiste= (TextView) findViewById(R.id.tvGanastePerdiste);
-        tvIndicacion1= (TextView) findViewById(R.id.tvIndicacion1);
-        tvIndicacion2= (TextView) findViewById(R.id.tvIndicacion2);
     }
 
     private String CheckearResultados(boolean MayoriaOpcion1,String VotoJugador)

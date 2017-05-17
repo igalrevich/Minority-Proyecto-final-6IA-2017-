@@ -1,0 +1,24 @@
+Liberar el puerto Api
+ 
+En definitiva seguimos en siguiente link.
+
+https://www.codeproject.com/articles/805238/access-iis-express-website-from-remote-machine
+
+Pero basicamente es:
+
+1- Ejecutar siempre el visual studio como administrador (hay que ver como hacen los chicos para poder hacer eso).
+
+2- luego de tener armado la API o el sitio, se debe acceder al archivo de configuración del IIS Express del proyecto mismo (D:\Projects\WebApplication1\.vs\config)
+
+3- Ahi se encuentra la sección bindings y donde dice
+
+  <binding protocol="http" bindingInformation="*:13556:localhost" /> -- esta es la configuracion del sitio para localhost
+
+    agregando lo siguiente abajo:
+
+  <binding protocol="http" bindingInformation="*:13556:10.152.2.45" /> -- es decir establecer la IP de la red de la maquina donde estamos 
+
+  Asi estamos estamos agregando la url de acceso remoto.
+
+4- Para poder permitir el acceso a todos los usuarios hay que ejecutar como administrador el CMD y poner el siguiente comando "netsh http add urlacl url=http://10.152.2.45:13556/ user=ALMAGRO" Este punto es porque sino el visual studio niega el acceso para levantar el sitio luego de agregar los bindings.
+
