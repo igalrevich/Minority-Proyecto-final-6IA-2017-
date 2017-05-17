@@ -120,6 +120,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         {
             setContentView(R.layout.layout_jugabilidad_landscape);
             ReestablecerCondicionesLayout();
+
         }
         else
         {

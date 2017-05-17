@@ -1,6 +1,7 @@
 package com.revich.mobile.minority;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import java.util.Random;
 public class Activity_Resultados extends AppCompatActivity {
      TextView tvOpcion1,tvOpcion2,tvVotosOpcion1,tvVotosOpcion2,tvGanastePerdiste,tvIndicacion1,tvIndicacion2;
      String Opcion1,Opcion2,ResultadoUsuario;
-     boolean MayoriaOpcion1=false;
+     boolean MayoriaOpcion1=false,VotoOpcion1=false;
      int CantVotosOpcion1=0,CantVotosOpcion2=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,16 @@ public class Activity_Resultados extends AppCompatActivity {
         CantVotosOpcion2=CantVotosOpciones-CantVotosOpcion1;
         if(VotoJugador!="")
         {
+            if(VotoJugador.equals(Opcion1))
+            {
+                CantVotosOpcion1++;
+                VotoOpcion1=true;
+            }
+            else
+            {
+                CantVotosOpcion2++;
+
+            }
             if(CantVotosOpcion1!=CantVotosOpcion2)
             {
                 if(CantVotosOpcion1>CantVotosOpcion2)
@@ -48,10 +59,12 @@ public class Activity_Resultados extends AppCompatActivity {
         else
         {
             ResultadoUsuario="Perdio";
-            GanoOPerdio(ResultadoUsuario);
         }
+        ImprimirResultadosPantalla(ResultadoUsuario);
 
     }
+
+
     private void ObtenerReferencias()
     {
         tvOpcion1= (TextView) findViewById(R.id.tvOpcion1);
@@ -67,7 +80,7 @@ public class Activity_Resultados extends AppCompatActivity {
     {   String Resultado="";
         if(MayoriaOpcion1)
         {
-            if(VotoJugador==Opcion1)
+            if(VotoOpcion1)
             {
                 Resultado="Perdio";
             }
@@ -78,7 +91,7 @@ public class Activity_Resultados extends AppCompatActivity {
         }
         else
         {
-            if(VotoJugador==Opcion1)
+            if(VotoOpcion1)
             {
                 Resultado="Gano";
             }
@@ -147,5 +160,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvIndicacion2.setText("Quedaste eliminado!!!");
         }
     }
+
+
 
 }
