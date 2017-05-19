@@ -12,7 +12,7 @@ namespace RestApiMinority.Controllers
 {
     public class RestController : ApiController
     {
-        // GET: api/Rest/GetHolaMundo
+        // GET: api/Rest
         public IEnumerable<string> GetHolaMundo()
         {
             return new string[] { "Hola mundo" };
@@ -42,7 +42,7 @@ namespace RestApiMinority.Controllers
         {
         }
 
-        // DELETE: api/Rest/DeleteSala/5
+        // DELETE: api/Rest/5
         public IHttpActionResult DeleteSala(int id)
         {
             if (UsuarioData.ObtenerPorId(id) == null)

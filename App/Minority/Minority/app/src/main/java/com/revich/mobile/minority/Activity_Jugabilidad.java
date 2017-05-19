@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +45,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        String url ="http://localhost:53630/api/Rest/GetSala/1";
+        String url ="http://10.152.2.26:53630/api/rest/GetSala/1";
         //new BuscarDatosTask().execute(url);
         SetearTimer();
     }
@@ -76,39 +78,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
 
         SalasDeJuego parsearResultado(String JSONstr) throws JSONException {
-            SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-            int CantJugadores=0;
-            int MontoAGanar=0;
-            int NRonda=0;
-            int Id=0;
-            String Nombre="";
-            boolean Disponible=false;
-            JSONObject json = new JSONObject(JSONstr);
-            JSONArray jsonDatosSala = json.getJSONArray("MiSalaDeJuego");
-            for (int i = 0; i < jsonDatosSala.length(); i++) {
-                JSONObject jsonResultado = jsonDatosSala.getJSONObject(i);
-                switch(i) {
-                    case 0:
-                        CantJugadores=jsonResultado.getInt("CantJugadores");
-                        break;
-                    case 1:
-                        Disponible=jsonResultado.getBoolean("Disponible");
-                        break;
-                    case 2:
-                        Id=jsonResultado.getInt("Id");
-                        break;
-                    case 3:
-                        MontoAGanar=jsonResultado.getInt("MontoAGanar");
-                        break;
-                    case 4:
-                        NRonda=jsonResultado.getInt("NRonda");
-                        break;
-                    case 5:
-                        Nombre=jsonResultado.getString("Nombre");
-                        break;
-                }
-            }
-            MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre);
+            Gson gson= new Gson();
+            SalasDeJuego MiSalaDeJuego= gson.fromJson(JSONstr,SalasDeJuego.class);
             return MiSalaDeJuego;
         }
     }
