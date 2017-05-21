@@ -5,6 +5,7 @@ using System.Web;
 using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
+using Microsoft.Azure;
 
 namespace RestApiMinority.Data
 {
@@ -14,7 +15,7 @@ namespace RestApiMinority.Data
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+                return CloudConfigurationManager.GetSetting("MySqlConnectionString");
             }
         }
 

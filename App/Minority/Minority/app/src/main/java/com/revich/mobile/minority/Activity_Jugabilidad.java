@@ -45,8 +45,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        String url ="http://10.152.2.26:53630/api/rest/GetSala/1";
-        //new BuscarDatosTask().execute(url);
+        String url ="http://localhost:53630/api/rest/GetSala/1";
+        new BuscarDatosTask().execute(url);
         SetearTimer();
     }
     private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {

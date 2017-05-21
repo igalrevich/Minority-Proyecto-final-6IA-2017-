@@ -20,8 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_Resultados"
-            android:configChanges="orientation|screenSize"></activity>
+        <activity
+            android:name=".Activity_Resultados"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".Activity_SeleccionarSala"></activity>
     </application>
 
 </manifest>
