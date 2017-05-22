@@ -168,7 +168,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    android:text="Sala A:"
+                    android:text="Sala B:"
                     android:textSize="25dp" />
 
 
@@ -219,7 +219,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    android:text="Sala A:"
+                    android:text="Sala C:"
                     android:textSize="25dp" />
 
 
@@ -270,7 +270,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    android:text="Sala A:"
+                    android:text="Sala D:"
                     android:textSize="25dp" />
 
 
@@ -321,7 +321,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    android:text="Sala A:"
+                    android:text="Sala E:"
                     android:textSize="25dp" />
 
 
@@ -372,7 +372,7 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
-                    android:text="Sala A:"
+                    android:text="Sala F:"
                     android:textSize="25dp" />
 
 
