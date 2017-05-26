@@ -33,8 +33,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical">
+            android:layout_weight="1.67"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/textView6"
@@ -95,7 +96,8 @@
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="0dp"
                 android:text="Salas de juego:"
-                android:textSize="25dp" />
+                android:textSize="25dp"
+                android:layout_weight="2.27" />
 
         </LinearLayout>
         <LinearLayout
@@ -130,6 +132,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -140,10 +143,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaA"
@@ -151,9 +156,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 0 min"
                     android:textSize="25dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -181,6 +188,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -191,10 +199,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaB"
@@ -202,9 +212,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 1 min"
                     android:textSize="25dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -232,6 +244,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -242,10 +255,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaC"
@@ -253,7 +268,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 2 min"
                     android:textSize="25dp" />
             </LinearLayout>
             <LinearLayout
@@ -283,6 +299,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -293,10 +310,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaD"
@@ -304,7 +323,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 3 min"
                     android:textSize="25dp" />
             </LinearLayout>
             <LinearLayout
@@ -334,6 +354,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -344,10 +365,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaE"
@@ -355,7 +378,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 4 min"
                     android:textSize="25dp" />
             </LinearLayout>
             <LinearLayout
@@ -385,6 +409,7 @@
                     android:layout_marginRight="105dp"
                     android:layout_marginTop="-28dp"
                     android:text="En Juego"
+                    android:textColor="#f61525"
                     android:textSize="25dp" />
 
                 <Button
@@ -395,10 +420,12 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="-40dp"
                     android:background="#000000"
+                    android:enabled="true"
                     android:gravity="center"
                     android:text="Entrar"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/tvTiempoDisponibleSalaF"
@@ -406,7 +433,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:text="Disponible en 1'15''"
+                    android:layout_marginTop="-7dp"
+                    android:text="Disponible en 5 min"
                     android:textSize="25dp" />
             </LinearLayout>
             </LinearLayout>
