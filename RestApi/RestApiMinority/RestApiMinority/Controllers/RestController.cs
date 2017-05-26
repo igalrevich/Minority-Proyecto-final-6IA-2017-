@@ -29,7 +29,7 @@ namespace RestApiMinority.Controllers
             }
             return Ok(MiSalaDeJuego);
         }
-         // GET: api/Rest/GetIdSala/D
+         // GET: api/Rest/GetIdSala
         public IHttpActionResult GetIdSala(string NombreSala)
         {
             int IdSala = UsuarioData.ObtenerIdSalaDeJuego(NombreSala);
