@@ -20,6 +20,11 @@ namespace RestApiMinority
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            
+            
+            config.Routes.MapHttpRoute(
+               name: "GetIdSala",
+               routeTemplate: "api/rest/GetIdSala/{nombreSala}"       
 
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
