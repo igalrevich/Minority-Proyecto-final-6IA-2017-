@@ -36,7 +36,7 @@ namespace RestApiMinority.Data
                 int IdSalaDeJuego = ObtenerIdSalaDeJuegoPorRow(dt.Rows[0]);
                 return IdSalaDeJuego;
             }
-            return null;
+            return 0;
         }
 
         
@@ -52,18 +52,7 @@ namespace RestApiMinority.Data
             MiUsuario.SalasDeJuego = row.Field<string>("SalasDeJuego");
             return MiUsuario;
         }
-        public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
-        {
-            string select = "select * from salasdejuegos where id=" + id.ToString();
-            DataTable dt = DBHelper.EjecutarSelect(select);
-            SalasDeJuego MiSalaDeJuego;
-            if (dt.Rows.Count > 0)
-            {
-                MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
-                return MiSalaDeJuego;
-            }
-            return null;
-        }
+       
 
          private static int ObtenerIdSalaDeJuegoPorRow(DataRow row)
         {
