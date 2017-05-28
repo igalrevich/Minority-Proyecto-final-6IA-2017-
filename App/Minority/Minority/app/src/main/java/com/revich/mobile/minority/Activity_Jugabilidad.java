@@ -105,8 +105,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private void ReestablecerCondicionesLayout()
     {
         ObtenerReferencias();
-        String url ="http://localhost:53630/api/Rest/1";
-        //new BuscarDatosTask().execute(url);
         if(VotoOpcion1)
         {
             btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));
@@ -236,7 +234,13 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 VotoFinal=btnOpcion2.getText().toString();
             }
         }
-        //tvVotoFinal.setText(VotoFinal);
+        Respuesta MiRespuesta=new Respuesta();
+        MiRespuesta.Usuario= 1;
+        MiRespuesta.Pregunta= 1;
+        MiRespuesta.RespuestaParcial=VotoFinal;
+        MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
+        MiRespuesta.Sala= 1;
+
         IniciarActivityResultados();
     }
     private void IniciarActivityResultados()

@@ -29,12 +29,9 @@ namespace RestApiMinority.Controllers
             }
             return Ok(MiSalaDeJuego);
         }
-<<<<<<< HEAD
+
         // GET: api/Rest/GetIdSala?NombreSala=D
 
-=======
-        // GET: api/Rest/GetIdSala
->>>>>>> 3e9c0ab538e5b0610e7cac3603ffcfe9ea17ec0b
         public IHttpActionResult GetIdSala(string NombreSala)
         {
             int IdSala = UsuarioData.ObtenerIdSalaDeJuego(NombreSala);
@@ -44,19 +41,25 @@ namespace RestApiMinority.Controllers
             }
             else
             {
-<<<<<<< HEAD
-
-=======
->>>>>>> 3e9c0ab538e5b0610e7cac3603ffcfe9ea17ec0b
                 return Ok(IdSala);
             }
         }
 
 
 
-        // POST: api/Rest
-        public void Post([FromBody]string value)
+        // POST: api/Rest/InsertarRespuesta
+        [ResponseType(typeof(Respuesta))]
+        public IHttpActionResult Post(Respuesta MiRespuesta)
         {
+            if (MiRespuesta == null)
+            {
+                return BadRequest("Datos incorrectos.");
+            }
+            else
+            {
+                UsuarioData.Insert(MiRespuesta);
+                return Ok();
+            }
         }
 
         // PUT: api/Rest/5

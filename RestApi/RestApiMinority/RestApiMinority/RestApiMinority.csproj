@@ -122,10 +122,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\RestController.cs" />
     <Compile Include="Data\DBHelper.cs" />
+    <Compile Include="Data\RespuestaData.cs" />
     <Compile Include="Data\UsuarioData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Respuesta.cs" />
     <Compile Include="Models\SalasDeJuego.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
