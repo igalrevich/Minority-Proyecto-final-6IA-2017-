@@ -22,10 +22,6 @@ namespace RestApiMinority
             );
             
             config.Routes.MapHttpRoute(
-               name: "GetIdSala",
-               routeTemplate: "api/rest/GetIdSala/{nombreSala}");       
-            
-             config.Routes.MapHttpRoute(
                 name: "GetIdSala",
                 routeTemplate: "api/{controller}/{action}/{NombreSala}",
                 defaults: new { action="GetIdSala"}
