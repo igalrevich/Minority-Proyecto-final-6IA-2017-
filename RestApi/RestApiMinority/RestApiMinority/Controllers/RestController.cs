@@ -33,11 +33,14 @@ namespace RestApiMinority.Controllers
         public IHttpActionResult GetIdSala(string NombreSala)
         {
             int IdSala = UsuarioData.ObtenerIdSalaDeJuego(NombreSala);
-            if (IdSala == null)
+            if (IdSala == 0)
             {
                 return NotFound();
             }
-            return Ok(MiSalaDeJuego);
+            else
+            {
+             return Ok(IdSala);
+            }
         }
        
 
