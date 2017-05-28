@@ -24,7 +24,8 @@ namespace RestApiMinority
             
             config.Routes.MapHttpRoute(
                name: "GetIdSala",
-               routeTemplate: "api/rest/GetIdSala/{NombreSala}");       
+               routeTemplate: "api/rest/GetIdSala/{NombreSala}",
+               defaults: new { controller = "rest", action = "GetIdSala" });
 
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
