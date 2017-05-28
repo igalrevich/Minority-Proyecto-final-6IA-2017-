@@ -30,7 +30,7 @@ namespace RestApiMinority.Controllers
             return Ok(MiSalaDeJuego);
         }
         // GET: api/Rest/GetIdSala
-        public IHttpActionResult GetIdSala(string NombreSala)
+        public IHttpActionResult GetIdSala(string nombreSala)
         {
             int IdSala = UsuarioData.ObtenerIdSalaDeJuego(NombreSala);
             if (IdSala == 0)
