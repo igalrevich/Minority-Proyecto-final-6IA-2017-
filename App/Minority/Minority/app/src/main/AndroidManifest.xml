@@ -13,17 +13,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity_Jugabilidad"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+            android:configChanges="orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Activity_Resultados"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".Activity_SeleccionarSala"
             android:configChanges="orientation|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

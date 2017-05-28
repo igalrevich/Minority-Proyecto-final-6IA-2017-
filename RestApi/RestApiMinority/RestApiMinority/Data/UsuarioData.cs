@@ -38,8 +38,24 @@ namespace RestApiMinority.Data
             }
             return 0;
         }
+        public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
+        {
+            string select = "select * from salasdejuegos where id=" + id.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            SalasDeJuego MiSalaDeJuego;
+            if (dt.Rows.Count > 0)
+            {
+                MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
+                return MiSalaDeJuego;
+            }
+            return null;
+        }
 
-        
+        private static int ObtenerIdSalaDeJuegoPorRow(DataRow row)
+        {
+            int IdSalaDeJuego = row.Field<int>("Id");
+            return IdSalaDeJuego;
+        }
 
         private static Usuario ObtenerPorRow(DataRow row)
         {
@@ -52,27 +68,7 @@ namespace RestApiMinority.Data
             MiUsuario.SalasDeJuego = row.Field<string>("SalasDeJuego");
             return MiUsuario;
         }
-<<<<<<< HEAD
        
-=======
-         public static int ObtenerIdSalaDeJuego(string Nombre)
-        {
-            string select = "select * from salasdejuego where id=" + Nombre;
-            DataTable dt = DBHelper.EjecutarSelect(select);
-            if (dt.Rows.Count > 0)
-            {
-                int IdSalaDeJuego = ObtenerIdSalaDeJuegoPorRow(dt.Rows[0]);
-                return IdSalaDeJuego;
-            }
-            return 0;
-        }
->>>>>>> 3426420507a04fa2500c36936222d56e67cb6d45
-
-         private static int ObtenerIdSalaDeJuegoPorRow(DataRow row)
-        {
-            int IdSalaDeJuego = row.Field<int>("Id");
-            return IdSalaDeJuego;
-        }
 
         private static SalasDeJuego ObtenerPorRowSalaDeJuego(DataRow row)
         {

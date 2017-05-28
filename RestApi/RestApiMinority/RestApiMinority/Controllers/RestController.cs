@@ -29,12 +29,9 @@ namespace RestApiMinority.Controllers
             }
             return Ok(MiSalaDeJuego);
         }
-        // GET: api/Rest/GetIdSala
-<<<<<<< HEAD
+        // GET: api/Rest/GetIdSala?NombreSala=D
+
         public IHttpActionResult GetIdSala(string NombreSala)
-=======
-        public IHttpActionResult GetIdSala(string nombreSala)
->>>>>>> 3426420507a04fa2500c36936222d56e67cb6d45
         {
             int IdSala = UsuarioData.ObtenerIdSalaDeJuego(NombreSala);
             if (IdSala == 0)
@@ -43,11 +40,8 @@ namespace RestApiMinority.Controllers
             }
             else
             {
-<<<<<<< HEAD
+
                 return Ok(IdSala);
-=======
-             return Ok(IdSala);
->>>>>>> 3426420507a04fa2500c36936222d56e67cb6d45
             }
         }
 

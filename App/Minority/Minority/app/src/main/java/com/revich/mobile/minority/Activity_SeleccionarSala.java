@@ -242,6 +242,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
          }
        }
     }
+    private  View.OnClickListener btnEntrar_click= new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
 
 }

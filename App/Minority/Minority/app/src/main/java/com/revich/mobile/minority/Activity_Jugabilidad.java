@@ -45,9 +45,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        String url ="http://localhost:53630/api/rest/GetSala/1";
-        //new BuscarDatosTask().execute(url);
-        SetearTimer();
+        String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/1";
+        new BuscarDatosTask().execute(url);
+
     }
     private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {
         private  OkHttpClient client= new OkHttpClient();
@@ -55,8 +55,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(SalasDeJuego MiSalaDeJuego) {
             super.onPostExecute(MiSalaDeJuego);
             tvSala.setText(MiSalaDeJuego.Nombre);
-            tvCantJugadores.setText(MiSalaDeJuego.CantJugadores);
-            tvNRonda.setText(MiSalaDeJuego.NRonda);
+            tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
+            tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
+            tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
+            SetearTimer();
 
         }
 
@@ -125,7 +127,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         if(VotoFinalmente)
         {
             tvSegundosTimer.setText(SegundosTimer);
-            DeterminarVotoFinal();
+            
         }
     }
     private void SetearTimer()
@@ -153,6 +155,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         tvMontoGanador= (TextView) findViewById(R.id.tvMontoGanador);
         tvCantJugadores= (TextView) findViewById(R.id.tvCantJugadores);
         tvSala= (TextView) findViewById(R.id.tvSala);
+        tvNRonda=(TextView) findViewById(R.id.tvNRonda);
 
 
     }
