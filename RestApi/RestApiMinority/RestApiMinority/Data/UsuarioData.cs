@@ -27,18 +27,7 @@ namespace RestApiMinority.Data
             }
             return null;
         }
-<<<<<<< HEAD
-         public static int ObtenerIdSalaDeJuego(string Nombre)
-        {
-            string select = "select * from salasdejuego where id=" + Nombre;
-            DataTable dt = DBHelper.EjecutarSelect(select);
-            if (dt.Rows.Count > 0)
-            {
-                int IdSalaDeJuego = ObtenerIdSalaDeJuegoPorRow(dt.Rows[0]);
-                return IdSalaDeJuego;
-            }
-            return 0;
-        }
+         
         public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
         {
             string select = "select * from salasdejuegos where id=" + id.ToString();
@@ -52,14 +41,6 @@ namespace RestApiMinority.Data
             return null;
         }
 
-        private static int ObtenerIdSalaDeJuegoPorRow(DataRow row)
-        {
-            int IdSalaDeJuego = row.Field<int>("Id");
-            return IdSalaDeJuego;
-        }
-=======
->>>>>>> 3e9c0ab538e5b0610e7cac3603ffcfe9ea17ec0b
-
         private static Usuario ObtenerPorRow(DataRow row)
         {
             Usuario MiUsuario = new Usuario();
@@ -71,9 +52,7 @@ namespace RestApiMinority.Data
             MiUsuario.SalasDeJuego = row.Field<string>("SalasDeJuego");
             return MiUsuario;
         }
-<<<<<<< HEAD
-       
-=======
+
          public static int ObtenerIdSalaDeJuego(string Nombre)
         {
             string select = "select Id from salasdejuegos where Nombre=\"" + Nombre + "\"";
@@ -91,7 +70,6 @@ namespace RestApiMinority.Data
             int IdSalaDeJuego = row.Field<int>("Id");
             return IdSalaDeJuego;
         }
->>>>>>> 3e9c0ab538e5b0610e7cac3603ffcfe9ea17ec0b
 
         private static SalasDeJuego ObtenerPorRowSalaDeJuego(DataRow row)
         {

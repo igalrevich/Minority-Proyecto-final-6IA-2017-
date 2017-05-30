@@ -11,7 +11,7 @@ namespace RestApiMinority.Data
     {
         public static void Insert(Respuesta MiRespuesta)
         {
-            string sInsert = "Insert into personas (Nombre,FechaNac) values ('" + persona.Nombre + "','" + persona.FechaNac.ToString("yyyy-MM-dd HH:mm") + "')";
+            string sInsert = "Insert into respuestas (Pregunta,Usuario,RespuestaFinal,RespuestaTemporal,Sala) values ('" + MiRespuesta.Pregunta + "','" + MiRespuesta.Usuario + "','" + MiRespuesta.RespuestaFinal + "','" + MiRespuesta.RespuestaParcial + "','" + MiRespuesta.Sala + "')";
             DBHelper.EjecutarIUD(sInsert);
         }
     }

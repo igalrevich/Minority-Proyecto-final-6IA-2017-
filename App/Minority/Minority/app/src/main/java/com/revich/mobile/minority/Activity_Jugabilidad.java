@@ -25,8 +25,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Activity_Jugabilidad extends AppCompatActivity {
@@ -35,9 +37,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
-    String VotoFinal,NombreBoton,SegundosTimer;
+    String VotoFinal,NombreBoton,SegundosTimer,url;
     int Idbtn;
     CountDownTimer Timer;
+    Gson gson;
+    SalasDeJuego SalaDeJuegoTraida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/1";
+        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/1";
         new BuscarDatosTask().execute(url);
 
     }
@@ -58,6 +62,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
             tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
             tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
+            SalaDeJuegoTraida=MiSalaDeJuego;
             SetearTimer();
 
         }
@@ -80,13 +85,43 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
 
         SalasDeJuego parsearResultado(String JSONstr) throws JSONException {
-            Gson gson= new Gson();
+            gson= new Gson();
             SalasDeJuego MiSalaDeJuego= gson.fromJson(JSONstr,SalasDeJuego.class);
             return MiSalaDeJuego;
         }
     }
 
-    @Override
+    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Void> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        @Override
+        protected void onPostExecute(Void param) {
+        }
+
+        @Override
+        protected Void doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+            String json = parametros[2];
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+
+            } catch (IOException e) {
+                Log.d("Error :", e.getMessage());
+            }
+          return  null;
+        }
+    }
+
+
+        @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -105,6 +140,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private void ReestablecerCondicionesLayout()
     {
         ObtenerReferencias();
+        tvSala.setText(SalaDeJuegoTraida.Nombre);
+        tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
+        tvNRonda.setText(String.valueOf(SalaDeJuegoTraida.NRonda));
+        tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
         if(VotoOpcion1)
         {
             btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));
@@ -154,8 +193,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         tvCantJugadores= (TextView) findViewById(R.id.tvCantJugadores);
         tvSala= (TextView) findViewById(R.id.tvSala);
         tvNRonda=(TextView) findViewById(R.id.tvNRonda);
-
-
     }
     private void SetearListeners()
     {
@@ -219,6 +256,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     {
         btnOpcion1.setEnabled(false);
         btnOpcion2.setEnabled(false);
+        btnVotar.setEnabled(false);
         if(VotoOpcion1==false && VotoOpcion2==false)
         {
             VotoFinal="";
@@ -240,7 +278,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiRespuesta.RespuestaParcial=VotoFinal;
         MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
         MiRespuesta.Sala= 1;
-
+        /*url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
+        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));*/
         IniciarActivityResultados();
     }
     private void IniciarActivityResultados()
