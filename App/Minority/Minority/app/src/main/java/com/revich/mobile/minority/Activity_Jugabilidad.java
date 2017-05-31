@@ -37,11 +37,12 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
-    String VotoFinal,NombreBoton,SegundosTimer,url;
+    String VotoFinal,NombreBoton,SegundosTimer,url,AtributoRespuesta;
     int Idbtn;
     CountDownTimer Timer;
     Gson gson;
     SalasDeJuego SalaDeJuegoTraida;
+    Respuesta MiRespuesta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,34 +92,67 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
-    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Void> {
+    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, int> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
 
         @Override
-        protected void onPostExecute(Void param) {
+        protected void onPostExecute(int Id) {
+            if (Id != 0)
+            {
+                switch (AtributoRespuesta)
+                {
+                    case "Sala":
+                        MiRespuesta.Sala = Id;
+                        break;
+                    case "Usuario":
+                        MiRespuesta.Usuario = Id;
+                        break;
+                    case "Pregunta":
+                        MiRespuesta.Pregunta = Id;
+                        break;
+                }
+            }
         }
 
         @Override
-        protected Void doInBackground(String... parametros) {
+        protected int doInBackground(String... parametros) {
             String method = parametros[0];
             String url = parametros[1];
-            String json = parametros[2];
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
+            if (method.equals("GET")) {
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                AtributoRespuesta = parametros[2];
+                try {
+                    Response response = client.newCall(request).execute();
+                    String jsonStr = response.body().string();
+                    return Integer.parseInt(jsonStr);
 
-            } catch (IOException e) {
-                Log.d("Error :", e.getMessage());
+                } catch (IOException e) {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+                }
+            } else {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+
+                } catch (IOException e) {
+                    Log.d("Error :", e.getMessage());
+                }
+                return 0;
             }
-          return  null;
         }
     }
+
+
 
 
         @Override
@@ -272,12 +306,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 VotoFinal=btnOpcion2.getText().toString();
             }
         }
-        Respuesta MiRespuesta=new Respuesta();
-        MiRespuesta.Usuario= 1;
-        MiRespuesta.Pregunta= 1;
+        MiRespuesta=new Respuesta();
+        String Usuario="IgalRevich";
+        String Opcion1= btnOpcion1.getText().toString();
+        String Sala= tvSala.getText().toString();
+        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+Sala;
+        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
+        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/usuarios/"+Usuario;
+        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
+        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/preguntas/"+Opcion1;
+        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
         MiRespuesta.RespuestaParcial=VotoFinal;
         MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
-        MiRespuesta.Sala= 1;
         /*url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
         new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));*/
         IniciarActivityResultados();
