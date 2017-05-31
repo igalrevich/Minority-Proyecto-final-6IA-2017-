@@ -50,7 +50,7 @@ namespace RestApiMinority.Controllers
         // POST: api/Rest/InsertarRespuesta
         [ResponseType(typeof(Respuesta))]
         [Route("api/Rest/InsertarResupesta")]
-        public IHttpActionResult Post(Respuesta MiRespuesta)
+        public IHttpActionResult InsertarRespuesta(Respuesta MiRespuesta)
         {
             if (MiRespuesta == null)
             {

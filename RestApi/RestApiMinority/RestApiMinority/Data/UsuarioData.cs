@@ -60,7 +60,7 @@ namespace RestApiMinority.Data
             {
                 Campo = "OpcionA";
             }
-            string select = "select Id from"+tabla+ "where"+Campo+"=\"" + Nombre + "\"";
+            string select = "select Id from "+tabla+ "where "+Campo+"=\"" + Nombre + "\"";
             DataTable dt = DBHelper.EjecutarSelect(select);
             if (dt.Rows.Count > 0)
             {
