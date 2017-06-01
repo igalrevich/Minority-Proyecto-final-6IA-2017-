@@ -92,32 +92,43 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
-    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, int> {
+    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
 
         @Override
-        protected void onPostExecute(int Id) {
+        protected void onPostExecute(Integer Id) {
             if (Id != 0)
             {
                 switch (AtributoRespuesta)
                 {
                     case "Sala":
                         MiRespuesta.Sala = Id;
+                        String Usuario="IgalRevich";
+                        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/usuarios/"+Usuario;
+                        new TraerIdsInsertarResultados().execute("GET",url,"Usuario");
                         break;
                     case "Usuario":
                         MiRespuesta.Usuario = Id;
+                        String Opcion1= btnOpcion1.getText().toString();
+                        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/preguntas/"+Opcion1;
+                        new TraerIdsInsertarResultados().execute("GET",url,"Pregunta");
                         break;
                     case "Pregunta":
                         MiRespuesta.Pregunta = Id;
+                        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
+                        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
                         break;
                 }
+
             }
+
+
         }
 
         @Override
-        protected int doInBackground(String... parametros) {
+        protected Integer doInBackground(String... parametros) {
             String method = parametros[0];
             String url = parametros[1];
             if (method.equals("GET")) {
@@ -143,11 +154,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
+                    IniciarActivityResultados();
 
                 } catch (IOException e) {
                     Log.d("Error :", e.getMessage());
+
                 }
                 return 0;
+
+
             }
         }
     }
@@ -307,20 +322,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             }
         }
         MiRespuesta=new Respuesta();
-        String Usuario="IgalRevich";
-        String Opcion1= btnOpcion1.getText().toString();
+        MiRespuesta.RespuestaParcial=VotoFinal;
+        MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
         String Sala= tvSala.getText().toString();
         url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Sala");
-        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/usuarios/"+Usuario;
-        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
-        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/preguntas/"+Opcion1;
-        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
-        MiRespuesta.RespuestaParcial=VotoFinal;
-        MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
-        /*url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
-        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));*/
-        IniciarActivityResultados();
     }
     private void IniciarActivityResultados()
     {
