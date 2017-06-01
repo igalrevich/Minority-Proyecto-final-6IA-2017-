@@ -30,8 +30,7 @@ namespace RestApiMinority.Controllers
             return Ok(MiSalaDeJuego);
         }
 
-        // GET: api/Rest/GetIdByNombre/nombre
-        [Route("api/Rest/GetIdByNombre/{tabla}/{nombre}")]
+        // GET: api/Rest/GetIdByNombre/tabla/nombre
         public IHttpActionResult GetIdByNombre(string tabla,string nombre)
         {
             int IdSala = UsuarioData.ObtenerIdPorNombre(tabla,nombre);
@@ -49,7 +48,6 @@ namespace RestApiMinority.Controllers
 
         // POST: api/Rest/InsertarRespuesta
         [ResponseType(typeof(Respuesta))]
-        [Route("api/Rest/InsertarResupesta")]
         public IHttpActionResult InsertarRespuesta(Respuesta MiRespuesta)
         {
             if (MiRespuesta == null)
