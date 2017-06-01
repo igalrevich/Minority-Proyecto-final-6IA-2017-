@@ -24,7 +24,7 @@ namespace RestApiMinority
             config.Routes.MapHttpRoute(
               name: "GetIdByNombre", // Route name
               routeTemplate: "api/{controller}/{action}/{tabla}/{nombre}",// URL with parameters
-              defaults: new { nombre = "" }  // Parameter defaults
+              defaults: new { nombre = "", tabla = "" }  // Parameter defaults
       );
 
             config.Formatters.JsonFormatter.SupportedMediaTypes
