@@ -66,14 +66,30 @@
             android:layout_width="135dp"
             android:layout_height="121dp"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="60dp"
             android:background="#ffffff"
             android:gravity="center"
             android:text="Sala A"
             android:textSize="25dp"
-            android:layout_weight="0.06" />
+            android:layout_weight="0.06"
+            android:layout_gravity="left" />
+
+        <Button
+            android:id="@+id/btnSalaB"
+            android:layout_width="135dp"
+            android:layout_height="121dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-145dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Sala B"
+            android:textSize="25dp"
+            android:layout_weight="0.08"
+            android:layout_gravity="right" />
 
     </LinearLayout>
 

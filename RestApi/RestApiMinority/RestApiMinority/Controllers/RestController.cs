@@ -44,7 +44,6 @@ namespace RestApiMinority.Controllers
             }
         }
         // GET: api/Rest/GetCantVotos/Coca
-        [Route("api/rest/GetCantVotos/{Opcion}")]
         public IHttpActionResult GetCantVotos(string Opcion)
         {
             int CantVotos = RespuestaData.ObtenerCantVotos(Opcion);

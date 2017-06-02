@@ -23,7 +23,7 @@ namespace RestApiMinority.Data
         }
         public static void DeleteRespuestasSala(int IdSala)
         {
-            string delete = "delete from respuestas where Sala=\"" + IdSala.ToString()+ "\"";
+            string delete = "delete from respuestas where Sala=" + IdSala.ToString();
             DBHelper.EjecutarIUD(delete);
         }
     }
