@@ -74,7 +74,6 @@ C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\RestApiMinority.dll.config
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\RestApiMinority.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\RestApiMinority.pdb
-C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\Google.Protobuf.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\MySql.Data.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\Newtonsoft.Json.dll

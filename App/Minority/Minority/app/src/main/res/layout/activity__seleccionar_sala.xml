@@ -68,7 +68,7 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="0dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:background="#ffffff"
             android:gravity="center"
             android:text="Sala A"
@@ -83,12 +83,67 @@
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="-145dp"
+            android:layout_marginTop="-125dp"
             android:background="#ffffff"
             android:gravity="center"
             android:text="Sala B"
             android:textSize="25dp"
             android:layout_weight="0.08"
+            android:layout_gravity="right" />
+
+        <Button
+            android:id="@+id/btnSalaC"
+            android:layout_width="135dp"
+            android:layout_height="121dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="60dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Sala C"
+            android:textSize="25dp"
+            android:layout_weight="0.37" />
+
+        <Button
+            android:id="@+id/btnSalaD"
+            android:layout_width="135dp"
+            android:layout_height="121dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-125dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Sala D"
+            android:textSize="25dp"
+            android:layout_gravity="right" />
+
+        <Button
+            android:id="@+id/btnSalaE"
+            android:layout_width="135dp"
+            android:layout_height="121dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="60dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Sala E"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="135dp"
+            android:layout_height="121dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-120dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Sala F"
+            android:textSize="25dp"
             android:layout_gravity="right" />
 
     </LinearLayout>
