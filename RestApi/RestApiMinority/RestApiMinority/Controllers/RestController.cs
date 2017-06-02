@@ -43,6 +43,13 @@ namespace RestApiMinority.Controllers
                 return Ok(IdSala);
             }
         }
+        // GET: api/Rest/GetCantVotos/Coca
+        [Route("api/rest/GetCantVotos/{Opcion}")]
+        public IHttpActionResult GetCantVotos(string Opcion)
+        {
+            int CantVotos = RespuestaData.ObtenerCantVotos(Opcion);
+            return Ok(CantVotos);
+        }
 
 
 
@@ -66,14 +73,10 @@ namespace RestApiMinority.Controllers
         {
         }
 
-        // DELETE: api/Rest/5
-        public IHttpActionResult DeleteSala(int id)
+        // DELETE: api/Rest/DeleteRespuestasSala/1
+        public IHttpActionResult DeleteRespuestasSala(int IdSala)
         {
-            if (UsuarioData.ObtenerPorId(id) == null)
-            {
-                return NotFound();
-            }
-            UsuarioData.Delete(id);
+            RespuestaData.DeleteRespuestasSala(IdSala);
             return Ok();
         }
     }

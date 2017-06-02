@@ -20,425 +20,62 @@
         tools:layout_editor_absoluteY="16dp"
         tools:layout_editor_absoluteX="16dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/LogoMinority"
-            android:layout_width="153dp"
-            android:layout_height="54dp"
-            android:src="@drawable/logominority"
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:weightSum="1"
+           android:background="#010101">
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Usuario: IgalRevich"
+               android:id="@+id/tvUsuario"
+               android:textSize="25dp"
+               android:layout_marginRight="25dp"
+               android:textColor="#ffffff" />
 
+           <ImageView
+               android:id="@+id/imageView2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="right"
+               android:layout_marginRight="50dp"
+               android:layout_marginTop="-26dp"
+               android:src="@drawable/monedasnuevo" />
 
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.67"
-            android:orientation="vertical"
-            android:weightSum="1">
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="40dp"
+               android:text="49"
+               android:id="@+id/tvMonedas"
+               android:layout_gravity="right"
+               android:textSize="25dp"
+               android:layout_marginTop="-32dp"
+               android:layout_marginRight="20dp"
+               android:layout_weight="0.21"
+               android:textColor="#ffffff" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="0dp"
-                android:text="Bienvenido"
-                android:textSize="25dp" />
+       </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvUsuario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="-27dp"
-                android:text="IgalRevich"
-                android:textSize="25dp" />
+        <Button
+            android:id="@+id/btnOpcion2"
+            android:layout_width="134dp"
+            android:layout_height="105dp"
+            android:layout_marginBottom="-11dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="0dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="Pepsi"
+            android:textSize="25dp"
+            android:layout_weight="0.10" />
 
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:layout_marginTop="0dp"
-                android:text="Monedas"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/tvMonedas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="-25dp"
-                android:text="49"
-                android:textSize="25dp" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="58dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="78dp"
-                android:layout_marginTop="-30dp"
-                android:src="@drawable/monedasnuevo" />
-
-            <TextView
-                android:id="@+id/tvSalasDeJuego"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="26dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
-                android:text="Salas de juego:"
-                android:textSize="25dp"
-                android:layout_weight="2.27" />
-
-        </LinearLayout>
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala A:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaA"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 0 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala B:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaB"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 1 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala C:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaC"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 2 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala D:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaD"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 3 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala E:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaE"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 4 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSalaF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Sala F:"
-                    android:textSize="25dp" />
-
-
-                <TextView
-                    android:id="@+id/tvEstadoSalaF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="105dp"
-                    android:layout_marginTop="-28dp"
-                    android:text="En Juego"
-                    android:textColor="#f61525"
-                    android:textSize="25dp" />
-
-                <Button
-                    android:id="@+id/btnEntrarSalaF"
-                    android:layout_width="88dp"
-                    android:layout_height="52dp"
-                    android:layout_gravity="right|center_horizontal"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="-40dp"
-                    android:background="#000000"
-                    android:enabled="true"
-                    android:gravity="center"
-                    android:text="Entrar"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
-                    android:visibility="invisible" />
-
-                <TextView
-                    android:id="@+id/tvTiempoDisponibleSalaF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="-7dp"
-                    android:text="Disponible en 5 min"
-                    android:textSize="25dp" />
-            </LinearLayout>
-            </LinearLayout>
-     </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
 

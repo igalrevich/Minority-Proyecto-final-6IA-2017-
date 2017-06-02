@@ -333,6 +333,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Intent MiIntent= new Intent(Activity_Jugabilidad.this,Activity_Resultados.class);
         Bundle ElBundle= new Bundle();
         ElBundle.putString("Voto",VotoFinal);
+        int CantJugadores= Integer.parseInt(tvCantJugadores.getText().toString());
+        ElBundle.putInt("CantJugadores",CantJugadores);
+        ElBundle.putInt("IdSala",MiRespuesta.Sala);
+        ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
+        ElBundle.putInt("IdUsuario",MiRespuesta.Usuario);
         MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
     }
