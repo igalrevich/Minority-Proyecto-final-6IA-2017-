@@ -16,14 +16,14 @@ namespace RestApiMinority.Data
         }
         public static int ObtenerCantVotos(string Opcion)
         {
-            string select = "select * from respuestas where RespuestaFinal=" + Opcion;
+            string select = "select * from respuestas where RespuestaFinal=\"" + Opcion+ "\"";
             DataTable dt = DBHelper.EjecutarSelect(select);
             int CantVotos = dt.Rows.Count;
             return CantVotos;
         }
         public static void DeleteRespuestasSala(int IdSala)
         {
-            string delete = "delete from respuestas where Sala=" + IdSala.ToString();
+            string delete = "delete from respuestas where Sala=\"" + IdSala.ToString()+ "\"";
             DBHelper.EjecutarIUD(delete);
         }
     }
