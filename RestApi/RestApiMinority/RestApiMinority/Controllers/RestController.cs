@@ -14,6 +14,7 @@ namespace RestApiMinority.Controllers
     {
         // GET: api/Rest/GetSala
         [ResponseType(typeof(SalasDeJuego))]
+        [Route("api/rest/GetSala")]
         public IEnumerable<SalasDeJuego> GetSala()
         {
 

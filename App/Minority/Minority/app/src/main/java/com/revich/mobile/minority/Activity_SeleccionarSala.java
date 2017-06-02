@@ -101,7 +101,18 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private void TraerEstadosSalas()
     {
+        CountDownTimer Timer=new CountDownTimer(15000, 1000) {
 
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish()
+            {
+                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                new BuscarDatosTask().execute(url);
+            }
+        }.start();
     }
     private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {
         private OkHttpClient client= new OkHttpClient();
