@@ -27,11 +27,7 @@ namespace RestApiMinority
               defaults: new { nombre = "", tabla = "" }  // Parameter defaults
               );
 
-              config.Routes.MapHttpRoute(
-              name: "GetCantVotos", // Route name
-              routeTemplate: "api/{controller}/{action}/{Opcion}",// URL with parameters
-              defaults: new { Opcion = "" }  // Parameter defaults
-      );
+         
 
             config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));

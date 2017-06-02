@@ -142,3 +142,4 @@ C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\ru\System.Spatial.resources.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\zh-Hans\System.Spatial.resources.dll
 C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\zh-Hant\System.Spatial.resources.dll
+C:\Git\Minority-Proyecto-final-6IA-2017-\RestApi\RestApiMinority\RestApiMinority\bin\Google.Protobuf.dll

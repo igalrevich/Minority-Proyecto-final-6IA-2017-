@@ -40,6 +40,23 @@ namespace RestApiMinority.Data
             }
             return null;
         }
+        public static List<SalasDeJuego> ObtenerSalasDeJuego()
+        {
+            string select = "select * from salasdejuegos";
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            List<SalasDeJuego> ListaSalasDeJuego = new List<SalasDeJuego>();
+            SalasDeJuego MiSalaDeJuego;
+            if (dt.Rows.Count > 0)
+            {
+                foreach(DataRow row in dt.Rows)
+                {
+                    MiSalaDeJuego = ObtenerPorRowSalaDeJuego(row);
+                    ListaSalasDeJuego.Add(MiSalaDeJuego);
+                }
+                MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
+            }
+            return ListaSalasDeJuego;
+        }
 
         private static Usuario ObtenerPorRow(DataRow row)
         {

@@ -12,10 +12,12 @@ namespace RestApiMinority.Controllers
 {
     public class RestController : ApiController
     {
-        // GET: api/Rest
-        public IEnumerable<string> GetHolaMundo()
+        // GET: api/Rest/GetSala
+        [ResponseType(typeof(SalasDeJuego))]
+        public IEnumerable<SalasDeJuego> GetSala()
         {
-            return new string[] { "Hola mundo" };
+
+            return UsuarioData.ObtenerSalasDeJuego();
         }
 
         // GET: api/Rest/GetSala/5
@@ -44,12 +46,12 @@ namespace RestApiMinority.Controllers
             }
         }
         // GET: api/Rest/GetCantVotos/Coca
-        [Route("api/rest/GetCantVotos/{Opcion}")]
         public IHttpActionResult GetCantVotos(string Opcion)
         {
             int CantVotos = RespuestaData.ObtenerCantVotos(Opcion);
             return Ok(CantVotos);
         }
+
 
 
 

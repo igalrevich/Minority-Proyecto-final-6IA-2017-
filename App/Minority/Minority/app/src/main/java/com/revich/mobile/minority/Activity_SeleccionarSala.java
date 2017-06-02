@@ -1,17 +1,28 @@
 package com.revich.mobile.minority;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Activity_SeleccionarSala extends AppCompatActivity {
     TextView tvSalaA,tvEstadoSalaA,tvTiempoDisponibleSalaA;
@@ -27,6 +38,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Boolean [] EstadosSalas= new Boolean[] {false,false,false,false,false,false};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Date HoraDateTime;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +56,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private void ObtenerReferencias()
     {
-        for(int i=0;i<6;i++)
+        /*for(int i=0;i<6;i++)
         {
           switch (i)
           {
@@ -85,8 +97,43 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                   VecBotones[i]=(Button) findViewById(R.id.btnEntrarSalaF);
                   break;
           }
+        }*/
+    }
+    private void TraerEstadosSalas()
+    {
+
+    }
+    private class BuscarDatosTask extends AsyncTask<String, Void, SalasDeJuego> {
+        private OkHttpClient client= new OkHttpClient();
+        @Override
+        protected void onPostExecute(SalasDeJuego MiSalaDeJuego) {
+
+        }
+
+        @Override
+        protected SalasDeJuego doInBackground(String... parametros) {
+            String url = parametros[0];
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String jsonStr= response.body().string();
+                return parsearResultado(jsonStr);
+
+            } catch (IOException | JSONException e) {
+                Log.d("Error", e.getMessage());
+                return new SalasDeJuego();
+            }
+        }
+
+        SalasDeJuego parsearResultado(String JSONstr) throws JSONException {
+            gson= new Gson();
+            SalasDeJuego MiSalaDeJuego= gson.fromJson(JSONstr,SalasDeJuego.class);
+            return MiSalaDeJuego;
         }
     }
+
     private void SetearTimerA()
     {
         EstadosSalas[0]=true;
