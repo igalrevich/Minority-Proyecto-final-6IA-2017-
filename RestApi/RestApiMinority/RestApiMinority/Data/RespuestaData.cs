@@ -14,9 +14,9 @@ namespace RestApiMinority.Data
             string sInsert = "Insert into respuestas (Pregunta,Usuario,RespuestaFinal,RespuestaTemporal,Sala) values ('" + MiRespuesta.Pregunta + "','" + MiRespuesta.Usuario + "','" + MiRespuesta.RespuestaFinal + "','" + MiRespuesta.RespuestaParcial + "','" + MiRespuesta.Sala + "')";
             DBHelper.EjecutarIUD(sInsert);
         }
-        public static int ObtenerCantVotos(string Opcion)
+        public static int ObtenerCantVotos(string Opcion, int Sala)
         {
-            string select = "select * from respuestas where RespuestaFinal=\"" + Opcion+ "\"";
+            string select = "select * from respuestas where RespuestaFinal=\"" + Opcion+ "\" and Sala="+Sala.ToString();
             DataTable dt = DBHelper.EjecutarSelect(select);
             int CantVotos = dt.Rows.Count;
             return CantVotos;

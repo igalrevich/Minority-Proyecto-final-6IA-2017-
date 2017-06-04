@@ -47,10 +47,10 @@ namespace RestApiMinority.Controllers
             }
         }
         // GET: api/Rest/GetCantVotos/Coca
-        [Route("api/rest/GetCantVotos/{Opcion}")]
-        public IHttpActionResult GetCantVotos(string Opcion)
+        [Route("api/rest/GetCantVotos/{Opcion}/{Sala}")]
+        public IHttpActionResult GetCantVotos(string Opcion, int Sala)
         {
-            int CantVotos = RespuestaData.ObtenerCantVotos(Opcion);
+            int CantVotos = RespuestaData.ObtenerCantVotos(Opcion,Sala);
             return Ok(CantVotos);
         }
 
@@ -78,9 +78,9 @@ namespace RestApiMinority.Controllers
         }
 
         // DELETE: api/Rest/DeleteRespuestasSala/1
-        public IHttpActionResult DeleteRespuestasSala(int IdSala)
+        public IHttpActionResult DeleteRespuestasSala(int id)
         {
-            RespuestaData.DeleteRespuestasSala(IdSala);
+            RespuestaData.DeleteRespuestasSala(id);
             return Ok();
         }
     }

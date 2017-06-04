@@ -107,7 +107,7 @@ public class Activity_Resultados extends AppCompatActivity {
                switch (Opcion) {
                    case "Opcion1":
                        CantVotosOpcion1 = CantVotos;
-                       url = "http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/" + Opcion2;
+                       url = "http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/" + Opcion2+"/"+Sala;
                        new TraerIdsInsertarResultados().execute("GET", url, "Opcion2");
                        break;
                    case "Opcion2":
@@ -134,7 +134,7 @@ public class Activity_Resultados extends AppCompatActivity {
 
                 } catch (IOException e) {
                     Log.d("Error :", e.getMessage());
-                    return 0;
+                    return -1;
                 }
             }
             else
@@ -175,7 +175,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
     private void GenerarResultadoUsuario()
     {
-        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/"+Opcion1;
+        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/"+Opcion1+"/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Opcion1");
         if(VotoJugador.equals("")==false)
         {
@@ -295,6 +295,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvIndicacion2.setText("Quedaste eliminado!!!");
         }
     }
+    
 
 
 
