@@ -26,5 +26,6 @@ namespace RestApiMinority.Data
             string delete = "delete from respuestas where Sala=" + IdSala.ToString();
             DBHelper.EjecutarIUD(delete);
         }
+        
     }
 }

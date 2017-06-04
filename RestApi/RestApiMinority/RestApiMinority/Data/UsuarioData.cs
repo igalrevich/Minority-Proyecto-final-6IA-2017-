@@ -14,6 +14,11 @@ namespace RestApiMinority.Data
             string delete = "delete from usuarios where id=" + id.ToString();
             DBHelper.EjecutarIUD(delete);
         }
+        public static void ModificarDisponibilidadSala(int IdSala, bool Estado)
+        {
+            string update = "update salasdejuegos set Disponible=" + Estado.ToString() + " where Id=" + IdSala.ToString();
+            DBHelper.EjecutarIUD(update);
+        }
 
         public static Usuario ObtenerPorId(int id)
         {

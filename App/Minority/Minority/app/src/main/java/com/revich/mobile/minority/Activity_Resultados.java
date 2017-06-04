@@ -295,7 +295,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvIndicacion2.setText("Quedaste eliminado!!!");
         }
     }
-    
+
 
 
 
