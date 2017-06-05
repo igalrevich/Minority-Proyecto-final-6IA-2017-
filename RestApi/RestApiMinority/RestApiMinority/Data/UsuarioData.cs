@@ -47,7 +47,7 @@ namespace RestApiMinority.Data
         }
         public static List<SalasDeJuego> ObtenerSalasDeJuego()
         {
-            string select = "select * from salasdejuegos";
+            string select = "select * from salasdejuegos order by Nombre";
             DataTable dt = DBHelper.EjecutarSelect(select);
             List<SalasDeJuego> ListaSalasDeJuego = new List<SalasDeJuego>();
             SalasDeJuego MiSalaDeJuego;

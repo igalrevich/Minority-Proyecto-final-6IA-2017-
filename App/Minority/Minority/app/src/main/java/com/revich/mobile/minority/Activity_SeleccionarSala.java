@@ -42,7 +42,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Date HoraDateTime;
     Gson gson;
-    int Segundos;
+    int Segundos,ContCambiarMinutos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +94,13 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private void TraerEstadosSalas()
     {
+        ContCambiarMinutos=0;
         CountDownTimer Timer=new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
               if(TrajoEstados)
               {
-                for(int i=0; i<TiempoDisponibleSalas.length;i++)
+                  for(int i=0; i<TiempoDisponibleSalas.length;i++)
                 {
                     if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
                     {
@@ -107,6 +108,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         if(TiempoDisponible[2].equals("00"))
                         {
                             TiempoDisponible[2]="59";
+                            if(ContCambiarMinutos==0 )
+                            {
+                                int Minutos= Integer.parseInt(TiempoDisponible[1]);
+                                Minutos=Minutos-1;
+                                TiempoDisponible[1]="0"+String.valueOf(Minutos);
+                            }
                         }
                         else
                         {
@@ -114,9 +121,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                             Segundos=Segundos-1;
                             TiempoDisponible[2]=String.valueOf(Segundos);
                         }
-                        int Minutos= Integer.parseInt(TiempoDisponible[1]);
-                        Minutos=Minutos-1;
-                        TiempoDisponible[1]=String.valueOf(Minutos);
                         String NuevoTiempoDisponible= TiempoDisponible[0]+":"+TiempoDisponible[1] +":" +TiempoDisponible[2];
                         TiempoDisponibleSalas[i] =NuevoTiempoDisponible;
                         VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
@@ -131,6 +135,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                       }
                     }
                 }
+                ContCambiarMinutos++;
 
               }
             }
@@ -196,12 +201,18 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
 
         ArrayList<SalasDeJuego> parsearResultado(String JSONstr) throws JSONException {
-            gson= new Gson();
             ArrayList<SalasDeJuego> ListaSalas= new ArrayList<>();
             JSONArray jsonSalas= new JSONArray(JSONstr);
             for (int i=0; i<jsonSalas.length(); i++) {
                 JSONObject jsonSala = jsonSalas.getJSONObject(i);
-                SalasDeJuego MiSalaDeJuego= gson.fromJson(JSONstr,SalasDeJuego.class);
+                int Id=jsonSala.getInt("Id");
+                int CantJugadores=jsonSala.getInt("CantJugadores");
+                int MontoAGanar= jsonSala.getInt("MontoAGanar");
+                int NRonda= jsonSala.getInt("NRonda");
+                boolean Disponible= jsonSala.getBoolean("Disponible");
+                String Nombre= jsonSala.getString("Nombre");
+                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre);
                 ListaSalas.add(MiSalaDeJuego);
             }
             return ListaSalas;
