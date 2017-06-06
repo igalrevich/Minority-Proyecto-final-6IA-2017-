@@ -14,10 +14,11 @@ namespace RestApiMinority.Controllers
     {
         // GET: api/Rest/GetSala
         [ResponseType(typeof(SalasDeJuego))]
+        [Route("api/rest/GetSala")]
         public IEnumerable<SalasDeJuego> GetSala()
         {
 
-            return UsuarioData.ObtenerSalasDeJuego();
+           return UsuarioData.ObtenerSalasDeJuego();
         }
 
         // GET: api/Rest/GetSala/5
@@ -33,6 +34,7 @@ namespace RestApiMinority.Controllers
         }
 
         // GET: api/Rest/GetIdByNombre/tabla/nombre
+        [Route("api/rest/GetIdByNombre/{tabla}/{nombre}")]
         public IHttpActionResult GetIdByNombre(string tabla,string nombre)
         {
             int IdSala = UsuarioData.ObtenerIdPorNombre(tabla,nombre);
@@ -46,7 +48,6 @@ namespace RestApiMinority.Controllers
             }
         }
         // GET: api/Rest/GetCantVotos/Coca
-        [Route("api/rest/GetCantVotos/{Opcion}/{Sala}")]
         public IHttpActionResult GetCantVotos(string Opcion, int Sala)
         {
             int CantVotos = RespuestaData.ObtenerCantVotos(Opcion,Sala);
