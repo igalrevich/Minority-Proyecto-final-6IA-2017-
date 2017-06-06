@@ -31,11 +31,7 @@ namespace RestApiMinority
               routeTemplate: "api/{controller}/{action}/{Opcion}",// URL with parameters
               defaults: new { Opcion = "" }  // Parameter defaults
               );
-            config.Routes.MapHttpRoute(
-              name: "ModificarSalaDeJuego", // Route name
-              routeTemplate: "api/{controller}/{action}/{id}/{Estado}",// URL with parameters
-              defaults: new { id = "", Estado= "" }  // Parameter defaults
-              );
+            
 
 
 
