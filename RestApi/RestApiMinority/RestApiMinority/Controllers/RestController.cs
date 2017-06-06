@@ -72,6 +72,7 @@ namespace RestApiMinority.Controllers
         }
 
         // PUT: api/Rest/ModificarSalaDeJuego/1
+        [Route("api/rest/ModificarSalaDeJuego/{id}")]
         public IHttpActionResult ModificarSalaDeJuego(int id, bool Estado)
         {
             UsuarioData.ModificarDisponibilidadSala(id, Estado);

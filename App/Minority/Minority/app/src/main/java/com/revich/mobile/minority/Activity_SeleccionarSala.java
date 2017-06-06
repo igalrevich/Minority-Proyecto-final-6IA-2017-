@@ -102,46 +102,38 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 {
                     if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
                     {
-                        String[] TiempoDisponible= TiempoDisponibleSalas[i].split(":");
-                        if(TiempoDisponible[2].equals("00"))
+                        if(TiempoDisponibleSalas[i].equals("00:00:00")==false)
                         {
-                            TiempoDisponible[2]="59";
-                            int Minutos= Integer.parseInt(TiempoDisponible[1]);
-                            Minutos=Minutos-1;
-                            TiempoDisponible[1]="0"+String.valueOf(Minutos);
-                        }
-                        else
-                        {
-                            int Segundos= Integer.parseInt(TiempoDisponible[2]);
-                            Segundos=Segundos-1;
-                            if(Segundos<10)
+                            String[] TiempoDisponible= TiempoDisponibleSalas[i].split(":");
+                            if(TiempoDisponible[2].equals("00"))
                             {
-                                TiempoDisponible[2]="0"+String.valueOf(Segundos);
+                                TiempoDisponible[2]="59";
+                                int Minutos= Integer.parseInt(TiempoDisponible[1]);
+                                Minutos=Minutos-1;
+                                TiempoDisponible[1]="0"+String.valueOf(Minutos);
                             }
                             else
                             {
-                                TiempoDisponible[2]=String.valueOf(Segundos);
+                                int Segundos= Integer.parseInt(TiempoDisponible[2]);
+                                Segundos=Segundos-1;
+                                if(Segundos<10)
+                                {
+                                    TiempoDisponible[2]="0"+String.valueOf(Segundos);
+                                }
+                                else
+                                {
+                                    TiempoDisponible[2]=String.valueOf(Segundos);
+                                }
                             }
+                            String NuevoTiempoDisponible= TiempoDisponible[0]+":"+TiempoDisponible[1] +":" +TiempoDisponible[2];
+                            TiempoDisponibleSalas[i] =NuevoTiempoDisponible;
+                            VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
                         }
-                        String NuevoTiempoDisponible= TiempoDisponible[0]+":"+TiempoDisponible[1] +":" +TiempoDisponible[2];
-                        TiempoDisponibleSalas[i] =NuevoTiempoDisponible;
-                        VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
-                        if(TiempoDisponibleSalas[i].equals("00:00:00"))
-                        {
-                            JuegoPrevioSalas[i]=true;
-                            String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
-                            new BuscarIdOModificarTask().execute("GET",url,"true");
-                        }
+
                     }
                     else
                     {
                         SegundosDisponibleSalas[i]++;
-                        if(SegundosDisponibleSalas[i]==120)
-                      {
-                          SegundosDisponibleSalas[i]=0;
-                          String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
-                          new BuscarIdOModificarTask().execute("GET",url,"false");
-                      }
                     }
                 }
 
@@ -165,7 +157,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                       {
                           if(TiempoDisponibleSalas[i].equals("Esperando2min"))
                           {
-                              SegundosDisponibleSalas[i]++;
                               if(SegundosDisponibleSalas[i]==120)
                               {
                                   SegundosDisponibleSalas[i]=0;
