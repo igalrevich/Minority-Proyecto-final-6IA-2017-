@@ -14,7 +14,6 @@ namespace RestApiMinority.Controllers
     {
         // GET: api/Rest/GetSala
         [ResponseType(typeof(SalasDeJuego))]
-        [Route("api/rest/GetSala")]
         public IEnumerable<SalasDeJuego> GetSala()
         {
 
@@ -34,7 +33,6 @@ namespace RestApiMinority.Controllers
         }
 
         // GET: api/Rest/GetIdByNombre/tabla/nombre
-        [Route("api/rest/GetIdByNombre/{tabla}/{nombre}")]
         public IHttpActionResult GetIdByNombre(string tabla,string nombre)
         {
             int IdSala = UsuarioData.ObtenerIdPorNombre(tabla,nombre);
@@ -73,9 +71,7 @@ namespace RestApiMinority.Controllers
             }
         }
 
-        // PUT: api/Rest/ModificarSalaDeJuego/1/true
-        [HttpPut]
-        [Route("api/rest/ModificarSalaDeJuego/{id}/{Estado}")]
+        // PUT: api/Rest/ModificarSalaDeJuego/1
         public IHttpActionResult ModificarSalaDeJuego(int id, bool Estado)
         {
             UsuarioData.ModificarDisponibilidadSala(id, Estado);
