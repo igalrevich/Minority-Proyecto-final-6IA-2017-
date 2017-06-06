@@ -36,13 +36,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Button  btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF;
     Boolean [] JuegoPrevioSalas= new Boolean[] {true,false,false,false,false,false};
     Boolean TrajoEstados=false, EstadoACambiar;
-    Boolean[] TimersSalasTerminados=new Boolean[]{false,false,false,false,false,false};
     String[] TiempoDisponibleSalas= new String[] {"00:00:00","00:01:00","00:02:00","00:03:00","00:04:00","00:05:00"};
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Date HoraDateTime;
     Gson gson;
-    int Segundos,ContCambiarMinutos;
+    int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +93,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private void TraerEstadosSalas()
     {
-        ContCambiarMinutos=0;
         CountDownTimer Timer=new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -108,34 +106,45 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         if(TiempoDisponible[2].equals("00"))
                         {
                             TiempoDisponible[2]="59";
-                            if(ContCambiarMinutos==0 )
-                            {
-                                int Minutos= Integer.parseInt(TiempoDisponible[1]);
-                                Minutos=Minutos-1;
-                                TiempoDisponible[1]="0"+String.valueOf(Minutos);
-                            }
+                            int Minutos= Integer.parseInt(TiempoDisponible[1]);
+                            Minutos=Minutos-1;
+                            TiempoDisponible[1]="0"+String.valueOf(Minutos);
                         }
                         else
                         {
                             int Segundos= Integer.parseInt(TiempoDisponible[2]);
                             Segundos=Segundos-1;
-                            TiempoDisponible[2]=String.valueOf(Segundos);
+                            if(Segundos<10)
+                            {
+                                TiempoDisponible[2]="0"+String.valueOf(Segundos);
+                            }
+                            else
+                            {
+                                TiempoDisponible[2]=String.valueOf(Segundos);
+                            }
                         }
                         String NuevoTiempoDisponible= TiempoDisponible[0]+":"+TiempoDisponible[1] +":" +TiempoDisponible[2];
                         TiempoDisponibleSalas[i] =NuevoTiempoDisponible;
                         VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
+                        if(TiempoDisponibleSalas[i].equals("00:00:00"))
+                        {
+                            JuegoPrevioSalas[i]=true;
+                            String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
+                            new BuscarIdOModificarTask().execute("GET",url,"true");
+                        }
                     }
                     else
                     {
-                      if(TimersSalasTerminados[i])
+                        SegundosDisponibleSalas[i]++;
+                        if(SegundosDisponibleSalas[i]==120)
                       {
-                          TimersSalasTerminados[i]=false;
-                          String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos"+NombresSalas[i];
+                          SegundosDisponibleSalas[i]=0;
+                          String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                           new BuscarIdOModificarTask().execute("GET",url,"false");
                       }
                     }
                 }
-                ContCambiarMinutos++;
+
 
               }
             }
@@ -156,12 +165,29 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                       {
                           if(TiempoDisponibleSalas[i].equals("Esperando2min"))
                           {
-                            if(TimersSalasTerminados[i])
-                            {
-                                TimersSalasTerminados[i]=false;
-                                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos"+NombresSalas[i];
-                                new BuscarIdOModificarTask().execute("GET",url,"false");
-                            }
+                              SegundosDisponibleSalas[i]++;
+                              if(SegundosDisponibleSalas[i]==120)
+                              {
+                                  SegundosDisponibleSalas[i]=0;
+                                  String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos"+NombresSalas[i];
+                                  new BuscarIdOModificarTask().execute("GET",url,"false");
+                              }
+                              else
+                              {
+                                if(i==TiempoDisponibleSalas.length-1)
+                                {
+                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                                    new BuscarDatosTask().execute(url);
+                                }
+                              }
+                          }
+                          else
+                          {
+                             if(i==TiempoDisponibleSalas.length-1)
+                             {
+                                 String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                                 new BuscarDatosTask().execute(url);
+                             }
                           }
                       }
                   }
@@ -230,8 +256,10 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             if(Id==-1)
             {
+
                 String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
                 new BuscarDatosTask().execute(url);
+
             }
         }
 
@@ -245,6 +273,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             if(method.equals("GET"))
             {
                 try {
+                    EstadoACambiar=Boolean.parseBoolean(parametros[2]);
                     Response response = client.newCall(request).execute();
                     String jsonStr = response.body().string();
                     return Integer.parseInt(jsonStr);
@@ -256,15 +285,17 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             else
             {
-                EstadoACambiar=Boolean.parseBoolean(parametros[2]);
                 try {
                     Response response = client.newCall(request).execute();
+                    Log.d("Put", "Puteo");
+                    return  -1;
 
                 } catch (IOException e) {
                     Log.d("Error :", e.getMessage());
+                    return 0;
 
                 }
-                return  -1;
+
             }
         }
     }
@@ -281,7 +312,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 TiempoDisponibleSalas[i]="Esperando2min";
-                EjecutarTimerParaReclutarJugadores(NombresSalas[i]);
+                SegundosDisponibleSalas[i]=0;
+                //EjecutarTimerParaReclutarJugadores(NombresSalas[i]);
             }
             else
             {
@@ -301,8 +333,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
     }
 
-    private void EjecutarTimerParaReclutarJugadores(final String Sala)
-    {
+   /* private void EjecutarTimerParaReclutarJugadores(final String Sala) {
         Segundos=0;
         final Timer timer=new Timer();
         TimerTask timertask= new TimerTask() {
@@ -342,7 +373,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
         };
         timer.schedule(timertask,0,1000);
-    }
+    }*/
 
     /*private void SetearTimerA()
     {
@@ -507,4 +538,4 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     };*/
 
 
-}
+    }
