@@ -21,5 +21,9 @@ public class SalasDeJuego {
         this.Disponible=Disponible;
         this.Nombre=Nombre;
     }
+    public void LlenarDisponibilidad(boolean Estado)
+    {
+        Disponible=Estado;
+    }
 
 }

@@ -48,6 +48,7 @@ namespace RestApiMinority.Controllers
             }
         }
         // GET: api/Rest/GetCantVotos/Coca
+        [Route("api/rest/GetCantVotos/{Opcion}/{Sala}")]
         public IHttpActionResult GetCantVotos(string Opcion, int Sala)
         {
             int CantVotos = RespuestaData.ObtenerCantVotos(Opcion,Sala);
@@ -73,10 +74,11 @@ namespace RestApiMinority.Controllers
         }
 
         // PUT: api/Rest/ModificarSalaDeJuego/1
+        [ResponseType(typeof(Respuesta))]
         [Route("api/rest/ModificarSalaDeJuego/{id}")]
-        public IHttpActionResult ModificarSalaDeJuego(int id, bool Estado)
+        public IHttpActionResult ModificarSalaDeJuego(int id, SalasDeJuego MiSalaDeJuego)
         {
-            UsuarioData.ModificarDisponibilidadSala(id, Estado);
+            UsuarioData.ModificarDisponibilidadSala(id, MiSalaDeJuego.Disponible);
             return Ok();
         }
 

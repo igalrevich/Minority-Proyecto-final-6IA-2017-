@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -26,8 +27,10 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Activity_SeleccionarSala extends AppCompatActivity {
@@ -41,7 +44,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Date HoraDateTime;
     Gson gson;
+    Toast msg;
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
+    ArrayList<SalasDeJuego> ListaSalasDeJuego= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
               if(TrajoEstados)
               {
+                  Log.d("TrajoEstados", "Trajo estados");
                   for(int i=0; i<TiempoDisponibleSalas.length;i++)
                 {
                     if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
@@ -133,7 +139,10 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     }
                     else
                     {
-                        SegundosDisponibleSalas[i]++;
+                        if(SegundosDisponibleSalas[i]<120)
+                        {
+                            SegundosDisponibleSalas[i]++;
+                        }
                     }
                 }
 
@@ -150,7 +159,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                       if(TiempoDisponibleSalas[i].equals("00:00:00"))
                       {
                           JuegoPrevioSalas[i]=true;
-                          String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos"+NombresSalas[i];
+                          String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                           new BuscarIdOModificarTask().execute("GET",url,"true");
                       }
                       else
@@ -167,6 +176,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                               {
                                 if(i==TiempoDisponibleSalas.length-1)
                                 {
+                                    Log.d("Debug", "Paso por el if");
                                     String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
                                     new BuscarDatosTask().execute(url);
                                 }
@@ -237,13 +247,16 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private class BuscarIdOModificarTask extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
-
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
         @Override
         protected void onPostExecute(Integer Id) {
             if(Id!=0 && Id!=-1)
             {
-                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/ModificarSalaDeJuego/"+Id+"/"+EstadoACambiar;
-                new BuscarIdOModificarTask().execute("PUT",url);
+                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                MiSalaDeJuego.LlenarDisponibilidad(EstadoACambiar);
+                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/ModificarSalaDeJuego/"+Id;
+                new BuscarIdOModificarTask().execute("PUT",url,gson.toJson(MiSalaDeJuego));
             }
             if(Id==-1)
             {
@@ -258,11 +271,11 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         protected Integer doInBackground(String... parametros) {
             String method = parametros[0];
             String url= parametros[1];
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
             if(method.equals("GET"))
             {
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
                 try {
                     EstadoACambiar=Boolean.parseBoolean(parametros[2]);
                     Response response = client.newCall(request).execute();
@@ -276,6 +289,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             else
             {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
                 try {
                     Response response = client.newCall(request).execute();
                     Log.d("Put", "Puteo");
