@@ -38,7 +38,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
     String VotoFinal,NombreBoton,SegundosTimer,url,AtributoRespuesta;
-    int Idbtn;
+    int Idbtn, IdSala;
     CountDownTimer Timer;
     Gson gson;
     SalasDeJuego SalaDeJuegoTraida;
@@ -50,7 +50,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/1";
+        Intent ElIntentQueVino= getIntent();
+        Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
+        IdSala=ElBundleQueVino.getInt("IdSala");
+        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
     }
