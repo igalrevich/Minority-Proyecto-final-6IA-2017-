@@ -47,6 +47,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Toast msg;
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
     ArrayList<SalasDeJuego> ListaSalasDeJuego= new ArrayList<>();
+    int IndiceVecBotonesAPasar=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +56,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         getSupportActionBar().hide();
         ObtenerReferencias();
         TraerEstadosSalas();
-        /*Calendar MiCalendar=Calendar.getInstance();
-        int Hora= MiCalendar.get(Calendar.HOUR);
-        int Minutos=MiCalendar.get(Calendar.MINUTE);
-        String HoraActual= String.valueOf(Hora)+":"+String.valueOf(Minutos);
-        HoraDateTime= Date.valueOf(HoraActual);
-        SetearTimerA();*/
+
 
     }
     private void ObtenerReferencias()
@@ -255,6 +251,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                 MiSalaDeJuego.LlenarDisponibilidad(EstadoACambiar);
+                Log.d("PostExecute", "DevuelveId");
                 String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/ModificarSalaDeJuego/"+Id;
                 new BuscarIdOModificarTask().execute("PUT",url,gson.toJson(MiSalaDeJuego));
             }
@@ -289,6 +286,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             else
             {
+                Log.d("Put", "Puteo");
                 String json = parametros[2];
                 RequestBody body = RequestBody.create(JSON, json);
                 Request request = new Request.Builder()
@@ -343,209 +341,66 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
     }
 
-   /* private void EjecutarTimerParaReclutarJugadores(final String Sala) {
-        Segundos=0;
-        final Timer timer=new Timer();
-        TimerTask timertask= new TimerTask() {
-            @Override
-            public void run() {
-             runOnUiThread(new Runnable() {
-                 @Override
-                 public void run() {
-                    Segundos++;
-                    if(Segundos==120)
-                    {
-                      switch (Sala)
-                      {
-                          case "A":
-                              TimersSalasTerminados[0]=true;
-                              break;
-                          case "B":
-                              TimersSalasTerminados[1]=true;
-                              break;
-                          case "C":
-                              TimersSalasTerminados[2]=true;
-                              break;
-                          case "D":
-                              TimersSalasTerminados[3]=true;
-                              break;
-                          case "E":
-                              TimersSalasTerminados[4]=true;
-                              break;
-                          case "F":
-                              TimersSalasTerminados[5]=true;
-                              break;
-                      }
-                      timer.cancel();
-                    }
-                 }
-             });
-            }
-        };
-        timer.schedule(timertask,0,1000);
-    }*/
-
-    /*private void SetearTimerA()
+    private void SetearListeners()
     {
-        EstadosSalas[0]=true;
-        CambiarTextViewsSalasPantalla(0,-1);
-        SetearTimerB();
-    }
-
-    private void SetearTimerB()
-    {
-        CountDownTimer Timer=new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                VecBotones[0].setOnClickListener(btnEntrar_click);
-                VecBotones[1].setOnClickListener(btnEntrar_click);
-            }
-
-            public void onFinish() {
-                EstadosSalas[1]=true;
-                CambiarTextViewsSalasPantalla(1,-1);
-                AdelantarTiempoDisponibleSalas("-1","-1","1","2","3","4");
-                SetearTimerC();
-            }
-        }.start();
-    }
-    private void SetearTimerC()
-    {
-        CountDownTimer Timer=new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                VecBotones[0].setOnClickListener(btnEntrar_click);
-                VecBotones[1].setOnClickListener(btnEntrar_click);
-                VecBotones[2].setOnClickListener(btnEntrar_click);
-            }
-
-            public void onFinish() {
-                EstadosSalas[2]=true;
-                EstadosSalas[0]=false;
-                CambiarTextViewsSalasPantalla(2,0);
-                AdelantarTiempoDisponibleSalas("-1","-1","-1","1","2","3");
-                SetearTimerD();
-            }
-        }.start();
-    }
-    private void SetearTimerD()
-    {
-        CountDownTimer Timer=new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            public void onFinish() {
-                EstadosSalas[3]=true;
-                EstadosSalas[1]=false;
-                CambiarTextViewsSalasPantalla(3,1);
-                AdelantarTiempoDisponibleSalas("-1","-1","-1","-1","1","2");
-                SetearTimerE();
-            }
-        }.start();
-    }
-    private void SetearTimerE()
-    {
-        CountDownTimer Timer=new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            public void onFinish() {
-                EstadosSalas[4]=true;
-                EstadosSalas[2]=false;
-                CambiarTextViewsSalasPantalla(4,-2);
-                AdelantarTiempoDisponibleSalas("-1","-1","-1","-1","-1","1");
-                SetearTimerF();
-            }
-        }.start();
-    }
-    private void SetearTimerF()
-    {
-        CountDownTimer Timer=new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            public void onFinish() {
-                EstadosSalas[5]=true;
-                EstadosSalas[3]=false;
-                CambiarTextViewsSalasPantalla(2,-1);
-
-            }
-        }.start();
-    }
-    private void CambiarTextViewsSalasPantalla(int IndiceActivado, int IndiceDesactivado)
-    {
-        VecEstadosSalas[IndiceActivado].setText("Disponible");
-        VecTiempoDisponibleSalas[IndiceActivado].setText("Disponible por 2min");
-        VecEstadosSalas[IndiceActivado].setTextColor(Color.parseColor("#8ef686"));
-        VecBotones[IndiceActivado].setEnabled(true);
-        VecBotones[IndiceActivado].setVisibility(View.VISIBLE);
-        if(IndiceDesactivado!=-1)
+        for(int i=0;i<VecBotones.length;i++)
         {
-            VecEstadosSalas[IndiceDesactivado].setText("En juego");
-            VecTiempoDisponibleSalas[IndiceDesactivado].setText("Disponible en 4'15 min");
-            VecEstadosSalas[IndiceDesactivado].setTextColor(Color.parseColor("#f61525"));
-            VecBotones[IndiceDesactivado].setEnabled(false);
-            VecBotones[IndiceDesactivado].setVisibility(View.INVISIBLE);
+           VecBotones[i].setOnClickListener(btnSala_click);
         }
+    }
 
-    }
-    private void AdelantarTiempoDisponibleSalas(String TiempoSalaA,String TiempoSalaB,String TiempoSalaC,String TiempoSalaD,String TiempoSalaE,String TiempoSalaF)
-    {
-       for(int i=0; i<6; i++)
-       {
-         switch (i)
-         {
-             case 0:
-                 if(TiempoSalaA.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaA+" min");
-                 }
-                 break;
-             case 1:
-                 if(TiempoSalaB.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaB+" min");
-                 }
-                 break;
-             case 2:
-                 if(TiempoSalaC.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaC+" min");
-                 }
-                 break;
-             case 3:
-                 if(TiempoSalaD.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaD+" min");
-                 }
-                 break;
-             case 4:
-                 if(TiempoSalaE.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaE+" min");
-                 }
-                 break;
-             case 5:
-                 if(TiempoSalaF.equals("-1")==false)
-                 {
-                     VecTiempoDisponibleSalas[i].setText("Disponible en "+TiempoSalaF+" min");
-                 }
-                 break;
-         }
-       }
-    }
-    private  View.OnClickListener btnEntrar_click= new View.OnClickListener() {
+    private View.OnClickListener btnSala_click=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+         int IdBoton=view.getId();
+         boolean EncontroElId=false;
+         int IndiceVecBotones=0;
+         while(EncontroElId==false)
+         {
+             if(IdBoton==VecBotones[IndiceVecBotones].getId())
+             {
+                EncontroElId=true;
+             }
+             else
+             {
+                 IndiceVecBotones++;
+             }
+         }
+            String url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
+            new BuscarIdAPasarTask().execute(url,String.valueOf(IndiceVecBotones));
 
         }
-    };*/
+    };
 
+    private class BuscarIdAPasarTask extends AsyncTask<String, Void, Integer> {
+        private  OkHttpClient client= new OkHttpClient();
+        @Override
+        protected void onPostExecute(Integer Id) {
+
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String url = parametros[0];
+            IndiceVecBotonesAPasar=Integer.parseInt(parametros[1]);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                String jsonStr= response.body().string();
+                return Integer.parseInt(jsonStr);
+
+            } catch (IOException  e) {
+                Log.d("Error", e.getMessage());
+                return 0;
+            }
+        }
 
     }
+
+    private void IrAActivityJugabilidad()
+
+
+
+      }

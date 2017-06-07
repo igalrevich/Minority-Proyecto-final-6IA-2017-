@@ -23,6 +23,11 @@ public class SalasDeJuego {
     }
     public void LlenarDisponibilidad(boolean Estado)
     {
+        Id=4;
+        CantJugadores=4;
+        MontoAGanar=4;
+        NRonda=4;
+        Nombre="Igal";
         Disponible=Estado;
     }
 
