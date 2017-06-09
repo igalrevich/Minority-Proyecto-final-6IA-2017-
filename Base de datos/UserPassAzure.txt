@@ -1,0 +1,19 @@
+server=127.0.0.1;userid=azure;password=6#vWHD_$;database=localdb;Port=53808
+UPDATE `usuarios` SET `Monedas`= 49,`SalasDeJuego`="" WHERE Id=2
+
+DELIMITER $$
+
+CREATE 
+	EVENT `ActualizarSalasDeJuego` 
+	ON SCHEDULE EVERY 30 SECOND STARTS '2017-06-09 11:38:00' 
+	DO BEGIN
+	
+		UPDATE salasdejuegos SET HoraComienzo=CURRENT_TIME WHERE Disponible=false;
+        
+        UPDATE salasdejuegos SET HoraComienzo=TIMESTAMPADD(MINUTE,4,CURRENT_TIME) WHERE  Disponible=true;
+	    
+    END */$$
+
+DELIMITER ;
+
+https://www.sitepoint.com/how-to-create-mysql-events/
