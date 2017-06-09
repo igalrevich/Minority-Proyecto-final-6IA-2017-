@@ -43,12 +43,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     String[] TiempoDisponibleSalas= new String[] {"00:00:00","00:01:00","00:02:00","00:03:00","00:04:00","00:05:00"};
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
-    Date HoraDateTime;
     Gson gson;
-    Toast msg;
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
     Boolean[] ContandoSegundosDisponiblesSala= new Boolean[] {false,false,false,false,false,false};
-    ArrayList<SalasDeJuego> ListaSalasDeJuego= new ArrayList<>();
     int IndiceVecBotonesAPasar=0;
 
     @Override
@@ -164,12 +161,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         {
                             if(TiempoDisponibleSalas[i].equals("Esperando2min"))
                             {
-                                Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(SegundosDisponibleSalas[i])+ " "+NombresSalas[i],Toast.LENGTH_SHORT);
-                                msg.show();
                                 if(SegundosDisponibleSalas[i]==120)
                                 {
-                                    Toast msg2= Toast.makeText(getApplicationContext(),String.valueOf(SegundosDisponibleSalas[i])+ " "+NombresSalas[i],Toast.LENGTH_SHORT);
-                                    msg.show();
                                     ContandoSegundosDisponiblesSala[i]=false;
                                     String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                                     new BuscarIdOModificarTask().execute("GET",url,"false");
@@ -378,13 +371,15 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                  IndiceVecBotones++;
              }
          }
-            String url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
-            new BuscarIdAPasarTask().execute(url,String.valueOf(IndiceVecBotones));
+            String url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/";
+            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones));
+            String url2="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
+            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url2,String.valueOf(IndiceVecBotones));
 
         }
     };
 
-    private class BuscarIdAPasarTask extends AsyncTask<String, Void, Integer> {
+    private class BuscarIdAPasarTaskOActualizarUsuario extends AsyncTask<String, Void, Integer> {
         private  OkHttpClient client= new OkHttpClient();
         @Override
         protected void onPostExecute(Integer Id) {
@@ -411,12 +406,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     }
 
-    private void IrAActivityJugabilidad(int IdSala, int IndiceSegundosSala)
+    private void IrAActivityJugabilidad(int IdSala, int SegundosDisponiblesSala)
     {
         Intent ElIntent= new Intent(this,Activity_Jugabilidad.class);
         Bundle ElBundle= new Bundle();
         ElBundle.putInt("IdSala",IdSala);
-        ElBundle.putInt("IndiceSegundosSala",IndiceSegundosSala);
+        ElBundle.putInt("SegundosDisponiblesSala",SegundosDisponiblesSala);
         ElIntent.putExtras(ElBundle);
         startActivity(ElIntent);
     }

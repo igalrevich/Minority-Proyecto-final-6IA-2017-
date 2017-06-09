@@ -48,27 +48,27 @@
                android:src="@drawable/monedasnuevo" />
 
            <TextView
+               android:id="@+id/tvMonedas"
                android:layout_width="match_parent"
                android:layout_height="40dp"
-               android:text="49"
-               android:id="@+id/tvMonedas"
                android:layout_gravity="right"
-               android:textSize="25dp"
-               android:layout_marginTop="-32dp"
+               android:layout_marginLeft="-30dp"
                android:layout_marginRight="20dp"
+               android:layout_marginTop="-32dp"
                android:layout_weight="0.21"
-               android:textColor="#ffffff" />
+               android:text="49"
+               android:textColor="#ffffff"
+               android:textSize="25dp" />
 
        </LinearLayout>
 
         <TextView
+            android:id="@+id/tvEstadoSalaA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaA"
-            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp" />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/tvTiempoDisponibleSalaA"
@@ -78,14 +78,13 @@
             android:text="00:02:00" />
 
         <TextView
+            android:id="@+id/tvEstadoSalaB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaB"
-            android:textSize="25dp"
-            android:layout_marginTop="-30dp"
             android:layout_gravity="right"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-30dp"
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/btnSalaA"
@@ -118,23 +117,21 @@
             android:layout_gravity="right" />
 
         <TextView
+            android:id="@+id/tvEstadoSalaC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaC"
-            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp" />
+            android:textSize="25dp" />
 
         <TextView
+            android:id="@+id/tvEstadoSalaD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaD"
-            android:textSize="25dp"
-            android:layout_marginTop="-30dp"
             android:layout_gravity="right"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-30dp"
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/btnSalaC"
@@ -165,23 +162,21 @@
             android:layout_gravity="right" />
 
         <TextView
+            android:id="@+id/tvEstadoSalaE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaE"
-            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp" />
+            android:textSize="25dp" />
 
         <TextView
+            android:id="@+id/tvEstadoSalaF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disponible"
-            android:id="@+id/tvEstadoSalaF"
-            android:textSize="25dp"
-            android:layout_marginTop="-30dp"
             android:layout_gravity="right"
-            android:layout_marginRight="20dp" />
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-30dp"
+            android:textSize="25dp" />
 
         <Button
             android:id="@+id/btnSalaE"

@@ -82,6 +82,16 @@ namespace RestApiMinority.Controllers
             return Ok();
         }
 
+        // PUT: api/Rest/ModificarUsuario/1
+        [ResponseType(typeof(Usuario))]
+        [Route("api/rest/ModificarUsuario/{id}")]
+        [HttpPut]
+        public IHttpActionResult ModificarUsuario(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+        {
+            UsuarioData.ModificarDisponibilidadSala(id, MiSalaDeJuego.Disponible);
+            return Ok();
+        }
+
         // DELETE: api/Rest/DeleteRespuestasSala/1
         public IHttpActionResult DeleteRespuestasSala(int id)
         {

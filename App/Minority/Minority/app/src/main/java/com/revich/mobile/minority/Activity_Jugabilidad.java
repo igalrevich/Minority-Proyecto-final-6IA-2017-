@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -38,7 +39,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
     String VotoFinal,NombreBoton,SegundosTimer,url,AtributoRespuesta;
-    int Idbtn, IdSala;
+    int Idbtn, IdSala, SegundosDisponiblesSala;
     CountDownTimer Timer;
     Gson gson;
     SalasDeJuego SalaDeJuegoTraida;
@@ -53,6 +54,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
+        SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosDisponiblesSala");
         url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
@@ -67,7 +69,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
             tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
             SalaDeJuegoTraida=MiSalaDeJuego;
-            SetearTimer();
+            SetearTimerSegundosDisponibles();
 
         }
 
@@ -233,6 +235,53 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 DeterminarVotoFinal();
             }
         }.start();
+    }
+    private void SetearTimerSegundosDisponibles()
+    {
+      if(SegundosDisponiblesSala==120)
+      {
+          CambiarBotones(true);
+          SetearTimer();
+      }
+      else
+      {
+          CambiarBotones(false);
+          int SegundosDisponiblesRestantes= 1000*(120-SegundosDisponiblesSala+1);
+          Timer=new CountDownTimer(SegundosDisponiblesRestantes, 1000) {
+
+              public void onTick(long millisUntilFinished) {
+                  Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(millisUntilFinished/1000),Toast.LENGTH_SHORT);
+                  msg.show();
+              }
+
+              public void onFinish()
+              {
+                  CambiarBotones(true);
+                  SetearTimer();
+              }
+          }.start();
+      }
+    }
+    private void CambiarBotones(boolean SegundosDisp120)
+    {
+        if(SegundosDisp120)
+        {
+            btnOpcion1.setEnabled(SegundosDisp120);
+            btnOpcion1.setVisibility(View.VISIBLE);
+            btnOpcion2.setVisibility(View.VISIBLE);
+            btnOpcion2.setEnabled(SegundosDisp120);
+            btnVotar.setEnabled(SegundosDisp120);
+            btnVotar.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btnOpcion1.setEnabled(SegundosDisp120);
+            btnOpcion1.setVisibility(View.INVISIBLE);
+            btnOpcion2.setVisibility(View.INVISIBLE);
+            btnOpcion2.setEnabled(SegundosDisp120);
+            btnVotar.setEnabled(SegundosDisp120);
+            btnVotar.setVisibility(View.INVISIBLE);
+        }
     }
     private void ObtenerReferencias()
     {
