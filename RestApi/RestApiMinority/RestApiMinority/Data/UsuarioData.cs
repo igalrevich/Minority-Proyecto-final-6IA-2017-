@@ -20,8 +20,8 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(update);
         }
         public static void ModificarMonedasYSalasUsuario(int IdUsuario, Usuario MiUsuario)
-        {
-            string update = "update usuarios set Monedas=" + MiUsuario.Monedas.ToString() + ", SalasDeJuego=SalasDeJuego + "+ MiUsuario.SalasDeJuego"where Id=" + IdSala.ToString();
+        { 
+            string update = "update usuarios set Monedas=" + MiUsuario.Monedas.ToString() + ", SalasDeJuego=SalasDeJuego + "+ MiUsuario.SalasDeJuego +" where Id=" + IdUsuario.ToString();
             DBHelper.EjecutarIUD(update);
         }
 
