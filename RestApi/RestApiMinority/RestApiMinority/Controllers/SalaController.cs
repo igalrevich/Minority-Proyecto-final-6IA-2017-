@@ -11,19 +11,19 @@ using System.Web.Http.Description;
 
     public class SalaController : ApiController
     {
-        // GET: api/Rest/GetSala
+        // GET: api/Sala/GetSala
         [ResponseType(typeof(SalasDeJuego))]
         public IEnumerable<SalasDeJuego> Get()
         {
 
-            return UsuarioData.ObtenerSalasDeJuego();
+            return SalaDeJuegoData.ObtenerSalasDeJuego();
         }
 
-        // GET: api/Rest/GetSala/5
-        [ResponseType(typeof(SalasDeJuego))]
+    // GET: api/Sala/GetSala/5
+    [ResponseType(typeof(SalasDeJuego))]
         public IHttpActionResult GetSala(int id)
         {
-        SalasDeJuego MiSalaDeJuego = UsuarioData.ObtenerPorIdSalaDeJuego(id);
+        SalasDeJuego MiSalaDeJuego = SalaDeJuegoData.ObtenerPorIdSalaDeJuego(id);
         if (MiSalaDeJuego == null)
         {
             return NotFound();
@@ -31,21 +31,13 @@ using System.Web.Http.Description;
         return Ok(MiSalaDeJuego);
         }
 
-       // GET: api/Rest/GetCantVotos/Coca
-       [Route("api/rest/GetCantVotos/{Opcion}/{Sala}")]
-       public IHttpActionResult GetCantVotos(string Opcion, int Sala)
-       {
-        int CantVotos = RespuestaData.ObtenerCantVotos(Opcion, Sala);
-        return Ok(CantVotos);
-       }
-
-       // PUT: api/Rest/ModificarSalaDeJuego/1
-       [ResponseType(typeof(SalasDeJuego))]
-       [Route("api/rest/ModificarSalaDeJuego/{id}")]
+    // PUT: api/Sala/ModificarSalaDeJuego/1
+    [ResponseType(typeof(SalasDeJuego))]
+       [Route("api/sala/ModificarSalaDeJuego/{id}")]
        [HttpPut]
        public IHttpActionResult ModificarSalaDeJuego(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
        {
-        UsuarioData.ModificarDisponibilidadSala(id, MiSalaDeJuego.Disponible);
+        SalaDeJuegoData.ModificarDisponibilidadSala(id, MiSalaDeJuego.Disponible);
         return Ok();
        }
 }

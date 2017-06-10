@@ -122,7 +122,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\RespuestaController.cs" />
-    <Compile Include="Controllers\RestController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Data\DBHelper.cs" />
     <Compile Include="Data\RespuestaData.cs" />

@@ -12,6 +12,14 @@ namespace RestApiMinority.Controllers
 {
     public class RespuestaController : ApiController
     {
+
+        // GET: api/Rest/GetCantVotos/Coca
+        [Route("api/respuesta/GetCantVotos/{Opcion}/{Sala}")]
+        public IHttpActionResult GetCantVotos(string Opcion, int Sala)
+        {
+            int CantVotos = RespuestaData.ObtenerCantVotos(Opcion, Sala);
+            return Ok(CantVotos);
+        }
         // POST: api/Rest/InsertarRespuesta
         [ResponseType(typeof(Respuesta))]
         public IHttpActionResult InsertarRespuesta(Respuesta MiRespuesta)
