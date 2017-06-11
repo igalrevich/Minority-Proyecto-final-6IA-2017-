@@ -21,16 +21,7 @@ namespace RestApiMinority
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-              name: "GetIdByNombre", // Route name
-              routeTemplate: "api/{controller}/{action}/{tabla}/{nombre}",// URL with parameters
-              defaults: new { nombre = "", tabla = "" }  // Parameter defaults
-              );
-            config.Routes.MapHttpRoute(
-              name: "GetCantVotos", // Route name
-              routeTemplate: "api/{controller}/{action}/{Opcion}/{Sala}",// URL with parameters
-              defaults: new { Opcion = "" }  // Parameter defaults
-              );
+            
 
 
 
