@@ -55,7 +55,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
         SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosDisponiblesSala");
-        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala/"+IdSala;
+        url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
     }
@@ -111,18 +111,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     case "Sala":
                         MiRespuesta.Sala = Id;
                         String Usuario="IgalRevich";
-                        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/usuarios/"+Usuario;
+                        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
                         new TraerIdsInsertarResultados().execute("GET",url,"Usuario");
                         break;
                     case "Usuario":
                         MiRespuesta.Usuario = Id;
                         String Opcion1= btnOpcion1.getText().toString();
-                        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/preguntas/"+Opcion1;
+                        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/preguntas/"+Opcion1;
                         new TraerIdsInsertarResultados().execute("GET",url,"Pregunta");
                         break;
                     case "Pregunta":
                         MiRespuesta.Pregunta = Id;
-                        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
+                        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
                         new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
                         break;
                 }

@@ -87,7 +87,7 @@ public class Activity_Resultados extends AppCompatActivity {
                     break;
             }
             MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
-            url ="http://apiminorityproyecto.azurewebsites.net/api/rest/InsertarRespuesta";
+            url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
             new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
         }
         /*CantVotosEnBlanco= rand.nextInt(50);
@@ -107,7 +107,7 @@ public class Activity_Resultados extends AppCompatActivity {
                switch (Opcion) {
                    case "Opcion1":
                        CantVotosOpcion1 = CantVotos;
-                       url = "http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/" + Opcion2+"/"+Sala;
+                       url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion2+"/"+Sala;
                        new TraerIdsInsertarResultados().execute("GET", url, "Opcion2");
                        break;
                    case "Opcion2":
@@ -175,7 +175,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
     private void GenerarResultadoUsuario()
     {
-        url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetCantVotos/"+Opcion1+"/"+Sala;
+        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/"+Opcion1+"/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Opcion1");
         if(VotoJugador.equals("")==false)
         {
@@ -272,7 +272,7 @@ public class Activity_Resultados extends AppCompatActivity {
               GanoOPerdio(Resultado);
           }
         }
-        /*url ="http://apiminorityproyecto.azurewebsites.net/api/rest/DeleteRespuestasSala/"+Sala;
+        /*url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/DeleteRespuestasSala/"+Sala;
         new TraerIdsInsertarResultados().execute("DELETE",url);*/
 
     }

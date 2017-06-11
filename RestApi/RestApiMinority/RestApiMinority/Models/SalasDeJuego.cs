@@ -13,5 +13,7 @@ namespace RestApiMinority.Models
         public int MontoAGanar { get; set; }
         public bool Disponible{ get; set; }
         public int NRonda { get; set; }
+        
+        public string HoraComienzo { get; set; }
     }
 }

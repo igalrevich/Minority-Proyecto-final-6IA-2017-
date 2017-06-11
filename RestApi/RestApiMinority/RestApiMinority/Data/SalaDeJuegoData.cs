@@ -54,6 +54,7 @@ namespace RestApiMinority.Data
             MiSalaDeJuego.MontoAGanar = row.Field<int>("MontoAGanar");
             MiSalaDeJuego.Disponible = row.Field<bool>("Disponible");
             MiSalaDeJuego.NRonda = row.Field<int>("NRonda");
+            MiSalaDeJuego.HoraComienzo = row.Field<DateTime>("HoraComienzo").ToString();
             return MiSalaDeJuego;
         }
 

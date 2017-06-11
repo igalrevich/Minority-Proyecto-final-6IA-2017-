@@ -1,5 +1,6 @@
 package com.revich.mobile.minority;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,19 +16,20 @@ public class SalasDeJuego {
     public int NRonda;
     public boolean Disponible;
     public String Nombre;
-    public Date HoraComienzo;
+    public String HoraComienzo;
 
-    public void LlenarDatos(int Id, int CantJugadores, int MontoAGanar, int NRonda, boolean Disponible, String Nombre)
+    public void LlenarDatos(int Id, int CantJugadores, int MontoAGanar, int NRonda, boolean Disponible, String Nombre , String HoraComienzoDateTime)
     {
         this.Id=Id;
         this.CantJugadores=CantJugadores;
         this.MontoAGanar=MontoAGanar;
-
         this.NRonda=NRonda;
         this.Disponible=Disponible;
         this.Nombre=Nombre;
+        this.HoraComienzo=HoraComienzoDateTime;
     }
-    public void LlenarDisponibilidad(boolean Estado) {
+    public void LlenarDisponibilidad(boolean Estado)
+    {
         Id = 4;
         CantJugadores = 4;
         MontoAGanar = 4;
@@ -35,10 +37,21 @@ public class SalasDeJuego {
         Nombre = "Igal";
         Disponible = Estado;
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
-        try {
-            HoraComienzo = dateFormat.parse("11:05:05");
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Date HoraActual= Calendar.getInstance().getTime();
+        if(Estado)
+        {
+            HoraComienzo= dateFormat.format(HoraActual);
+        }
+        else
+        {
+            Date CuatroMin15Seg=null;
+            try {
+                CuatroMin15Seg = dateFormat.parse("00:04:15");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long HoraComienzoSalaLong= HoraActual.getTime() + CuatroMin15Seg.getTime();
+            HoraComienzo= String.valueOf(HoraComienzoSalaLong);
         }
 
     }

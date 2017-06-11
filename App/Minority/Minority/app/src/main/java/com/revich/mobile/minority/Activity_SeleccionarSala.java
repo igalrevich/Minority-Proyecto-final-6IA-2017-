@@ -19,7 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +47,12 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
     Boolean[] ContandoSegundosDisponiblesSala= new Boolean[] {false,false,false,false,false,false};
     int IndiceVecBotonesAPasar=0;
+    Date [] TiempoALlegar= new Date[] {null,null,null,null,null,null};
+    boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
+    boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
+    SimpleDateFormat dateFormat;
+    Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null;
+    Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +107,36 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
                     Log.d("TrajoEstados", "Trajo estados");
                         SetearListeners();
-                        for(int i=0; i<TiempoDisponibleSalas.length;i++)
+                        for(int i=0; i<DisponibilidadSalas.length;i++)
                         {
-                            if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
+                            SetearListeners();
+                            if(DisponibilidadSalas[i])
+                            {
+                               cal= Calendar.getInstance();
+                               HoraActual=cal.getTime();
+                               if(HoraActual==TiempoALlegar[i])
+                               {
+                                 DisponibilidadSalas[i]=false;
+                                 DisponibilidadSalasRecienTerminada[i]=true;
+                               }
+                            }
+                            else
+                            {
+                              if(VecEstadosSalas[i].equals("00:00:00")==false)
+                              {
+                                 Date TiempoDisponibleSala= null;
+                                 Date UnSegundo= null;
+                                  try {
+                                      TiempoDisponibleSala = dateFormat.parse(VecEstadosSalas[i].getText().toString());
+                                      UnSegundo = dateFormat.parse("00:00:01");
+                                  } catch (ParseException e) {
+                                      e.printStackTrace();
+                                  }
+                                  long NuevoTiempoDisponible= TiempoDisponibleSala.getTime() - UnSegundo.getTime();
+                                  VecEstadosSalas[i].setText(String.valueOf(NuevoTiempoDisponible));
+                              }
+                            }
+                            /*if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
                             {
                                 if(TiempoDisponibleSalas[i].equals("00:00:00")==false)
                                 {
@@ -141,7 +174,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                                 {
                                     SegundosDisponibleSalas[i]++;
                                 }
-                            }
+                            }*/
                         }
 
 
@@ -149,12 +182,46 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
                 public void onFinish()
                 {
-                    for(int i=0;i<TiempoDisponibleSalas.length;i++)
+                    for(int i=0;i<DisponibilidadSalas.length;i++)
                     {
-                        if(TiempoDisponibleSalas[i].equals("00:00:00"))
+                        if(DisponibilidadSalas[i])
+                        {
+                            if(DisponibilidadSalasRecienTerminada[i])
+                            {
+                                DisponibilidadSalasRecienTerminada[i]=false;
+                                String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
+                                new BuscarIdOModificarTask().execute("GET",url,"false");
+                            }
+                            else
+                            {
+                                if(i==DisponibilidadSalas.length-1)
+                                {
+                                   TraerEstadosSalas();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            String EstadoSala= VecEstadosSalas[i].getText().toString();
+                            if(EstadoSala.equals("00:00:00"))
+                            {
+                                JuegoPrevioSalas[i]=true;
+                                String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
+                                new BuscarIdOModificarTask().execute("GET",url,"true");
+                            }
+                            else
+                            {
+                                if(i==DisponibilidadSalas.length-1)
+                                {
+                                    TraerEstadosSalas();
+                                }
+                            }
+                        }
+
+                        /*if(TiempoDisponibleSalas[i].equals("00:00:00"))
                         {
                                 JuegoPrevioSalas[i]=true;
-                                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
+                                String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                                 new BuscarIdOModificarTask().execute("GET",url,"true");
                         }
                         else
@@ -164,7 +231,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                                 if(SegundosDisponibleSalas[i]==120)
                                 {
                                     ContandoSegundosDisponiblesSala[i]=false;
-                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
+                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                                     new BuscarIdOModificarTask().execute("GET",url,"false");
                                 }
                                 else
@@ -172,7 +239,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                                     if(i==TiempoDisponibleSalas.length-1)
                                     {
                                         Log.d("Debug", "Paso por el if");
-                                        String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                                        String url ="http://apiminorityproyecto.azurewebsites.net/sala/rest/Get";
                                         new BuscarDatosTask().execute(url);
                                     }
                                 }
@@ -181,11 +248,11 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                             {
                                 if(i==TiempoDisponibleSalas.length-1)
                                 {
-                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/Get";
                                     new BuscarDatosTask().execute(url);
                                 }
                             }
-                        }
+                        }*/
                     }
 
                 }
@@ -193,7 +260,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
         else
         {
-            String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/Get";
             new BuscarDatosTask().execute(url);
         }
     }
@@ -225,6 +292,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
         ArrayList<SalasDeJuego> parsearResultado(String JSONstr) throws JSONException {
             ArrayList<SalasDeJuego> ListaSalas= new ArrayList<>();
+            Date HoraComienzoDateTime= null;
             JSONArray jsonSalas= new JSONArray(JSONstr);
             for (int i=0; i<jsonSalas.length(); i++) {
                 JSONObject jsonSala = jsonSalas.getJSONObject(i);
@@ -234,8 +302,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 int NRonda= jsonSala.getInt("NRonda");
                 boolean Disponible= jsonSala.getBoolean("Disponible");
                 String Nombre= jsonSala.getString("Nombre");
+                String HoraComienzo= jsonSala.getString("HoraComienzo");
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre);
+                MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre,HoraComienzo);
                 ListaSalas.add(MiSalaDeJuego);
             }
             return ListaSalas;
@@ -252,14 +321,14 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                 MiSalaDeJuego.LlenarDisponibilidad(EstadoACambiar);
                 Log.d("PostExecute", "DevuelveId");
-                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/ModificarSalaDeJuego/"+Id;
+                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuego/"+Id;
                 gson=new Gson();
                 new BuscarIdOModificarTask().execute("PUT",url,gson.toJson(MiSalaDeJuego));
             }
             if(Id==-1)
             {
 
-                String url ="http://apiminorityproyecto.azurewebsites.net/api/rest/GetSala";
+                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/Get";
                 new BuscarDatosTask().execute(url);
 
             }
@@ -312,15 +381,26 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     private void CheckearDisponibilidadSalas(ArrayList<SalasDeJuego> ListaSalas)
     {
+        dateFormat= new SimpleDateFormat("hh:mm:ss");
         for(int i=0; i<ListaSalas.size();i++)
         {
             SalasDeJuego MiSalaDeJuego=ListaSalas.get(i);
+            try
+            {
+                HoraComienzoSalaDateTime= dateFormat.parse(MiSalaDeJuego.HoraComienzo);
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
             if(MiSalaDeJuego.Disponible)
             {
                 VecEstadosSalas[i].setText("Disponible");
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
-                TiempoDisponibleSalas[i]="Esperando2min";
+                DisponibilidadSalas[i]=true;
+                CalcularTiempoDisponibleSalas(MiSalaDeJuego.Disponible,i);
+                //TiempoDisponibleSalas[i]="Esperando2min";
                 if(ContandoSegundosDisponiblesSala[i]==false)
                 {
                     SegundosDisponibleSalas[i]=0;
@@ -329,7 +409,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             else
             {
-                if(JuegoPrevioSalas[i])
+                DisponibilidadSalas[i]=false;
+                CalcularTiempoDisponibleSalas(MiSalaDeJuego.Disponible,i);
+                /*if(JuegoPrevioSalas[i])
                 {
                     VecEstadosSalas[i].setText("00:04:15");
                     TiempoDisponibleSalas[i]=VecEstadosSalas[i].getText().toString();
@@ -341,7 +423,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
                     VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
                     VecBotones[i].setEnabled(false);
-                }
+                }*/
             }
         }
     }
@@ -353,6 +435,36 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
            VecBotones[i].setOnClickListener(btnSala_click);
         }
     }
+
+    private void CalcularTiempoDisponibleSalas (boolean DisponibilidadSala, int IndiceVectores) {
+        if (DisponibilidadSala)
+        {
+            try {
+                DosMin = dateFormat.parse("00:02:00");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long SumaTiempoDisponible = DosMin.getTime() + HoraComienzoSalaDateTime.getTime();
+            Date SumaTiempoDisponibleDateTime = new Date(SumaTiempoDisponible);
+            TiempoALlegar[IndiceVectores] = SumaTiempoDisponibleDateTime;
+        }
+        else
+        {
+            try {
+                QuinceSeg = dateFormat.parse("00:00:15");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            cal = Calendar.getInstance();
+            HoraActual = cal.getTime();
+            long SumaTiempoDisponible = QuinceSeg.getTime() + HoraComienzoSalaDateTime.getTime();
+            Date SumaTiempoDisponibleDateTime = new Date(SumaTiempoDisponible);
+            TiempoALlegar[IndiceVectores] = SumaTiempoDisponibleDateTime;
+            long TiempoHastaQueEsteDisponibleSala = SumaTiempoDisponible - HoraActual.getTime();
+            VecEstadosSalas[IndiceVectores].setText(String.valueOf(TiempoHastaQueEsteDisponibleSala));
+        }
+    }
+
 
     private View.OnClickListener btnSala_click=new View.OnClickListener() {
         @Override
@@ -371,9 +483,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                  IndiceVecBotones++;
              }
          }
-            String url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/";
+            String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/";
             new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones));
-            String url2="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
+            String url2="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
             new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url2,String.valueOf(IndiceVecBotones));
 
         }
