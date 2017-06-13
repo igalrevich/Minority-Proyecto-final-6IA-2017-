@@ -12,6 +12,6 @@ namespace RestApiMinority.Models
         public string Mail { get; set; }
         public string Password{ get; set; }
         public int Monedas{ get; set; }
-        public string SalasDeJuego{ get; set; }
+        public int SalaDeJuego{ get; set; }
     }
 }

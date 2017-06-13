@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.EventListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,22 +36,23 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Activity_SeleccionarSala extends AppCompatActivity {
-    TextView tvEstadoSalaA,tvEstadoSalaB, tvEstadoSalaC, tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF;
+    TextView tvEstadoSalaA,tvEstadoSalaB, tvEstadoSalaC, tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF, tvUsuario, tvMonedas;
     TextView [] VecEstadosSalas= new TextView[]{tvEstadoSalaA,tvEstadoSalaB,tvEstadoSalaC,tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF};
     Button  btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF;
     Boolean [] JuegoPrevioSalas= new Boolean[] {true,false,false,false,false,false};
-    Boolean TrajoEstados=false, EstadoACambiar;
+    Boolean TrajoEstados=false, EstadoACambiar, BuscaIdSala;
     String[] TiempoDisponibleSalas= new String[] {"00:00:00","00:01:00","00:02:00","00:03:00","00:04:00","00:05:00"};
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Gson gson;
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
+    int [] IdsSalas = new int [] {0,0,0,0,0,0};
     Boolean[] ContandoSegundosDisponiblesSala= new Boolean[] {false,false,false,false,false,false};
-    int IndiceVecBotonesAPasar=0;
+    int  IndiceVecBotonesAPasar= 0;
     Date [] TiempoALlegar= new Date[] {null,null,null,null,null,null};
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
-    SimpleDateFormat dateFormat;
+    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
     Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null;
     Calendar cal;
 
@@ -66,9 +68,11 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     }
     private void ObtenerReferencias()
     {
+        tvUsuario= (TextView) findViewById(R.id.tvUsuario);
+        tvMonedas = (TextView) findViewById(R.id.tvMonedas);
         for(int i=0;i<6;i++)
         {
-          switch (i)
+            switch (i)
           {
               case 0:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaA);
@@ -116,8 +120,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                                HoraActual=cal.getTime();
                                if(HoraActual==TiempoALlegar[i])
                                {
-                                 DisponibilidadSalas[i]=false;
-                                 DisponibilidadSalasRecienTerminada[i]=true;
+                                   DisponibilidadSalasRecienTerminada[i]=true;
                                }
                             }
                             else
@@ -189,6 +192,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                             if(DisponibilidadSalasRecienTerminada[i])
                             {
                                 DisponibilidadSalasRecienTerminada[i]=false;
+                                DisponibilidadSalas[i]=false;
                                 String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                                 new BuscarIdOModificarTask().execute("GET",url,"false");
                             }
@@ -292,7 +296,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
         ArrayList<SalasDeJuego> parsearResultado(String JSONstr) throws JSONException {
             ArrayList<SalasDeJuego> ListaSalas= new ArrayList<>();
-            Date HoraComienzoDateTime= null;
             JSONArray jsonSalas= new JSONArray(JSONstr);
             for (int i=0; i<jsonSalas.length(); i++) {
                 JSONObject jsonSala = jsonSalas.getJSONObject(i);
@@ -483,47 +486,107 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                  IndiceVecBotones++;
              }
          }
-            String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/";
-            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones));
-            String url2="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
-            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url2,String.valueOf(IndiceVecBotones));
+            String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
+            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones),"true");
 
         }
     };
 
     private class BuscarIdAPasarTaskOActualizarUsuario extends AsyncTask<String, Void, Integer> {
         private  OkHttpClient client= new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
         @Override
-        protected void onPostExecute(Integer Id) {
-         IrAActivityJugabilidad(Id,SegundosDisponibleSalas[IndiceVecBotonesAPasar]);
+        protected void onPostExecute(Integer Id)
+        {
+            if(Id!=0 && Id!=-1)
+            {
+                if(BuscaIdSala)
+                {
+                    IdsSalas[IndiceVecBotonesAPasar]= Id;
+                    String Usuario= tvUsuario.getText().toString();
+                    String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
+                    new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotonesAPasar),"false");
+                }
+                else
+                {
+                    gson= new Gson();
+                    Usuario MiUsuario= new Usuario();
+                    String MonedasUsuarioString= tvMonedas.getText().toString();
+                    int MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
+                    MiUsuario.LlenarDatos(Id,MonedasUsuario,IdsSalas[IndiceVecBotonesAPasar]);
+                    String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/ModificarUsuario/"+Id;
+                    new BuscarIdAPasarTaskOActualizarUsuario().execute("PUT",url,gson.toJson(MiUsuario));
+                }
+            }
+            else
+            {
+                if(Id==-1)
+                {
+                    IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                }
+            }
+
         }
 
         @Override
         protected Integer doInBackground(String... parametros) {
-            String url = parametros[0];
-            IndiceVecBotonesAPasar=Integer.parseInt(parametros[1]);
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                String jsonStr= response.body().string();
-                return Integer.parseInt(jsonStr);
+            String method = parametros[0];
+            String url = parametros[1];
+            if(method.equals("GET"))
+            {
+                IndiceVecBotonesAPasar =Integer.parseInt(parametros[2]);
+                BuscaIdSala= Boolean.parseBoolean(parametros[3]);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    String jsonStr= response.body().string();
+                    return Integer.parseInt(jsonStr);
 
-            } catch (IOException  e) {
-                Log.d("Error", e.getMessage());
-                return 0;
+                }
+                catch (IOException  e)
+                {
+                    Log.d("Error", e.getMessage());
+                    return 0;
+                }
             }
+            else
+            {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .put(body)
+                        .build();
+                try
+                {
+                    Response response = client.newCall(request).execute();
+                    Log.d("Put", "Puteo");
+                    return  -1;
+
+                }
+                catch (IOException e)
+                {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+
+                }
+
+            }
+
         }
 
     }
 
-    private void IrAActivityJugabilidad(int IdSala, int SegundosDisponiblesSala)
+    private void IrAActivityJugabilidad(int IdSala, Date TiempoALlegar)
     {
         Intent ElIntent= new Intent(this,Activity_Jugabilidad.class);
         Bundle ElBundle= new Bundle();
         ElBundle.putInt("IdSala",IdSala);
-        ElBundle.putInt("SegundosDisponiblesSala",SegundosDisponiblesSala);
+        String TiempoALlegarString= dateFormat.format(TiempoALlegar);
+        ElBundle.putString("TiempoALlegarSala",TiempoALlegarString);
         ElIntent.putExtras(ElBundle);
         startActivity(ElIntent);
     }

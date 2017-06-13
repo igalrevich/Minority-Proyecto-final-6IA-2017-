@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using RestApiMinority.Models;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace RestApiMinority.Data
 {
@@ -17,7 +18,7 @@ namespace RestApiMinority.Data
 
         public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
         {
-            string select = "select * from salasdejuegos where id=" + id.ToString();
+            string select = "select Id, Nombre, CantJugadores, MontoAGanar, Disponible, NRonda from salasdejuegos where id=" + id.ToString();
             DataTable dt = DBHelper.EjecutarSelect(select);
             SalasDeJuego MiSalaDeJuego;
             if (dt.Rows.Count > 0)
@@ -29,7 +30,7 @@ namespace RestApiMinority.Data
         }
         public static List<SalasDeJuego> ObtenerSalasDeJuego()
         {
-            string select = "select * from salasdejuegos order by Nombre";
+            string select = "select Id, Nombre, CantJugadores, MontoAGanar, Disponible, NRonda from salasdejuegos order by Nombre";
             DataTable dt = DBHelper.EjecutarSelect(select);
             List<SalasDeJuego> ListaSalasDeJuego = new List<SalasDeJuego>();
             SalasDeJuego MiSalaDeJuego;
@@ -42,6 +43,43 @@ namespace RestApiMinority.Data
                 }
                 MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
             }
+            return ListaSalasDeJuego;
+        }
+
+        public static List<SalasDeJuego> ObtenerSalasDeJuegoConHoraComienzo()
+        {
+            MySqlCommand cmd = new MySqlCommand("TraerSalas", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            List<SalasDeJuego> ListaSalasDeJuego = new List<SalasDeJuego>();
+            SalasDeJuego MiSalaDeJuego;
+            while (dr.Read())
+
+            {
+
+                MiSalaDeJuego= new SalasDeJuego();
+
+                MiSalaDeJuego.Id = Convert.ToInt32(dr["Id"]);
+
+                MiSalaDeJuego.Nombre= Convert.ToString(dr["Nombre"]);
+
+                MiSalaDeJuego.CantJugadores= Convert.ToInt32(dr["CantJugadores"]);
+
+                MiSalaDeJuego.MontoAGanar = Convert.ToInt32(dr["MontoAGanar"]);
+
+                MiSalaDeJuego.NRonda = Convert.ToInt32(dr["NRonda"]);
+
+                MiSalaDeJuego.Disponible = Convert.ToBoolean(dr["Disponible"]);
+
+                MiSalaDeJuego.HoraComienzo = Convert.ToString(dr["HoraComienzo"]);
+
+                ListaSalasDeJuego.Add(MiSalaDeJuego);
+
+            }
+
+            dr.Close();
+
             return ListaSalasDeJuego;
         }
 

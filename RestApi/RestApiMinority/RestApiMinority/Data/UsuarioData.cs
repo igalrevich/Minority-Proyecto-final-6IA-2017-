@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using RestApiMinority.Models;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace RestApiMinority.Data
 {
@@ -15,9 +16,22 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(delete);
         }
        public static void ModificarMonedasYSalasUsuario(int IdUsuario, Usuario MiUsuario)
-        { 
-            string update = "update usuarios set Monedas=" + MiUsuario.Monedas.ToString() + ", SalasDeJuego="+ MiUsuario.SalasDeJuego +" where Id=" + IdUsuario.ToString();
-            DBHelper.EjecutarIUD(update);
+        {
+            MySqlCommand cmd = new MySqlCommand("ActualizarUsuario", new MySqlConnection(DBHelper.ConnectionString));
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
+
+            cmd.Parameters.Add(new MySqlParameter("Monedas", MiUsuario.Monedas));
+
+            cmd.Parameters.Add(new MySqlParameter("IdSalaDeJuego", MiUsuario.SalaDeJuego));
+
+            cmd.Connection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
         }
 
         public static Usuario ObtenerPorId(int id)
@@ -40,8 +54,7 @@ namespace RestApiMinority.Data
             MiUsuario.Nombre = row.Field<string>("Nombre");
             MiUsuario.Mail = row.Field<string>("Mail");
             MiUsuario.Password = row.Field<string>("password");
-            MiUsuario.Monedas= row.Field<int>("Monedas");
-            MiUsuario.SalasDeJuego = row.Field<string>("SalasDeJuego");
+            MiUsuario.Monedas = row.Field<int>("Monedas");
             return MiUsuario;
         }
 

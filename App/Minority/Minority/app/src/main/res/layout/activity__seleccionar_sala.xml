@@ -29,14 +29,15 @@
            android:orientation="horizontal"
            android:weightSum="1"
            android:background="#010101">
+
            <TextView
+               android:id="@+id/tvUsuario"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Usuario: IgalRevich"
-               android:id="@+id/tvUsuario"
-               android:textSize="25dp"
                android:layout_marginRight="25dp"
-               android:textColor="#ffffff" />
+               android:text=" IgalRevich"
+               android:textColor="#ffffff"
+               android:textSize="25dp" />
 
            <ImageView
                android:id="@+id/imageView2"

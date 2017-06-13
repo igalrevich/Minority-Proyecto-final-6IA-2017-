@@ -16,7 +16,7 @@ using System.Web.Http.Description;
         public IEnumerable<SalasDeJuego> Get()
         {
 
-            return SalaDeJuegoData.ObtenerSalasDeJuego();
+            return SalaDeJuegoData.ObtenerSalasDeJuegoConHoraComienzo();
         }
 
     // GET: api/Sala/GetSala/5
