@@ -23,8 +23,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -43,7 +49,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     CountDownTimer Timer;
     Gson gson;
     SalasDeJuego SalaDeJuegoTraida;
+    Date TiempoALlegarSala;
+    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
     Respuesta MiRespuesta;
+    Date HoraActual;
+    Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
-        SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosDisponiblesSala");
+        String TiempoALlegarSalaString= ElBundleQueVino.getString("TiempoALlegarSala");
+        try
+        {
+            TiempoALlegarSala= dateFormat.parse(TiempoALlegarSalaString);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
         url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
@@ -238,7 +256,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void SetearTimerSegundosDisponibles()
     {
-      if(SegundosDisponiblesSala==120)
+        cal= Calendar.getInstance();
+        HoraActual=cal.getTime();
+        if(HoraActual==TiempoALlegarSala)
       {
           CambiarBotones(true);
           SetearTimer();
@@ -246,8 +266,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
       else
       {
           CambiarBotones(false);
-          int SegundosDisponiblesRestantes= 1000*(120-SegundosDisponiblesSala+1);
-          Timer=new CountDownTimer(SegundosDisponiblesRestantes, 1000) {
+          long DifSegArranqueSala= TiempoALlegarSala.getTime() - HoraActual.getTime();
+          DifSegArranqueSala= TimeUnit.MILLISECONDS.toSeconds(DifSegArranqueSala);
+          int SegundosParaArranqueSala= (int) (long) DifSegArranqueSala;
+          //int SegundosDisponiblesRestantes= 1000*(120-SegundosDisponiblesSala+1);
+          Timer=new CountDownTimer(SegundosParaArranqueSala, 1000) {
 
               public void onTick(long millisUntilFinished) {
                   Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(millisUntilFinished/1000),Toast.LENGTH_SHORT);
@@ -306,7 +329,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         public void onClick(View view) {
             Idbtn= view.getId();
             int idbtnOpcion1=R.id.btnOpcion1;
-            int idbtnOpcion2=R.id.btnOpcion2;
             if(Idbtn==idbtnOpcion1)
             {
                 if(VotoOpcion1==false)
@@ -377,7 +399,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiRespuesta.RespuestaParcial=VotoFinal;
         MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
         String Sala= tvSala.getText().toString();
-        url="http://apiminorityproyecto.azurewebsites.net/api/Rest/GetIdByNombre/salasdejuegos/"+Sala;
+        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Sala");
     }
     private void IniciarActivityResultados()

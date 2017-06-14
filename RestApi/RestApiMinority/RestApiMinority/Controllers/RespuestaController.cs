@@ -13,14 +13,14 @@ namespace RestApiMinority.Controllers
     public class RespuestaController : ApiController
     {
 
-        // GET: api/Rest/GetCantVotos/Coca
+        // GET: api/respuesta/GetCantVotos/Coca
         [Route("api/respuesta/GetCantVotos/{Opcion}/{Sala}")]
         public IHttpActionResult GetCantVotos(string Opcion, int Sala)
         {
             int CantVotos = RespuestaData.ObtenerCantVotos(Opcion, Sala);
             return Ok(CantVotos);
         }
-        // POST: api/Rest/InsertarRespuesta
+        // POST: api/respuesta/InsertarRespuesta
         [ResponseType(typeof(Respuesta))]
         public IHttpActionResult InsertarRespuesta(Respuesta MiRespuesta)
         {
@@ -35,7 +35,7 @@ namespace RestApiMinority.Controllers
             }
         }
 
-        // DELETE: api/Rest/DeleteRespuestasSala/1
+        // DELETE: api/respuesta/DeleteRespuestasSala/1
         public IHttpActionResult DeleteRespuestasSala(int id)
         {
             RespuestaData.DeleteRespuestasSala(id);

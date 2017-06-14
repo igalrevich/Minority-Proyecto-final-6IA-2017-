@@ -35,7 +35,7 @@ public class Activity_Resultados extends AppCompatActivity {
         getSupportActionBar().hide();
         ObtenerReferencias();
         GenerarVotosAlAzar();
-        GenerarResultadoUsuario();
+        GenerarResultadoUsuarioParte1();
         ImprimirResultadosPantalla(ResultadoUsuario);
     }
 
@@ -112,6 +112,7 @@ public class Activity_Resultados extends AppCompatActivity {
                        break;
                    case "Opcion2":
                        CantVotosOpcion2 = CantVotos;
+                       GenerarResultadoUsuarioParte2();
                        break;
                }
            }
@@ -173,10 +174,13 @@ public class Activity_Resultados extends AppCompatActivity {
             }
         }
     }
-    private void GenerarResultadoUsuario()
+    private void GenerarResultadoUsuarioParte1()
     {
         url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/"+Opcion1+"/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Opcion1");
+    }
+    private void GenerarResultadoUsuarioParte2()
+    {
         if(VotoJugador.equals("")==false)
         {
             if(VotoJugador.equals(Opcion1))
