@@ -12,7 +12,17 @@ namespace RestApiMinority.Data
     {
         public static void ModificarDisponibilidadSala(int IdSala, bool Estado)
         {
-            string update = "update salasdejuegos set Disponible=" + Estado.ToString() + " where Id=" + IdSala.ToString();
+            string update = "";
+            if (Estado)
+            {
+                //string delete = "DELETE FROM usuariosxsala";
+                //DBHelper.EjecutarIUD(delete);
+                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= localtime() where Id=" + IdSala.ToString();
+            }
+            else
+            {
+                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= timestampadd(MINUTE,4,localtime()) where Id=" + IdSala.ToString();
+            }
             DBHelper.EjecutarIUD(update);
         }
 

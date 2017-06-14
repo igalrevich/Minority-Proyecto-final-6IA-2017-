@@ -28,6 +28,7 @@ import java.util.Calendar;
 import java.util.EventListener;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -37,13 +38,13 @@ import okhttp3.Response;
 
 public class Activity_SeleccionarSala extends AppCompatActivity {
     TextView tvEstadoSalaA,tvEstadoSalaB, tvEstadoSalaC, tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF, tvUsuario, tvMonedas;
-    TextView [] VecEstadosSalas= new TextView[]{tvEstadoSalaA,tvEstadoSalaB,tvEstadoSalaC,tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF};
+    TextView [] VecEstadosSalas= new TextView[]{tvEstadoSalaD,tvEstadoSalaA,tvEstadoSalaB,tvEstadoSalaC,tvEstadoSalaE,tvEstadoSalaF};
     Button  btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF;
     Boolean [] JuegoPrevioSalas= new Boolean[] {true,false,false,false,false,false};
     Boolean TrajoEstados=false, EstadoACambiar, BuscaIdSala;
     String[] TiempoDisponibleSalas= new String[] {"00:00:00","00:01:00","00:02:00","00:03:00","00:04:00","00:05:00"};
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
-    Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
+    Button [] VecBotones=new Button[]{btnEntrarSalaD,btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaE,btnEntrarSalaF};
     Gson gson;
     int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
     int [] IdsSalas = new int [] {0,0,0,0,0,0};
@@ -75,20 +76,20 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             switch (i)
           {
               case 0:
+                  VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaD);
+                  VecBotones[i]=(Button) findViewById(R.id.btnSalaD);
+                  break;
+              case 1:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaA);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaA);
                   break;
-              case 1:
+              case 2:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaB);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaB);
                   break;
-              case 2:
+              case 3:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaC);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaC);
-                  break;
-              case 3:
-                  VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaD);
-                  VecBotones[i]=(Button) findViewById(R.id.btnSalaD);
                   break;
               case 4:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaE);
@@ -461,7 +462,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             cal = Calendar.getInstance();
             HoraActual = cal.getTime();
             long SumaTiempoDisponible = QuinceSeg.getTime() + HoraComienzoSalaDateTime.getTime();
-            Date SumaTiempoDisponibleDateTime = new Date(SumaTiempoDisponible);
+            Date SumaTiempoDisponibleDateTime = new Date(TimeUnit.MILLISECONDS.toHours(SumaTiempoDisponible));
             TiempoALlegar[IndiceVectores] = SumaTiempoDisponibleDateTime;
             long TiempoHastaQueEsteDisponibleSala = SumaTiempoDisponible - HoraActual.getTime();
             VecEstadosSalas[IndiceVectores].setText(String.valueOf(TiempoHastaQueEsteDisponibleSala));

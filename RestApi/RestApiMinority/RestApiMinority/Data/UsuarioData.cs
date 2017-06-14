@@ -17,7 +17,7 @@ namespace RestApiMinority.Data
         }
        public static void ModificarMonedasYSalasUsuario(int IdUsuario, Usuario MiUsuario)
         {
-            MySqlCommand cmd = new MySqlCommand("ActualizarUsuario", new MySqlConnection(DBHelper.ConnectionString));
+            MySqlCommand cmd = new MySqlCommand("ActualizarUsuarios", new MySqlConnection(DBHelper.ConnectionString));
 
             cmd.CommandType = CommandType.StoredProcedure;
 
