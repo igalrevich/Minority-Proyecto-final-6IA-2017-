@@ -28,16 +28,44 @@ namespace RestApiMinority.Data
 
         public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
         {
-            string select = "select Id, Nombre, CantJugadores, MontoAGanar, Disponible, NRonda from salasdejuegos where id=" + id.ToString();
-            DataTable dt = DBHelper.EjecutarSelect(select);
-            SalasDeJuego MiSalaDeJuego;
-            if (dt.Rows.Count > 0)
+            bool CantSalasMayor0 = false;
+            MySqlCommand cmd = new MySqlCommand("TraerSalaPorId", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("IdSala", id));
+            cmd.Connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            SalasDeJuego MiSalaDeJuego = new SalasDeJuego(); ;
+            while (dr.Read())
+
             {
-                MiSalaDeJuego = ObtenerPorRowSalaDeJuego(dt.Rows[0]);
-                return MiSalaDeJuego;
+                CantSalasMayor0 = true;
+
+                MiSalaDeJuego.Id = Convert.ToInt32(dr["Id"]);
+
+                MiSalaDeJuego.Nombre = Convert.ToString(dr["Nombre"]);
+
+                MiSalaDeJuego.CantJugadores = Convert.ToInt32(dr["CantJugadores"]);
+
+                MiSalaDeJuego.MontoAGanar = Convert.ToInt32(dr["MontoAGanar"]);
+
+                MiSalaDeJuego.NRonda = Convert.ToInt32(dr["NRonda"]);
+
+                MiSalaDeJuego.Disponible = Convert.ToBoolean(dr["Disponible"]);
+
+                MiSalaDeJuego.HoraComienzo = Convert.ToString(dr["HoraComienzo"]);
+
             }
-            return null;
+
+            dr.Close();
+
+            if (CantSalasMayor0 == false)
+            {
+                MiSalaDeJuego = null;
+            }
+
+            return MiSalaDeJuego;
         }
+           
         public static List<SalasDeJuego> ObtenerSalasDeJuego()
         {
             string select = "select Id, Nombre, CantJugadores, MontoAGanar, Disponible, NRonda from salasdejuegos order by Nombre";

@@ -23,7 +23,7 @@ namespace RestApiMinority.Data
 
             cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
 
-            cmd.Parameters.Add(new MySqlParameter("Monedas", MiUsuario.Monedas));
+            cmd.Parameters.Add(new MySqlParameter("MonedasParam", MiUsuario.Monedas));
 
             cmd.Parameters.Add(new MySqlParameter("IdSalaDeJuego", MiUsuario.SalaDeJuego));
 

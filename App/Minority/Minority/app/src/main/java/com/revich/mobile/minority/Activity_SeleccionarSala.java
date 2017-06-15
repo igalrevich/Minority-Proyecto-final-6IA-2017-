@@ -54,7 +54,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
-    Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null;
+    Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null ,TiempoParaComienzoSala;
     Calendar cal;
 
     @Override
@@ -128,16 +128,19 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                             {
                               if(VecEstadosSalas[i].equals("00:00:00")==false)
                               {
-                                 Date TiempoDisponibleSala= null;
-                                 Date UnSegundo= null;
-                                  try {
-                                      TiempoDisponibleSala = dateFormat.parse(VecEstadosSalas[i].getText().toString());
-                                      UnSegundo = dateFormat.parse("00:00:01");
-                                  } catch (ParseException e) {
+                                  try
+                                  {
+                                      TiempoParaComienzoSala= dateFormat.parse(VecEstadosSalas[i].getText().toString());
+                                  }
+                                  catch (ParseException e) {
                                       e.printStackTrace();
                                   }
-                                  long NuevoTiempoDisponible= TiempoDisponibleSala.getTime() - UnSegundo.getTime();
-                                  VecEstadosSalas[i].setText(String.valueOf(NuevoTiempoDisponible));
+                                  Calendar calendar= Calendar.getInstance();
+                                  calendar.setTime(TiempoParaComienzoSala);
+                                  calendar.add(Calendar.SECOND, -1);
+                                  TiempoParaComienzoSala= calendar.getTime();
+                                  String TiempoParaComienzoSalaString= dateFormat.format(TiempoParaComienzoSala);
+                                  VecEstadosSalas[i].setText(TiempoParaComienzoSalaString);
                               }
                             }
                             /*if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
@@ -415,6 +418,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 DisponibilidadSalas[i]=false;
                 CalcularTiempoDisponibleSalas(MiSalaDeJuego.Disponible,i);
+                VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
+                VecBotones[i].setEnabled(false);
                 /*if(JuegoPrevioSalas[i])
                 {
                     VecEstadosSalas[i].setText("00:04:15");
@@ -459,7 +464,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             HoraActual = cal.getTime();
             long DiferenciaHActHComienzo= HoraComienzoMas15SegDT.getTime() - HoraActual.getTime();
             Date SumaTiempoDisponibleDateTime = new Date(TimeUnit.MILLISECONDS.toHours(DiferenciaHActHComienzo));
-            VecEstadosSalas[IndiceVectores].setText(String.valueOf(SumaTiempoDisponibleDateTime.getTime()));
+            String DiferenciaHorasString= dateFormat.format(SumaTiempoDisponibleDateTime);
+            VecEstadosSalas[IndiceVectores].setText(DiferenciaHorasString);
+            Log.d("VerValorVecEstadosSalas", VecEstadosSalas[IndiceVectores].getText().toString());
         }
     }
 
@@ -500,7 +507,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 {
                     IdsSalas[IndiceVecBotonesAPasar]= Id;
                     String Usuario= tvUsuario.getText().toString();
+                    Usuario=Usuario.trim();
                     String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
+                    Log.d("url", url);
                     new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotonesAPasar),"false");
                 }
                 else
@@ -532,20 +541,42 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 IndiceVecBotonesAPasar =Integer.parseInt(parametros[2]);
                 BuscaIdSala= Boolean.parseBoolean(parametros[3]);
-                Request request = new Request.Builder()
-                        .url(url)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    String jsonStr= response.body().string();
-                    return Integer.parseInt(jsonStr);
+                if(BuscaIdSala)
+                {
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        String jsonStr= response.body().string();
+                        return Integer.parseInt(jsonStr);
+
+                    }
+                    catch (IOException  e)
+                    {
+                        Log.d("Error", e.getMessage());
+                        return 0;
+                    }
 
                 }
-                catch (IOException  e)
+                else
                 {
-                    Log.d("Error", e.getMessage());
-                    return 0;
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        String jsonStr= response.body().string();
+                        return Integer.parseInt(jsonStr);
+
+                    }
+                    catch (IOException  e)
+                    {
+                        Log.d("Error", e.getMessage());
+                        return 0;
+                    }
                 }
+
             }
             else
             {

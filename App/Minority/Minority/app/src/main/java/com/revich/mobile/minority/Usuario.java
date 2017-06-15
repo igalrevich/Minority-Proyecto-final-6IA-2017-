@@ -19,7 +19,7 @@ public class Usuario
         this.Nombre="Igal";
         this.Mail="Igal";
         this.Password="igal";
-        this.Monedas=Monedas;
+        this.Monedas=Monedas-1;
         this.SalaDeJuego= SalaDeJuego;
     }
 }
