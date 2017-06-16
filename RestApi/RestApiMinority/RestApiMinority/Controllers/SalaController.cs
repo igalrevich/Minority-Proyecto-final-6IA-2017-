@@ -32,7 +32,7 @@ using System.Web.Http.Description;
         }
 
     // PUT: api/Sala/ModificarSalaDeJuego/1
-    [ResponseType(typeof(SalasDeJuego))]
+       [ResponseType(typeof(SalasDeJuego))]
        [Route("api/sala/ModificarSalaDeJuego/{id}")]
        [HttpPut]
        public IHttpActionResult ModificarSalaDeJuego(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
@@ -40,4 +40,14 @@ using System.Web.Http.Description;
         SalaDeJuegoData.ModificarDisponibilidadSala(id, MiSalaDeJuego.Disponible);
         return Ok();
        }
+
+    // PUT: api/Sala/ModificarSalaDeJuego/1
+    [ResponseType(typeof(SalasDeJuego))]
+    [Route("api/sala/ModificarSalaDeJuegoMHC/{id}")]
+    [HttpPut]
+    public IHttpActionResult ModificarSalaDeJuegoMHC(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+    {
+        SalaDeJuegoData.ModificarMHCSala(id, MiSalaDeJuego);
+        return Ok();
+    }
 }

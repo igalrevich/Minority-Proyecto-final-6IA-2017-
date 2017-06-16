@@ -64,7 +64,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
-        String TiempoALlegarSalaString= ElBundleQueVino.getString("TiempoALlegarSala");
+        /*String TiempoALlegarSalaString= ElBundleQueVino.getString("TiempoALlegarSala");
         try
         {
             TiempoALlegarSala= dateFormat.parse(TiempoALlegarSalaString);
@@ -72,7 +72,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         catch (ParseException e)
         {
             e.printStackTrace();
-        }
+        }*/
         url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 

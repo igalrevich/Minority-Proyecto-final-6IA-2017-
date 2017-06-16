@@ -42,7 +42,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Button  btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF;
     Boolean [] JuegoPrevioSalas= new Boolean[] {true,false,false,false,false,false};
     Boolean TrajoEstados=false, EstadoACambiar, BuscaIdSala;
-    String[] TiempoDisponibleSalas= new String[] {"00:00:00","00:01:00","00:02:00","00:03:00","00:04:00","00:05:00"};
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Gson gson;
@@ -53,6 +52,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Date [] TiempoALlegar= new Date[] {null,null,null,null,null,null};
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
+    boolean [] EnJuegoSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
     Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null ,TiempoParaComienzoSala;
     Calendar cal;
@@ -114,78 +114,21 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         SetearListeners();
                         for(int i=0; i<DisponibilidadSalas.length;i++)
                         {
-                            SetearListeners();
-                            if(DisponibilidadSalas[i])
+                            cal= Calendar.getInstance();
+                            HoraActual=cal.getTime();
+                            if(HoraActual==TiempoALlegar[i])
                             {
-                               cal= Calendar.getInstance();
-                               HoraActual=cal.getTime();
-                               if(HoraActual==TiempoALlegar[i])
+                               if(DisponibilidadSalas[i])
                                {
                                    DisponibilidadSalasRecienTerminada[i]=true;
                                }
+                               else
+                               {
+                                   EnJuegoSalasRecienTerminada[i]=true;
+                               }
                             }
-                            else
-                            {
-                              if(VecEstadosSalas[i].equals("00:00:00")==false)
-                              {
-                                  try
-                                  {
-                                      TiempoParaComienzoSala= dateFormat.parse(VecEstadosSalas[i].getText().toString());
-                                  }
-                                  catch (ParseException e) {
-                                      e.printStackTrace();
-                                  }
-                                  Calendar calendar= Calendar.getInstance();
-                                  calendar.setTime(TiempoParaComienzoSala);
-                                  calendar.add(Calendar.SECOND, -1);
-                                  TiempoParaComienzoSala= calendar.getTime();
-                                  String TiempoParaComienzoSalaString= dateFormat.format(TiempoParaComienzoSala);
-                                  VecEstadosSalas[i].setText(TiempoParaComienzoSalaString);
-                              }
-                            }
-                            /*if(TiempoDisponibleSalas[i].equals("Esperando2min")==false)
-                            {
-                                if(TiempoDisponibleSalas[i].equals("00:00:00")==false)
-                                {
-                                    String[] TiempoDisponible= TiempoDisponibleSalas[i].split(":");
-                                    if(TiempoDisponible[2].equals("00"))
-                                    {
-                                        TiempoDisponible[2]="59";
-                                        int Minutos= Integer.parseInt(TiempoDisponible[1]);
-                                        Minutos=Minutos-1;
-                                        TiempoDisponible[1]="0"+String.valueOf(Minutos);
-                                    }
-                                    else
-                                    {
-                                        int Segundos= Integer.parseInt(TiempoDisponible[2]);
-                                        Segundos=Segundos-1;
-                                        if(Segundos<10)
-                                        {
-                                            TiempoDisponible[2]="0"+String.valueOf(Segundos);
-                                        }
-                                        else
-                                        {
-                                            TiempoDisponible[2]=String.valueOf(Segundos);
-                                        }
-                                    }
-                                    String NuevoTiempoDisponible= TiempoDisponible[0]+":"+TiempoDisponible[1] +":" +TiempoDisponible[2];
-                                    TiempoDisponibleSalas[i] =NuevoTiempoDisponible;
-                                    VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
-                                }
-
-                            }
-                            else
-                            {
-                                ContandoSegundosDisponiblesSala[i]=true;
-                                if(SegundosDisponibleSalas[i]<120)
-                                {
-                                    SegundosDisponibleSalas[i]++;
-                                }
-                            }*/
                         }
-
-
-                    }
+                }
 
                 public void onFinish()
                 {
@@ -210,9 +153,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         }
                         else
                         {
-                            String EstadoSala= VecEstadosSalas[i].getText().toString();
-                            if(EstadoSala.equals("00:00:00"))
+                            if(EnJuegoSalasRecienTerminada[i])
                             {
+                                EnJuegoSalasRecienTerminada[i]=false;
                                 JuegoPrevioSalas[i]=true;
                                 String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
                                 new BuscarIdOModificarTask().execute("GET",url,"true");
@@ -225,42 +168,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                                 }
                             }
                         }
-
-                        /*if(TiempoDisponibleSalas[i].equals("00:00:00"))
-                        {
-                                JuegoPrevioSalas[i]=true;
-                                String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
-                                new BuscarIdOModificarTask().execute("GET",url,"true");
-                        }
-                        else
-                        {
-                            if(TiempoDisponibleSalas[i].equals("Esperando2min"))
-                            {
-                                if(SegundosDisponibleSalas[i]==120)
-                                {
-                                    ContandoSegundosDisponiblesSala[i]=false;
-                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[i];
-                                    new BuscarIdOModificarTask().execute("GET",url,"false");
-                                }
-                                else
-                                {
-                                    if(i==TiempoDisponibleSalas.length-1)
-                                    {
-                                        Log.d("Debug", "Paso por el if");
-                                        String url ="http://apiminorityproyecto.azurewebsites.net/sala/rest/Get";
-                                        new BuscarDatosTask().execute(url);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if(i==TiempoDisponibleSalas.length-1)
-                                {
-                                    String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/Get";
-                                    new BuscarDatosTask().execute(url);
-                                }
-                            }
-                        }*/
                     }
 
                 }
@@ -277,8 +184,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<SalasDeJuego> ListaSalas) {
             CheckearDisponibilidadSalas(ListaSalas);
-            TrajoEstados=true;
-            TraerEstadosSalas();
         }
 
         @Override
@@ -310,8 +215,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 boolean Disponible= jsonSala.getBoolean("Disponible");
                 String Nombre= jsonSala.getString("Nombre");
                 String HoraComienzo= jsonSala.getString("HoraComienzo");
+                boolean ModificarHComienzo= jsonSala.getBoolean("ModificarHComienzo");
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre,HoraComienzo);
+                MiSalaDeJuego.LlenarDatos(Id,CantJugadores,MontoAGanar,NRonda,Disponible,Nombre,HoraComienzo,ModificarHComienzo);
                 ListaSalas.add(MiSalaDeJuego);
             }
             return ListaSalas;
@@ -385,6 +291,49 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
     }
 
+    private class ActualizarMHCSala extends AsyncTask<String, Void, Integer> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+        @Override
+        protected void onPostExecute(Integer Id)
+        {
+            if(Id!=0 )
+            {
+                TrajoEstados=true;
+                TraerEstadosSalas();
+            }
+
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url= parametros[1];
+            Log.d("Put", "Puteo");
+            String json = parametros[2];
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    Log.d("Put", "Puteo");
+                    return  -1;
+
+                }
+                catch (IOException e)
+                {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+
+                }
+
+            }
+        }
+
+
 
     private void CheckearDisponibilidadSalas(ArrayList<SalasDeJuego> ListaSalas)
     {
@@ -402,37 +351,25 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             if(MiSalaDeJuego.Disponible)
             {
-                VecEstadosSalas[i].setText("Disponible");
+                VecEstadosSalas[i].setText(MiSalaDeJuego.HoraComienzo);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
-                CalcularTiempoDisponibleSalas(MiSalaDeJuego.Disponible,i);
-                //TiempoDisponibleSalas[i]="Esperando2min";
-                if(ContandoSegundosDisponiblesSala[i]==false)
-                {
-                    SegundosDisponibleSalas[i]=0;
-                }
-                //EjecutarTimerParaReclutarJugadores(NombresSalas[i]);
+                TiempoALlegar[i]=HoraComienzoSalaDateTime;
+                CambiarMHCSalaDeJuego(MiSalaDeJuego);
             }
             else
             {
+                VecEstadosSalas[i].setText("En juego");
                 DisponibilidadSalas[i]=false;
-                CalcularTiempoDisponibleSalas(MiSalaDeJuego.Disponible,i);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
                 VecBotones[i].setEnabled(false);
-                /*if(JuegoPrevioSalas[i])
-                {
-                    VecEstadosSalas[i].setText("00:04:15");
-                    TiempoDisponibleSalas[i]=VecEstadosSalas[i].getText().toString();
-                    VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
-                    VecBotones[i].setEnabled(false);
-                }
-                else
-                {
-                    VecEstadosSalas[i].setText(TiempoDisponibleSalas[i]);
-                    VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
-                    VecBotones[i].setEnabled(false);
-                }*/
+                Calendar HoraComienzoMas15Seg= Calendar.getInstance();
+                HoraComienzoMas15Seg.setTime(HoraComienzoSalaDateTime);
+                HoraComienzoMas15Seg.add(Calendar.SECOND,15);
+                TiempoALlegar[i]= HoraComienzoMas15Seg.getTime();
+                CambiarMHCSalaDeJuego(MiSalaDeJuego);
+
             }
         }
     }
@@ -445,29 +382,26 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
     }
 
-    private void CalcularTiempoDisponibleSalas (boolean DisponibilidadSala, int IndiceVectores) {
-        if (DisponibilidadSala)
+    private void CambiarMHCSalaDeJuego (SalasDeJuego MiSalaDeJuego) {
+        if (MiSalaDeJuego.Disponible)
         {
-            Calendar calendar= Calendar.getInstance();
-            calendar.setTime(HoraComienzoSalaDateTime);
-            calendar.add(Calendar.MINUTE, 2);
-            TiempoALlegar[IndiceVectores] = calendar.getTime();
+            SalasDeJuego ObjetoSalaDeJuego= new SalasDeJuego();
+            ObjetoSalaDeJuego.LlenarDisponibilidad(false);
+            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+String.valueOf(MiSalaDeJuego.Id);
+            gson=new Gson();
+            new ActualizarMHCSala().execute("PUT",url,gson.toJson(ObjetoSalaDeJuego));
         }
         else
         {
-            Calendar HoraComienzoMas15Seg= Calendar.getInstance();
-            HoraComienzoMas15Seg.setTime(HoraComienzoSalaDateTime);
-            HoraComienzoMas15Seg.add(Calendar.SECOND, 15);
-            Date HoraComienzoMas15SegDT= HoraComienzoMas15Seg.getTime();
-            TiempoALlegar[IndiceVectores] = HoraComienzoMas15SegDT;
-            cal = Calendar.getInstance();
-            HoraActual = cal.getTime();
-            long DiferenciaHActHComienzo= HoraComienzoMas15SegDT.getTime() - HoraActual.getTime();
-            Date SumaTiempoDisponibleDateTime = new Date(TimeUnit.MILLISECONDS.toHours(DiferenciaHActHComienzo));
-            String DiferenciaHorasString= dateFormat.format(SumaTiempoDisponibleDateTime);
-            VecEstadosSalas[IndiceVectores].setText(DiferenciaHorasString);
-            Log.d("VerValorVecEstadosSalas", VecEstadosSalas[IndiceVectores].getText().toString());
+
+            SalasDeJuego ObjetoSalaDeJuego= new SalasDeJuego();
+            ObjetoSalaDeJuego.LlenarDisponibilidad(true);
+            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+String.valueOf(MiSalaDeJuego.Id);
+            gson=new Gson();
+            new ActualizarMHCSala().execute("PUT",url,gson.toJson(ObjetoSalaDeJuego));
         }
+
+
     }
 
 
@@ -541,8 +475,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 IndiceVecBotonesAPasar =Integer.parseInt(parametros[2]);
                 BuscaIdSala= Boolean.parseBoolean(parametros[3]);
-                if(BuscaIdSala)
-                {
+
                     Request request = new Request.Builder()
                             .url(url)
                             .build();
@@ -557,26 +490,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         Log.d("Error", e.getMessage());
                         return 0;
                     }
-
-                }
-                else
-                {
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    try {
-                        Response response = client.newCall(request).execute();
-                        String jsonStr= response.body().string();
-                        return Integer.parseInt(jsonStr);
-
-                    }
-                    catch (IOException  e)
-                    {
-                        Log.d("Error", e.getMessage());
-                        return 0;
-                    }
-                }
-
             }
             else
             {
@@ -611,8 +524,11 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         Intent ElIntent= new Intent(this,Activity_Jugabilidad.class);
         Bundle ElBundle= new Bundle();
         ElBundle.putInt("IdSala",IdSala);
-        String TiempoALlegarString= dateFormat.format(TiempoALlegar);
-        ElBundle.putString("TiempoALlegarSala",TiempoALlegarString);
+        cal= Calendar.getInstance();
+        HoraActual= cal.getTime();
+        long TiempoParaReclutarJugadores= TiempoALlegar.getTime() - HoraActual.getTime();
+        int TiempoParaReclutarJugadoresSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaReclutarJugadores)));
+        ElBundle.putInt("SegundosParaReclutarJugadores",TiempoParaReclutarJugadoresSegundos);
         ElIntent.putExtras(ElBundle);
         startActivity(ElIntent);
     }

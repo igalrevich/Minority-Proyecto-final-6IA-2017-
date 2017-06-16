@@ -26,6 +26,12 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(update);
         }
 
+        public static void ModificarMHCSala(int IdSalaDeJuego, SalasDeJuego MiSalaDeJuego)
+        {
+            string update = "UPDATE salasdejuegos SET ModificarHComienzo=" + MiSalaDeJuego.ModificarHComienzo + " WHERE Id=" + IdSalaDeJuego;
+            DBHelper.EjecutarIUD(update);
+        }
+
         public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
         {
             bool CantSalasMayor0 = false;
@@ -53,6 +59,8 @@ namespace RestApiMinority.Data
                 MiSalaDeJuego.Disponible = Convert.ToBoolean(dr["Disponible"]);
 
                 MiSalaDeJuego.HoraComienzo = Convert.ToString(dr["HoraComienzo"]);
+
+                MiSalaDeJuego.ModificarHComienzo = Convert.ToBoolean(dr["ModificarHComienzo"]);
 
             }
 
@@ -111,6 +119,8 @@ namespace RestApiMinority.Data
                 MiSalaDeJuego.Disponible = Convert.ToBoolean(dr["Disponible"]);
 
                 MiSalaDeJuego.HoraComienzo = Convert.ToString(dr["HoraComienzo"]);
+
+                MiSalaDeJuego.ModificarHComienzo= Convert.ToBoolean(dr["ModificarHComienzo"]);
 
                 ListaSalasDeJuego.Add(MiSalaDeJuego);
 

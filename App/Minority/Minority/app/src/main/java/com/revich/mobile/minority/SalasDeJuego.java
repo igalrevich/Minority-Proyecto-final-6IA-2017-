@@ -17,8 +17,9 @@ public class SalasDeJuego {
     public boolean Disponible;
     public String Nombre;
     public String HoraComienzo;
+    public boolean ModificarHComienzo;
 
-    public void LlenarDatos(int Id, int CantJugadores, int MontoAGanar, int NRonda, boolean Disponible, String Nombre , String HoraComienzoDateTime)
+    public void LlenarDatos(int Id, int CantJugadores, int MontoAGanar, int NRonda, boolean Disponible, String Nombre , String HoraComienzoDateTime, boolean ModificarHComienzo)
     {
         this.Id=Id;
         this.CantJugadores=CantJugadores;
@@ -27,6 +28,7 @@ public class SalasDeJuego {
         this.Disponible=Disponible;
         this.Nombre=Nombre;
         this.HoraComienzo=HoraComienzoDateTime;
+        this.ModificarHComienzo=  ModificarHComienzo;
     }
     public void LlenarDisponibilidad(boolean Estado)
     {
@@ -53,6 +55,7 @@ public class SalasDeJuego {
             long HoraComienzoSalaLong= HoraActual.getTime() + CuatroMin15Seg.getTime();
             HoraComienzo= String.valueOf(HoraComienzoSalaLong);
         }
+        ModificarHComienzo=Estado;
 
     }
 
