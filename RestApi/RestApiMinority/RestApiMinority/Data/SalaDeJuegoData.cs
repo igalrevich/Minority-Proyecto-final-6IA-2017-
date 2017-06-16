@@ -15,13 +15,13 @@ namespace RestApiMinority.Data
             string update = "";
             if (Estado)
             {
-                //string delete = "DELETE FROM usuariosxsala";
-                //DBHelper.EjecutarIUD(delete);
-                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= localtime() where Id=" + IdSala.ToString();
+                string delete = "DELETE FROM usuariosxsala";
+                DBHelper.EjecutarIUD(delete);
+                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) where Id=" + IdSala.ToString();
             }
             else
             {
-                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= timestampadd(MINUTE,4,localtime()) where Id=" + IdSala.ToString();
+                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= TIMESTAMPADD(MINUTE,4,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) ) where Id=" + IdSala.ToString();
             }
             DBHelper.EjecutarIUD(update);
         }
