@@ -21,9 +21,8 @@ namespace RestApiMinority
                 defaults: new { id = RouteParameter.Optional }
             );
 
-           
-
-            config.Formatters.JsonFormatter.SupportedMediaTypes
+            
+           config.Formatters.JsonFormatter.SupportedMediaTypes
                 .Add(new MediaTypeHeaderValue("text/html"));
         }
     }
