@@ -50,4 +50,11 @@ using System.Web.Http.Description;
         SalaDeJuegoData.ModificarMHCSala(id, MiSalaDeJuego);
         return Ok();
     }
+
+    // DELETE: api/Rest/DeleteUsuarioxSala/1
+    public IHttpActionResult DeleteUsuarioxSala(int id)
+    {
+        SalaDeJuegoData.DeleteUsuarioEnSala(id);
+        return Ok();
+    }
 }

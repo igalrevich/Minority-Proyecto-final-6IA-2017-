@@ -38,12 +38,7 @@ namespace RestApiMinority.Controllers
             return Ok();
         }
 
-        // DELETE: api/Rest/DeleteUsuarioxSala/1
-        public IHttpActionResult DeleteUsuarioxSala(int id)
-        {
-            SalaDeJuegoData.DeleteUsuarioEnSala(id);
-            return Ok();
-        }
+       
 
 
     }

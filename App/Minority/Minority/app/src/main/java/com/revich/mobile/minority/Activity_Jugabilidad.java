@@ -61,18 +61,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         setContentView(R.layout.layout_jugabilidad_landscape);
         getSupportActionBar().hide();
         ObtenerReferencias();
+        CambiarBotones(false);
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
-        /*String TiempoALlegarSalaString= ElBundleQueVino.getString("TiempoALlegarSala");
-        try
-        {
-            TiempoALlegarSala= dateFormat.parse(TiempoALlegarSalaString);
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }*/
+        SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosParaReclutarJugadores");
         url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
@@ -256,34 +249,28 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void SetearTimerSegundosDisponibles()
     {
-        cal= Calendar.getInstance();
-        HoraActual=cal.getTime();
-        if(HoraActual==TiempoALlegarSala)
-      {
-          CambiarBotones(true);
-          SetearTimer();
-      }
-      else
-      {
-          CambiarBotones(false);
-          long DifSegArranqueSala= TiempoALlegarSala.getTime() - HoraActual.getTime();
-          DifSegArranqueSala= TimeUnit.MILLISECONDS.toSeconds(DifSegArranqueSala);
-          int SegundosParaArranqueSala= (int) (long) DifSegArranqueSala;
-          //int SegundosDisponiblesRestantes= 1000*(120-SegundosDisponiblesSala+1);
-          Timer=new CountDownTimer(SegundosParaArranqueSala, 1000) {
+       if(SegundosDisponiblesSala<=0)
+       {
+           CambiarBotones(true);
+           SetearTimer();
+       }
+       else
+       {
+           int SegundosDisponiblesSalaTimer= 1000*(SegundosDisponiblesSala+1);
+           Timer=new CountDownTimer(SegundosDisponiblesSalaTimer, 1000) {
 
-              public void onTick(long millisUntilFinished) {
-                  Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(millisUntilFinished/1000),Toast.LENGTH_SHORT);
-                  msg.show();
-              }
+               public void onTick(long millisUntilFinished) {
+                   /*Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(millisUntilFinished/1000),Toast.LENGTH_SHORT);
+                   msg.show();*/
+               }
 
-              public void onFinish()
-              {
-                  CambiarBotones(true);
-                  SetearTimer();
-              }
-          }.start();
-      }
+               public void onFinish()
+               {
+                   CambiarBotones(true);
+                   SetearTimer();
+               }
+           }.start();
+       }
     }
     private void CambiarBotones(boolean SegundosDisp120)
     {

@@ -45,9 +45,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     String[] NombresSalas= new String[]{"A","B","C","D","E","F"};
     Button [] VecBotones=new Button[]{btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF};
     Gson gson;
-    int [] SegundosDisponibleSalas= new int [] {0,0,0,0,0,0};
     int [] IdsSalas = new int [] {0,0,0,0,0,0};
-    Boolean[] ContandoSegundosDisponiblesSala= new Boolean[] {false,false,false,false,false,false};
+    Boolean[] ApretoBotonesSalas= new Boolean[] {false,false,false,false,false,false};
     int  IndiceVecBotonesAPasar= 0;
     Date [] TiempoALlegar= new Date[] {null,null,null,null,null,null};
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
@@ -448,13 +447,21 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 }
                 else
                 {
-                    gson= new Gson();
-                    Usuario MiUsuario= new Usuario();
-                    String MonedasUsuarioString= tvMonedas.getText().toString();
-                    int MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
-                    MiUsuario.LlenarDatos(Id,MonedasUsuario,IdsSalas[IndiceVecBotonesAPasar]);
-                    String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/ModificarUsuario/"+Id;
-                    new BuscarIdAPasarTaskOActualizarUsuario().execute("PUT",url,gson.toJson(MiUsuario));
+                    if (ApretoBotonesSalas[IndiceVecBotonesAPasar]==false)
+                    {
+                        ApretoBotonesSalas[IndiceVecBotonesAPasar]=true;
+                        gson= new Gson();
+                        Usuario MiUsuario= new Usuario();
+                        String MonedasUsuarioString= tvMonedas.getText().toString();
+                        int MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
+                        MiUsuario.LlenarDatos(Id,MonedasUsuario,IdsSalas[IndiceVecBotonesAPasar]);
+                        String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/ModificarUsuario/"+Id;
+                        new BuscarIdAPasarTaskOActualizarUsuario().execute("PUT",url,gson.toJson(MiUsuario));
+                    }
+                    else
+                    {
+                        IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                    }
                 }
             }
             else
@@ -526,7 +533,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         ElBundle.putInt("IdSala",IdSala);
         cal= Calendar.getInstance();
         HoraActual= cal.getTime();
-        long TiempoParaReclutarJugadores= TiempoALlegar.getTime() - HoraActual.getTime();
+        cal.setTime(TiempoALlegar);
+        Date HoraComienzo= cal.getTime();
+        long TiempoParaReclutarJugadores= HoraComienzo.getTime() - HoraActual.getTime();
         int TiempoParaReclutarJugadoresSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaReclutarJugadores)));
         ElBundle.putInt("SegundosParaReclutarJugadores",TiempoParaReclutarJugadoresSegundos);
         ElIntent.putExtras(ElBundle);
