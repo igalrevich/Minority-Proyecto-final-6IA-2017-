@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 
     public class SalaController : ApiController
     {
-        // GET: api/Sala/GetSala
+        // GET: api/Sala/Get
         [ResponseType(typeof(SalasDeJuego))]
         public IEnumerable<SalasDeJuego> Get()
         {
