@@ -146,6 +146,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
                         new BuscarPregunta().execute("GET",url);
                     }
+                    else
+                    {
+                        String CantJugadoresString= tvCantJugadores.getText().toString();
+                        int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
+                        String MontoAGanarString= tvMontoGanador.getText().toString();
+                        int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
+                        tvCantJugadores.setText(String.valueOf(CantJugadores));
+                        tvMontoGanador.setText(String.valueOf(MontoAGanar));
+                    }
                 }
 
             }
@@ -333,6 +342,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            Timer=new CountDownTimer(SegundosDisponiblesSalaTimer, 1000) {
 
                public void onTick(long millisUntilFinished) {
+
                    Random rand= new Random();
                    int Num0o1= rand.nextInt(2);
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();

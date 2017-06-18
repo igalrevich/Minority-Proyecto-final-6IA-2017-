@@ -169,22 +169,20 @@
                 android:layout_marginTop="0dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="Pepsi"
                 android:textSize="25dp" />
 
             <Button
-            android:id="@+id/btnOpcion1"
-            android:layout_width="79dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="-180dp"
-            android:background="#ffffff"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="Coca"
-            android:textSize="25dp" />
+                android:id="@+id/btnOpcion1"
+                android:layout_width="79dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="-180dp"
+                android:background="#ffffff"
+                android:clickable="false"
+                android:gravity="center"
+                android:textSize="25dp" />
         </LinearLayout>
 
         <Button
