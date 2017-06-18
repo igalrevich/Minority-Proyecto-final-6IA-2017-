@@ -59,4 +59,16 @@ public class SalasDeJuego {
 
     }
 
+    public void LlenarCantJugadoresMas1(int CantJugadoresActual, int MontoAGanarActual, int NumRonda)
+    {
+        Id = 4;
+        CantJugadores = CantJugadoresActual+1;
+        MontoAGanar = MontoAGanarActual+1;
+        NRonda = NumRonda;
+        Nombre = "Igal";
+        Disponible = true;
+        HoraComienzo= "Igal";
+        ModificarHComienzo=true;
+    }
+
 }

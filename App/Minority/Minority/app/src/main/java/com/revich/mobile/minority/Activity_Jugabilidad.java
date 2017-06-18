@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
@@ -44,13 +45,14 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
-    String VotoFinal,NombreBoton,SegundosTimer,url,AtributoRespuesta;
+    String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica;
     int Idbtn, IdSala, SegundosDisponiblesSala;
+    int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
     CountDownTimer Timer;
     Gson gson;
     SalasDeJuego SalaDeJuegoTraida;
     Date TiempoALlegarSala;
-    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
+    SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
     Respuesta MiRespuesta;
     Date HoraActual;
     Calendar cal;
@@ -65,6 +67,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
+        Usuario= ElBundleQueVino.getString("Usuario");
         SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosParaReclutarJugadores");
         url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
@@ -117,25 +120,32 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(Integer Id) {
             if (Id != 0)
             {
-                switch (AtributoRespuesta)
+                if(Id!=-1)
                 {
-                    case "Sala":
-                        MiRespuesta.Sala = Id;
-                        String Usuario="IgalRevich";
-                        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
-                        new TraerIdsInsertarResultados().execute("GET",url,"Usuario");
-                        break;
-                    case "Usuario":
-                        MiRespuesta.Usuario = Id;
-                        String Opcion1= btnOpcion1.getText().toString();
-                        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/preguntas/"+Opcion1;
-                        new TraerIdsInsertarResultados().execute("GET",url,"Pregunta");
-                        break;
-                    case "Pregunta":
-                        MiRespuesta.Pregunta = Id;
-                        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
-                        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
-                        break;
+                    switch (AtributoRespuesta)
+                    {
+                        case "Usuario":
+                            MiRespuesta.Usuario = Id;
+                            String Opcion1= btnOpcion1.getText().toString();
+                            url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/preguntas/"+Opcion1;
+                            new TraerIdsInsertarResultados().execute("GET",url,"Pregunta");
+                            break;
+                        case "Pregunta":
+                            MiRespuesta.Pregunta = Id;
+                            url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
+                            new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
+                            break;
+                    }
+                }
+                else
+                {
+                    if(QueModifica.equals("NRonda"))
+                    {
+                        Random r = new Random();
+                        int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
+                        url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
+                        new BuscarPregunta().execute("GET",url);
+                    }
                 }
 
             }
@@ -161,22 +171,49 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     Log.d("Error :", e.getMessage());
                     return 0;
                 }
-            } else {
-                String json = parametros[2];
-                RequestBody body = RequestBody.create(JSON, json);
-                Request request = new Request.Builder()
-                        .url(url)
-                        .post(body)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    IniciarActivityResultados();
+            } else
+                {
 
-                } catch (IOException e) {
-                    Log.d("Error :", e.getMessage());
+                if(method.equals("POST"))
+                {
+                    String json = parametros[2];
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        IniciarActivityResultados();
+
+                    } catch (IOException e) {
+                        Log.d("Error :", e.getMessage());
+
+                    }
+                    return 0;
 
                 }
-                return 0;
+                else
+                {
+                    String json = parametros[2];
+                    QueModifica= parametros[3];
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .put(body)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        return -1;
+
+                    } catch (IOException e)
+                    {
+                        Log.d("Error :", e.getMessage());
+                        return 0;
+                    }
+
+
+                }
 
 
             }
@@ -184,7 +221,43 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
 
 
+    private class BuscarPregunta extends AsyncTask<String, Void, Pregunta> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
 
+        @Override
+        protected void onPostExecute(Pregunta MiPregunta) {
+            btnOpcion1.setText(MiPregunta.OpcionA);
+            btnOpcion2.setText(MiPregunta.OpcionB);
+            SetearTimer();
+        }
+
+        @Override
+        protected Pregunta doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    String jsonStr = response.body().string();
+                    return parsearResultado(jsonStr);
+
+                } catch (IOException | JSONException e) {
+                    Log.d("Error", e.getMessage());
+                    return new Pregunta();
+                }
+        }
+
+        Pregunta parsearResultado(String JSONstr) throws JSONException {
+            gson= new Gson();
+            Pregunta MiPregunta= gson.fromJson(JSONstr,Pregunta.class);
+            return MiPregunta;
+        }
+    }
 
         @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -260,14 +333,30 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            Timer=new CountDownTimer(SegundosDisponiblesSalaTimer, 1000) {
 
                public void onTick(long millisUntilFinished) {
-                   /*Toast msg= Toast.makeText(getApplicationContext(),String.valueOf(millisUntilFinished/1000),Toast.LENGTH_SHORT);
-                   msg.show();*/
+                   Random rand= new Random();
+                   int Num0o1= rand.nextInt(2);
+                   String CantJugadoresSalaString= tvCantJugadores.getText().toString();
+                   int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
+                   String MontoAGanarString= tvMontoGanador.getText().toString();
+                   int MontoAGanar= Integer.parseInt(MontoAGanarString);
+                   if(Num0o1==1 && CantJugadoresSala<50)
+                   {
+                       SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                       MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
+                       String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                       gson=new Gson();
+                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadores");
+                   }
                }
 
                public void onFinish()
                {
                    CambiarBotones(true);
-                   SetearTimer();
+                   SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                   MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
+                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                   gson=new Gson();
+                   new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"NRonda");
                }
            }.start();
        }
@@ -385,9 +474,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiRespuesta=new Respuesta();
         MiRespuesta.RespuestaParcial=VotoFinal;
         MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
-        String Sala= tvSala.getText().toString();
-        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+Sala;
-        new TraerIdsInsertarResultados().execute("GET",url,"Sala");
+        MiRespuesta.Sala=IdSala;
+        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
+        new TraerIdsInsertarResultados().execute("GET",url,"Usuario");
     }
     private void IniciarActivityResultados()
     {

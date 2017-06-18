@@ -32,6 +32,21 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(update);
         }
 
+        public static void ModificarCantJugadoresONRondaSala(int IdSalaDeJuego, SalasDeJuego MiSalaDeJuego)
+        {
+            string update = "";
+            if (MiSalaDeJuego.NRonda == -1)
+            {
+                update = "UPDATE salasdejuegos SET CantJugadores=" + MiSalaDeJuego.CantJugadores + " , MontoAGanar=" + MiSalaDeJuego.MontoAGanar + " WHERE Id=" + IdSalaDeJuego;
+            }
+            else
+            {
+                update = "UPDATE salasdejuegos SET NRonda="+MiSalaDeJuego.NRonda + " WHERE Id=" + IdSalaDeJuego;
+            }
+            DBHelper.EjecutarIUD(update);
+        }
+
+
         public static SalasDeJuego ObtenerPorIdSalaDeJuego(int id)
         {
             bool CantSalasMayor0 = false;

@@ -52,9 +52,10 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     boolean [] EnJuegoSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
-    SimpleDateFormat dateFormat= new SimpleDateFormat("hh:mm:ss");
-    Date HoraActual,DosMin= null,QuinceSeg= null,HoraComienzoSalaDateTime=null ,TiempoParaComienzoSala;
+    SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+    Date HoraActual,HoraComienzoSalaDateTime=null;
     Calendar cal;
+    String Usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -336,7 +337,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     private void CheckearDisponibilidadSalas(ArrayList<SalasDeJuego> ListaSalas)
     {
-        dateFormat= new SimpleDateFormat("hh:mm:ss");
         for(int i=0; i<ListaSalas.size();i++)
         {
             SalasDeJuego MiSalaDeJuego=ListaSalas.get(i);
@@ -350,7 +350,10 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             if(MiSalaDeJuego.Disponible)
             {
-                VecEstadosSalas[i].setText(MiSalaDeJuego.HoraComienzo);
+                String HoraComienzoSala= MiSalaDeJuego.HoraComienzo.trim();
+                String [] HoraComienzoSalaDividida= HoraComienzoSala.split(" ");
+                String TiempoComienzoSala= HoraComienzoSalaDividida[1];
+                VecEstadosSalas[i].setText(TiempoComienzoSala);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
@@ -439,7 +442,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 if(BuscaIdSala)
                 {
                     IdsSalas[IndiceVecBotonesAPasar]= Id;
-                    String Usuario= tvUsuario.getText().toString();
+                    Usuario= tvUsuario.getText().toString();
                     Usuario=Usuario.trim();
                     String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
                     Log.d("url", url);
@@ -531,6 +534,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         Intent ElIntent= new Intent(this,Activity_Jugabilidad.class);
         Bundle ElBundle= new Bundle();
         ElBundle.putInt("IdSala",IdSala);
+        ElBundle.putString("Usuario",Usuario);
         cal= Calendar.getInstance();
         HoraActual= cal.getTime();
         cal.setTime(TiempoALlegar);

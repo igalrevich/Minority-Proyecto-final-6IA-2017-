@@ -41,13 +41,23 @@ using System.Web.Http.Description;
         return Ok();
        }
 
-    // PUT: api/Sala/ModificarSalaDeJuego/1
+    // PUT: api/Sala/ModificarSalaDeJuegoMHC/1
     [ResponseType(typeof(SalasDeJuego))]
     [Route("api/sala/ModificarSalaDeJuegoMHC/{id}")]
     [HttpPut]
     public IHttpActionResult ModificarSalaDeJuegoMHC(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
     {
         SalaDeJuegoData.ModificarMHCSala(id, MiSalaDeJuego);
+        return Ok();
+    }
+
+    // PUT: api/Sala/ModificarCantJugadoresONRondaSala/1
+    [ResponseType(typeof(SalasDeJuego))]
+    [Route("api/sala/ModificarCantJugadoresONRondaSala/{id}")]
+    [HttpPut]
+    public IHttpActionResult ModificarCantJugadoresONRondaSala(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+    {
+        SalaDeJuegoData.ModificarCantJugadoresONRondaSala(id, MiSalaDeJuego);
         return Ok();
     }
 
