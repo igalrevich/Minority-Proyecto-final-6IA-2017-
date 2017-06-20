@@ -110,7 +110,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
                 public void onTick(long millisUntilFinished) {
 
-                    Log.d("TrajoEstados", "Trajo estados");
+                    //Log.d("TrajoEstados", "Trajo estados");
                         SetearListeners();
                         for(int i=0; i<DisponibilidadSalas.length;i++)
                         {

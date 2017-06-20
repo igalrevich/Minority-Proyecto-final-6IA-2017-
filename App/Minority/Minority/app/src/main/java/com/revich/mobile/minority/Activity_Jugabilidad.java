@@ -45,7 +45,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false;
-    String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica;
+    String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2;
     int Idbtn, IdSala, SegundosDisponiblesSala;
     int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
     CountDownTimer Timer;
@@ -150,8 +150,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     {
                         String CantJugadoresString= tvCantJugadores.getText().toString();
                         int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
+                        SalaDeJuegoTraida.CantJugadores=CantJugadores;
                         String MontoAGanarString= tvMontoGanador.getText().toString();
                         int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
+                        SalaDeJuegoTraida.MontoAGanar= MontoAGanar;
                         tvCantJugadores.setText(String.valueOf(CantJugadores));
                         tvMontoGanador.setText(String.valueOf(MontoAGanar));
                     }
@@ -229,6 +231,51 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
+    private class ActualizarMHCSala extends AsyncTask<String, Void, Integer> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+        @Override
+        protected void onPostExecute(Integer Id)
+        {
+            if(Id!=0 )
+            {
+                CambiarBotones(true);
+                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
+                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                gson=new Gson();
+                new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"NRonda");
+            }
+
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url= parametros[1];
+            Log.d("Put", "Puteo");
+            String json = parametros[2];
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                Log.d("Put", "Puteo");
+                return  -1;
+
+            }
+            catch (IOException e)
+            {
+                Log.d("Error :", e.getMessage());
+                return 0;
+
+            }
+
+        }
+    }
 
     private class BuscarPregunta extends AsyncTask<String, Void, Pregunta> {
         private OkHttpClient client = new OkHttpClient();
@@ -356,17 +403,17 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
                        new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadores");
+
                    }
                }
 
                public void onFinish()
                {
-                   CambiarBotones(true);
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                   MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
-                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                   MiSalaDeJuego.LlenarDisponibilidad(true);
+                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
                    gson=new Gson();
-                   new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"NRonda");
+                   new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
                }
            }.start();
        }
@@ -463,6 +510,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     };
     private void DeterminarVotoFinal()
     {
+        Opcion1=btnOpcion1.getText().toString();
+        Opcion2=btnOpcion2.getText().toString();
         btnOpcion1.setEnabled(false);
         btnOpcion2.setEnabled(false);
         btnVotar.setEnabled(false);
@@ -474,11 +523,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         {
             if(VotoOpcion1)
             {
-                VotoFinal=btnOpcion1.getText().toString();
+                VotoFinal=Opcion1;
             }
             else
             {
-                VotoFinal=btnOpcion2.getText().toString();
+                VotoFinal=Opcion2;
             }
         }
         MiRespuesta=new Respuesta();
@@ -498,6 +547,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ElBundle.putInt("IdSala",MiRespuesta.Sala);
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
         ElBundle.putInt("IdUsuario",MiRespuesta.Usuario);
+        ElBundle.putString("Opcion1",Opcion1);
+        ElBundle.putString("Opcion2",Opcion2);
         MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
     }

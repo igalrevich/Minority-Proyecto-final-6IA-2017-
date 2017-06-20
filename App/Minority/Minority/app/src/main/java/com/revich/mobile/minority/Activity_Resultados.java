@@ -24,7 +24,7 @@ public class Activity_Resultados extends AppCompatActivity {
      TextView tvOpcion1,tvOpcion2,tvVotosOpcion1,tvVotosOpcion2,tvGanastePerdiste,tvIndicacion1,tvIndicacion2;
      String Opcion1,Opcion2,ResultadoUsuario,VotoJugador,url,Opcion;
      boolean MayoriaOpcion1=false,VotoOpcion1=false;
-     int CantVotosOpcion1,CantVotosOpcion2,CantVotosEnBlanco,CantVotosOpciones,Sala,Usuario,Pregunta;
+     int CantVotosOpcion1,CantVotosOpcion2,CantVotosEnBlanco,CantVotosOpciones,Sala,Usuario,Pregunta,CantJugadores,IndiceFor;
      Random rand;
      Respuesta MiRespuesta;
      Gson gson;
@@ -35,8 +35,7 @@ public class Activity_Resultados extends AppCompatActivity {
         getSupportActionBar().hide();
         ObtenerReferencias();
         GenerarVotosAlAzar();
-        GenerarResultadoUsuarioParte1();
-        ImprimirResultadosPantalla(ResultadoUsuario);
+
     }
 
 
@@ -52,12 +51,12 @@ public class Activity_Resultados extends AppCompatActivity {
     }
     private void GenerarVotosAlAzar()
     {
-        Opcion1=tvOpcion1.getText().toString();
-        Opcion2=tvOpcion2.getText().toString();
         Intent ELIntentQueVino= getIntent();
         Bundle ElBundle= ELIntentQueVino.getExtras();
+        Opcion1= ElBundle.getString("Opcion1");
+        Opcion2= ElBundle.getString("Opcion2");
         VotoJugador= ElBundle.getString("Voto");
-        int CantJugadores =ElBundle.getInt("CantJugadores");
+        CantJugadores =ElBundle.getInt("CantJugadores");
         Sala =ElBundle.getInt("IdSala");
         Usuario =ElBundle.getInt("IdUsuario");
         Pregunta=ElBundle.getInt("IdPregunta");
@@ -88,7 +87,9 @@ public class Activity_Resultados extends AppCompatActivity {
             }
             MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
             url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
-            new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
+            gson= new Gson();
+            new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta),String.valueOf(i));
+
         }
         /*CantVotosEnBlanco= rand.nextInt(50);
         CantVotosOpciones=49-CantVotosEnBlanco;
@@ -104,16 +105,27 @@ public class Activity_Resultados extends AppCompatActivity {
         protected void onPostExecute(Integer CantVotos) {
            if(CantVotos!=-1)
            {
-               switch (Opcion) {
-                   case "Opcion1":
-                       CantVotosOpcion1 = CantVotos;
-                       url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion2+"/"+Sala;
-                       new TraerIdsInsertarResultados().execute("GET", url, "Opcion2");
-                       break;
-                   case "Opcion2":
-                       CantVotosOpcion2 = CantVotos;
-                       GenerarResultadoUsuarioParte2();
-                       break;
+               if(CantVotos!=-2)
+               {
+                   switch (Opcion) {
+                       case "Opcion1":
+                           CantVotosOpcion1 = CantVotos;
+                           url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion2 + "/" + Sala;
+                           new TraerIdsInsertarResultados().execute("GET", url, "Opcion2");
+                           break;
+                       case "Opcion2":
+                           CantVotosOpcion2 = CantVotos;
+                           GenerarResultadoUsuarioParte2();
+                           break;
+                   }
+               }
+               else
+               {
+                  if(IndiceFor==CantJugadores-1)
+                  {
+                      GenerarResultadoUsuarioParte1();
+                      ImprimirResultadosPantalla(ResultadoUsuario);
+                  }
                }
            }
 
@@ -143,6 +155,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 if(method.equals("POST"))
                 {
                     String json = parametros[2];
+                    IndiceFor= Integer.parseInt(parametros[3]);
                     RequestBody body = RequestBody.create(JSON, json);
                     Request request = new Request.Builder()
                             .url(url)
@@ -150,13 +163,14 @@ public class Activity_Resultados extends AppCompatActivity {
                             .build();
                     try {
                         Response response = client.newCall(request).execute();
+                        return -2;
 
                     }
                     catch (IOException e) {
                         Log.d("Error :", e.getMessage());
-
+                        return -1;
                     }
-                    return -1;
+
                 }
                 else
                 {
