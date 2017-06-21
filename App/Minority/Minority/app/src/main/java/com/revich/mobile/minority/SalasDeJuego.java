@@ -71,4 +71,16 @@ public class SalasDeJuego {
         ModificarHComienzo=true;
     }
 
+    public void ActualizarDatosSalas(int NuevaCantJugadores,int NumRondaActual)
+    {
+        Id = 4;
+        CantJugadores = NuevaCantJugadores;
+        MontoAGanar = 1;
+        NRonda = NumRondaActual+1;
+        Nombre = "Igal";
+        Disponible = true;
+        HoraComienzo= "Igal";
+        ModificarHComienzo=true;
+    }
+
 }

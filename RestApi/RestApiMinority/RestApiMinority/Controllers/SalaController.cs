@@ -61,7 +61,17 @@ using System.Web.Http.Description;
         return Ok();
     }
 
-    // DELETE: api/Rest/DeleteUsuarioxSala/1
+    // PUT: api/Sala/ModificarCantJugadoresYRespuestasSala/1
+    [ResponseType(typeof(SalasDeJuego))]
+    [Route("api/sala/ModificarCantJugadoresYRespuestasSala/{id}")]
+    [HttpPut]
+    public IHttpActionResult ModificarCantJugadoresYRespuestasSala(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+    {
+        SalaDeJuegoData.ModificarCantJugadoresYRespuestasSala(id, MiSalaDeJuego);
+        return Ok();
+    }
+
+    // DELETE: api/sala/DeleteUsuarioxSala/1
     public IHttpActionResult DeleteUsuarioxSala(int id)
     {
         SalaDeJuegoData.DeleteUsuarioEnSala(id);

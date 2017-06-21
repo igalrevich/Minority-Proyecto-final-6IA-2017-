@@ -17,7 +17,7 @@ namespace RestApiMinority.Data
             {
                 string delete = "DELETE FROM usuariosxsala";
                 DBHelper.EjecutarIUD(delete);
-                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) where Id=" + IdSala.ToString();
+                update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= TIMESTAMPADD(MINUTE,2,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) ) where Id=" + IdSala.ToString();
             }
             else
             {
@@ -44,6 +44,25 @@ namespace RestApiMinority.Data
                 update = "UPDATE salasdejuegos SET NRonda="+MiSalaDeJuego.NRonda + " WHERE Id=" + IdSalaDeJuego;
             }
             DBHelper.EjecutarIUD(update);
+        }
+
+        public static void ModificarCantJugadoresYRespuestasSala(int IdSalaDeJuego, SalasDeJuego MiSalaDeJuego)
+        {
+            MySqlCommand cmd = new MySqlCommand("ActualizarSalas", new MySqlConnection(DBHelper.ConnectionString));
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new MySqlParameter("NuevaCantJugadores", MiSalaDeJuego.CantJugadores));
+
+            cmd.Parameters.Add(new MySqlParameter("NuevoNRonda", MiSalaDeJuego.NRonda));
+
+            cmd.Parameters.Add(new MySqlParameter("IdSala", IdSalaDeJuego));
+
+            cmd.Connection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
         }
 
 

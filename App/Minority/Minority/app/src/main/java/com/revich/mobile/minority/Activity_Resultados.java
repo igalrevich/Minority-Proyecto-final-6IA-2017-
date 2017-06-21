@@ -24,7 +24,7 @@ public class Activity_Resultados extends AppCompatActivity {
      TextView tvOpcion1,tvOpcion2,tvVotosOpcion1,tvVotosOpcion2,tvGanastePerdiste,tvIndicacion1,tvIndicacion2;
      String Opcion1,Opcion2,ResultadoUsuario,VotoJugador,url,Opcion;
      boolean MayoriaOpcion1=false,VotoOpcion1=false;
-     int CantVotosOpcion1,CantVotosOpcion2,CantVotosEnBlanco,CantVotosOpciones,Sala,Usuario,Pregunta,CantJugadores,IndiceFor;
+     int CantVotosOpcion1,CantVotosOpcion2,NRonda,Sala,Usuario,Pregunta,CantJugadores,IndiceFor;
      Random rand;
      Respuesta MiRespuesta;
      Gson gson;
@@ -58,6 +58,7 @@ public class Activity_Resultados extends AppCompatActivity {
         VotoJugador= ElBundle.getString("Voto");
         CantJugadores =ElBundle.getInt("CantJugadores");
         Sala =ElBundle.getInt("IdSala");
+        NRonda=ElBundle.getInt("NRonda");
         Usuario =ElBundle.getInt("IdUsuario");
         Pregunta=ElBundle.getInt("IdPregunta");
         rand = new Random();
@@ -96,6 +97,50 @@ public class Activity_Resultados extends AppCompatActivity {
         CantVotosOpcion1=rand.nextInt(CantVotosOpciones+1);
         CantVotosOpcion2=CantVotosOpciones-CantVotosOpcion1;*/
     }
+
+    private class ActualizarSalasEIrAActJug extends AsyncTask<String, Void, Integer> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        @Override
+        protected void onPostExecute(Integer num) {
+            if(num!=-1)
+            {
+                IniciarActivityJugabilidad();
+            }
+
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+            if (method.equals("PUT")) {
+                String json=parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .put(body)
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    return 1;
+
+                } catch (IOException e) {
+                    Log.d("Error :", e.getMessage());
+                    return -1;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+
+
+        }
+    }
     private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
@@ -103,7 +148,7 @@ public class Activity_Resultados extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Integer CantVotos) {
-           if(CantVotos!=-1)
+           if(CantVotos!=-1 && CantVotos!=-3)
            {
                if(CantVotos!=-2)
                {
@@ -124,10 +169,17 @@ public class Activity_Resultados extends AppCompatActivity {
                   if(IndiceFor==CantJugadores-1)
                   {
                       GenerarResultadoUsuarioParte1();
-                      ImprimirResultadosPantalla(ResultadoUsuario);
                   }
                }
            }
+           else
+           {
+               if(CantVotos==-3)
+               {
+                   ActualizarSalas();
+               }
+           }
+
 
         }
 
@@ -179,11 +231,13 @@ public class Activity_Resultados extends AppCompatActivity {
                             .build();
                     try {
                         Response response = client.newCall(request).execute();
+                        return -3;
                     }
                     catch (IOException e) {
                         Log.d("Error :", e.getMessage());
+                        return -1;
                     }
-                    return -1;
+
                 }
             }
         }
@@ -193,19 +247,45 @@ public class Activity_Resultados extends AppCompatActivity {
         url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/"+Opcion1+"/"+Sala;
         new TraerIdsInsertarResultados().execute("GET",url,"Opcion1");
     }
+    private void IniciarActivityJugabilidad()
+    {
+        Intent MiIntent= new Intent(Activity_Resultados.this,Activity_Jugabilidad.class);
+        Bundle ElBundle= new Bundle();
+        ElBundle.putInt("Usuario",Usuario);
+        ElBundle.putInt("IdSala",Sala);
+        ElBundle.putBoolean("PrimeraVezQueJuegaSala",false);
+        ElBundle.putInt("SegundosParaReclutarJugadores",0);
+        MiIntent.putExtras(ElBundle);
+        startActivity(MiIntent);
+    }
+
+    private void ActualizarSalas()
+    {
+        url ="http://apiminorityproyecto.azurewebsites.net/api/Sala/ModificarCantJugadoresYRespuestasSala/"+Sala;
+        SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+        int CantJugadoresPasanDeRonda;
+        int NuevoNRonda=NRonda+1;
+        if(MayoriaOpcion1)
+        {
+            CantJugadoresPasanDeRonda= Integer.parseInt(tvVotosOpcion2.getText().toString());
+
+        }
+        else
+        {
+            CantJugadoresPasanDeRonda= Integer.parseInt(tvVotosOpcion1.getText().toString());
+        }
+
+        MiSalaDeJuego.ActualizarDatosSalas(CantJugadoresPasanDeRonda,NuevoNRonda);
+        gson= new Gson();
+        new ActualizarSalasEIrAActJug().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+    }
     private void GenerarResultadoUsuarioParte2()
     {
         if(VotoJugador.equals("")==false)
         {
             if(VotoJugador.equals(Opcion1))
             {
-                CantVotosOpcion1++;
                 VotoOpcion1=true;
-            }
-            else
-            {
-                CantVotosOpcion2++;
-
             }
             if(CantVotosOpcion1!=CantVotosOpcion2)
             {
@@ -225,6 +305,7 @@ public class Activity_Resultados extends AppCompatActivity {
         {
             ResultadoUsuario="Perdio";
         }
+        ImprimirResultadosPantalla(ResultadoUsuario);
     }
 
     private String CheckearResultados(boolean MayoriaOpcion1,String VotoJugador)
@@ -256,6 +337,8 @@ public class Activity_Resultados extends AppCompatActivity {
 
     private void ImprimirResultadosPantalla(String Resultado)
     {
+        tvOpcion1.setText(Opcion1);
+        tvOpcion2.setText(Opcion2);
         tvVotosOpcion1.setText(String.valueOf(CantVotosOpcion1));
         tvVotosOpcion2.setText(String.valueOf(CantVotosOpcion2));
         if(MayoriaOpcion1)
@@ -280,6 +363,9 @@ public class Activity_Resultados extends AppCompatActivity {
               tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
               tvOpcion1.setTextColor(Color.parseColor("#f61525"));
               tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
+              url ="http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/"+Sala;
+              new TraerIdsInsertarResultados().execute("DELETE",url);
+
           }
           else
           {
@@ -290,9 +376,6 @@ public class Activity_Resultados extends AppCompatActivity {
               GanoOPerdio(Resultado);
           }
         }
-        /*url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/DeleteRespuestasSala/"+Sala;
-        new TraerIdsInsertarResultados().execute("DELETE",url);*/
-
     }
 
     private void GanoOPerdio(String Resultado)
@@ -302,6 +385,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvGanastePerdiste.setTextColor(Color.parseColor("#8ef686"));
             tvIndicacion1.setTextColor(Color.parseColor("#8ef686"));
             tvIndicacion2.setTextColor(Color.parseColor("#8ef686"));
+            ActualizarSalas();
         }
         if(Resultado=="Perdio")
         {
@@ -311,6 +395,9 @@ public class Activity_Resultados extends AppCompatActivity {
             tvGanastePerdiste.setText("Perdiste!!");
             tvIndicacion1.setText("Sos parte de la mayoria");
             tvIndicacion2.setText("Quedaste eliminado!!!");
+            url ="http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/"+Sala;
+            new TraerIdsInsertarResultados().execute("DELETE",url);
+
         }
     }
 

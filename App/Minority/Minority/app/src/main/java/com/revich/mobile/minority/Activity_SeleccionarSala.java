@@ -542,6 +542,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         long TiempoParaReclutarJugadores= HoraComienzo.getTime() - HoraActual.getTime();
         int TiempoParaReclutarJugadoresSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaReclutarJugadores)));
         ElBundle.putInt("SegundosParaReclutarJugadores",TiempoParaReclutarJugadoresSegundos);
+        ElBundle.putBoolean("PrimeraVezQueJuegaSala",true);
         ElIntent.putExtras(ElBundle);
         startActivity(ElIntent);
     }

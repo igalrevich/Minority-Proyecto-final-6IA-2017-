@@ -141,6 +141,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 {
                     if(QueModifica.equals("NRonda"))
                     {
+                        tvNRonda.setText("1");
                         Random r = new Random();
                         int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
                         url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
@@ -380,8 +381,22 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     {
        if(SegundosDisponiblesSala<=0)
        {
-           CambiarBotones(true);
-           SetearTimer();
+           Random r = new Random();
+           int IdPreguntaABuscar=0;
+           switch (SalaDeJuegoTraida.NRonda)
+           {
+               case 2:
+                   IdPreguntaABuscar = r.nextInt(MinMaxIds[3] +1 - MinMaxIds[2]) + MinMaxIds[2];
+                   break;
+               case 3:
+                   IdPreguntaABuscar = r.nextInt(MinMaxIds[5] +1 - MinMaxIds[4]) + MinMaxIds[4];
+                   break;
+               case 4:
+                   IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
+                   break;
+           }
+           url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
+           new BuscarPregunta().execute("GET",url);
        }
        else
        {
@@ -543,9 +558,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundle= new Bundle();
         ElBundle.putString("Voto",VotoFinal);
         int CantJugadores= Integer.parseInt(tvCantJugadores.getText().toString());
+        int NRonda= Integer.parseInt(tvNRonda.getText().toString());
         ElBundle.putInt("CantJugadores",CantJugadores);
         ElBundle.putInt("IdSala",MiRespuesta.Sala);
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
+        ElBundle.putInt("NRonda",NRonda);
         ElBundle.putInt("IdUsuario",MiRespuesta.Usuario);
         ElBundle.putString("Opcion1",Opcion1);
         ElBundle.putString("Opcion2",Opcion2);
