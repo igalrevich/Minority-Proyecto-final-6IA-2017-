@@ -76,7 +76,7 @@ public class SalasDeJuego {
         Id = 4;
         CantJugadores = NuevaCantJugadores;
         MontoAGanar = 1;
-        NRonda = NumRondaActual+1;
+        NRonda = NumRondaActual;
         Nombre = "Igal";
         Disponible = true;
         HoraComienzo= "Igal";

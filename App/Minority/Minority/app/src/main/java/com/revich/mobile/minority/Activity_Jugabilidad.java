@@ -44,7 +44,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala;
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
-    boolean VotoFinalmente=false;
+    boolean VotoFinalmente=false, BotonesVisibles=false;
+    boolean PrimeraVezQueJuega;
     String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2;
     int Idbtn, IdSala, SegundosDisponiblesSala;
     int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
@@ -68,7 +69,12 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
         Usuario= ElBundleQueVino.getString("Usuario");
+        PrimeraVezQueJuega= ElBundleQueVino.getBoolean("PrimeraVezQueJuegaSala");
         SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosParaReclutarJugadores");
+        if(PrimeraVezQueJuega==false)
+        {
+            CambiarBotones(true);
+        }
         url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
         new BuscarDatosTask().execute(url);
 
@@ -142,21 +148,30 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     if(QueModifica.equals("NRonda"))
                     {
                         tvNRonda.setText("1");
-                        Random r = new Random();
-                        int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
-                        url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
-                        new BuscarPregunta().execute("GET",url);
+                        BuscarPreguntaConVec(PrimeraVezQueJuega);
                     }
                     else
                     {
-                        String CantJugadoresString= tvCantJugadores.getText().toString();
-                        int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
-                        SalaDeJuegoTraida.CantJugadores=CantJugadores;
-                        String MontoAGanarString= tvMontoGanador.getText().toString();
-                        int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
-                        SalaDeJuegoTraida.MontoAGanar= MontoAGanar;
-                        tvCantJugadores.setText(String.valueOf(CantJugadores));
-                        tvMontoGanador.setText(String.valueOf(MontoAGanar));
+                        if(QueModifica.equals("CantJugadoresPJSD0"))
+                        {
+                            SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                            MiSalaDeJuego.LlenarDisponibilidad(true);
+                            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
+                            gson=new Gson();
+                            new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                        }
+                        else
+                        {
+                            String CantJugadoresString= tvCantJugadores.getText().toString();
+                            int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
+                            SalaDeJuegoTraida.CantJugadores=CantJugadores;
+                            String MontoAGanarString= tvMontoGanador.getText().toString();
+                            int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
+                            SalaDeJuegoTraida.MontoAGanar= MontoAGanar;
+                            tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
+                            tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
+                        }
+
                     }
                 }
 
@@ -232,6 +247,35 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
+    private void BuscarPreguntaConVec(boolean PrimeraVezQueJuega)
+    {
+        Random r = new Random();
+        if(PrimeraVezQueJuega)
+        {
+            int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
+            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
+            new BuscarPregunta().execute("GET",url);
+        }
+        else
+        {
+            int IdPreguntaABuscar=0;
+            switch (SalaDeJuegoTraida.NRonda)
+            {
+                case 2:
+                    IdPreguntaABuscar = r.nextInt(MinMaxIds[3] +1 - MinMaxIds[2]) + MinMaxIds[2];
+                    break;
+                case 3:
+                    IdPreguntaABuscar = r.nextInt(MinMaxIds[5] +1 - MinMaxIds[4]) + MinMaxIds[4];
+                    break;
+                case 4:
+                    IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
+                    break;
+            }
+            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
+            new BuscarPregunta().execute("GET",url);
+        }
+    }
+
     private class ActualizarMHCSala extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
@@ -242,6 +286,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             if(Id!=0 )
             {
                 CambiarBotones(true);
+                BotonesVisibles=true;
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                 MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
                 String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
@@ -316,7 +361,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
-        @Override
+        /*@Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -330,7 +375,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             setContentView(R.layout.layout_jugabilidad_landscape);
             ReestablecerCondicionesLayout();
         }
-    }
+    }*/
 
     private void ReestablecerCondicionesLayout()
     {
@@ -339,6 +384,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
         tvNRonda.setText(String.valueOf(SalaDeJuegoTraida.NRonda));
         tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
+        CambiarBotones(BotonesVisibles);
         if(VotoOpcion1)
         {
             btnOpcion1.setBackgroundColor(Color.parseColor("#FF000000"));
@@ -381,22 +427,21 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     {
        if(SegundosDisponiblesSala<=0)
        {
-           Random r = new Random();
-           int IdPreguntaABuscar=0;
-           switch (SalaDeJuegoTraida.NRonda)
+           if(PrimeraVezQueJuega)
            {
-               case 2:
-                   IdPreguntaABuscar = r.nextInt(MinMaxIds[3] +1 - MinMaxIds[2]) + MinMaxIds[2];
-                   break;
-               case 3:
-                   IdPreguntaABuscar = r.nextInt(MinMaxIds[5] +1 - MinMaxIds[4]) + MinMaxIds[4];
-                   break;
-               case 4:
-                   IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
-                   break;
+               Random rand= new Random();
+               int NumRandJugadoresMontoAGanar= rand.nextInt(50-3)+3;
+               SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+               MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
+               String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+               gson=new Gson();
+               new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresPJSD0");
            }
-           url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
-           new BuscarPregunta().execute("GET",url);
+           else
+           {
+               BuscarPreguntaConVec(PrimeraVezQueJuega);
+           }
+
        }
        else
        {
@@ -409,8 +454,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    int Num0o1= rand.nextInt(2);
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
                    int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
+                   SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
                    String MontoAGanarString= tvMontoGanador.getText().toString();
                    int MontoAGanar= Integer.parseInt(MontoAGanarString);
+                   SalaDeJuegoTraida.MontoAGanar=MontoAGanar;
                    if(Num0o1==1 && CantJugadoresSala<50)
                    {
                        SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
@@ -419,6 +466,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        gson=new Gson();
                        new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadores");
 
+                   }
+                   else
+                   {
+                       Log.d("Mayor50", "Mayor50");
                    }
                }
 
@@ -519,6 +570,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         public void onClick(View view)
         {
             Timer.cancel();
+            btnVotar.setEnabled(false);
             DeterminarVotoFinal();
             VotoFinalmente=true;
         }
@@ -564,6 +616,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
         ElBundle.putInt("NRonda",NRonda);
         ElBundle.putInt("IdUsuario",MiRespuesta.Usuario);
+        ElBundle.putString("Usuario",Usuario);
         ElBundle.putString("Opcion1",Opcion1);
         ElBundle.putString("Opcion2",Opcion2);
         MiIntent.putExtras(ElBundle);

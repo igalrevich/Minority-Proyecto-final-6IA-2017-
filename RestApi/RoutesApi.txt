@@ -8,3 +8,16 @@
               routeTemplate: "api/{controller}/{action}/{Opcion}/{Sala}",// URL with parameters
               defaults: new { Opcion = "" }  // Parameter defaults
               );
+
+DELETE FROM usuariosxsala;
+UPDATE salasdejuegos SET CantJugadores=0, MontoAGanar=0, NRonda=0,ModificarHComienzo=true WHERE Id=8;
+DELETE FROM respuestas;
+
+BEGIN
+	
+		UPDATE salasdejuegos SET HoraComienzo=TIMESTAMPADD(MINUTE,2,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) )  WHERE Disponible=true AND ModificarHComienzo=true;
+        
+        UPDATE salasdejuegos SET HoraComienzo=TIMESTAMPADD(MINUTE,4,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) ) WHERE  Disponible=false AND ModificarHComienzo=true;;
+       SET @@global.event_scheduler = ON;
+	    
+END

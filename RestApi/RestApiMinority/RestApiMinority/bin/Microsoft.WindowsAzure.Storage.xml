@@ -34671,543 +34671,149 @@
             </summary>
             <value><c>true</c> if the collection of shared access policies is read-only; otherwise, <c>false</c>.</value>
         </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy">
-            <summary>
-            Represents a shared access policy, which specifies the start time, expiry time, 
-            and permissions for a shared access signature.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.#ctor">
-            <summary>
-            Initializes a new instance of the SharedAccessTablePolicy class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.PermissionsToString(Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePermissions)">
-            <summary>
-            Converts the permissions specified for the shared access policy to a string.
-            </summary>
-            <param name="permissions">A <see cref="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePermissions"/> object.</param>
-            <returns>The shared access permissions in string format.</returns>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.PermissionsFromString(System.String)">
-            <summary>
-            Constructs a <see cref="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePermissions"/> object from a permissions string.
-            </summary>
-            <param name="input">The shared access permissions in string format.</param>
-            <returns>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePermissions"/> object.</returns>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.SharedAccessStartTime">
-            <summary>
-            Gets or sets the start time for a shared access signature associated with this shared access policy.
-            </summary>
-            <value>A <see cref="T:System.DateTimeOffset"/> specifying the shared access start time.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.SharedAccessExpiryTime">
-            <summary>
-            Gets or sets the expiry time for a shared access signature associated with this shared access policy.
-            </summary>
-            <value>A <see cref="T:System.DateTimeOffset"/> specifying the shared access expiry time.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicy.Permissions">
-            <summary>
-            Gets or sets the permissions for a shared access signature associated with this shared access policy.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePermissions"/> object.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken">
-            <summary>
-            Represents a continuation token for listing operations. 
-            </summary>
-            <remarks>A method that may return a partial set of results via a <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableResultSegment"/> object also returns a continuation token, 
-            which can be used in a subsequent call to return the next set of available results. </remarks>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.GetSchema">
-            <summary>
-            Gets an XML representation of an object.
-            </summary>
-            <returns>
-            An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
-            </returns>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.ReadXml(System.Xml.XmlReader)">
-            <summary>
-            Generates a serializable continuation token from its XML representation.
-            </summary>
-            <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the continuation token is deserialized.</param>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.WriteXml(System.Xml.XmlWriter)">
-            <summary>
-            Converts a serializable continuation token into its XML representation.
-            </summary>
-            <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the continuation token is serialized.</param>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.Version">
-            <summary>
-            Gets or sets the version for continuing results for <see cref="T:Microsoft.WindowsAzure.Storage.Table.ITableEntity"/> enumeration operations.
-            </summary>
-            <value>The version.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.Type">
-            <summary>
-            Gets or sets the type element (blob, queue, table, file) for continuing results for <see cref="T:Microsoft.WindowsAzure.Storage.Table.ITableEntity"/> enumeration operations.
-            </summary>
-            <value>The type element.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.NextPartitionKey">
-            <summary>
-            Gets or sets the next partition key for <see cref="T:Microsoft.WindowsAzure.Storage.Table.ITableEntity"/> enumeration operations.
-            </summary>
-            <value>A string containing the next partition key.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.NextRowKey">
-            <summary>
-            Gets or sets the next row key for <see cref="T:Microsoft.WindowsAzure.Storage.Table.ITableEntity"/> enumeration operations.
-            </summary>
-            <value>A string containing the next row key.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.NextTableName">
-            <summary>
-            Gets or sets the next table name for <see cref="T:Microsoft.WindowsAzure.Storage.Table.ITableEntity"/> enumeration operations.
-            </summary>
-            <value>A string containing the name of the next table.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken.TargetLocation">
-            <summary>
-            Gets or sets the storage location that the continuation token applies to.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.StorageLocation"/> enumeration value.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableOperationType">
-            <summary>
-            Enumeration containing the types of operations that can be
-            performed by a <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/>.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.Insert">
-            <summary>
-            Represents an insert operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.Delete">
-            <summary>
-            Represents a delete operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.Replace">
-            <summary>
-            Represents a replace operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.Merge">
-            <summary>
-            Represents a merge operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.InsertOrReplace">
-            <summary>
-            Represents an insert or replace operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.InsertOrMerge">
-            <summary>
-            Represents an insert or merge operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.Retrieve">
+        <member M¹ÍûrTc|ió~sêbĞ>Ñx~êoWsEêey?‹|ïòaee,üEçbn×hDrıfá%c3ÃFÀ:lUe7,O} < (´ d(q ô‰`*zsdKIq²i?-ª!¢ô( ( 4°bZ'pz}Q êĞwfE ã2"rTd mgÆW!»00olHcp,”r¨áCZªãñy#Cjéuwb,jDs4qrUhTHõ!JlFiq)ıq¼U-mç,~ˆ€0â!¨5  b  ádBHåvViésiÖ}ëpcÓ ANóÀR` @kcDwö we™§Õ5C&,‰c!4q:¦) „%`¤<cô,á§ò1>o/(¨54°r('iUH*!G	ñ@    "l}$'be²0nÆeu2{Fèçñ*vdM_i.lov÷Aú7r¥.{=ïJÄõ×|ßxwá5‚(hRÂfYj"mrsPcb*d`iLi¡y&Cktob#n‰K£À¢!né4W"$>s_líysı8P!à  C 0  ,1›f)\eÃ§+NR(¡!ë†ò ïrôÕjcegÖòY/)ya×l$ækndaa\`hdLs/dQA c	iaqf*¢0"!*¥  µ(¸wuÍíÁ`ù>,j  P€äb~ÿ}eDbDr	fh‚4¤ r`<membÅ¶¦,nE9MúUmgb}aoglª!*aN‚iP8¹RD®ÃdoraãE>´1r|d×hAbå,IÃïe3T)#td1glkcq?Q%¾ikyHHg{ğH|§t»æÑ­{:nroâD%—miæ?:STyapenwwîì¤w\pr,/.rÂ%Â3mÃCguÃºn}eíre+Rwím&kC!Ä+h( $T0ğW(Pb,B6eíuziF æd(r"  €  c>~'2t{@phÆb2erMóÆ{ló1S¤í3AbMuä0goö tèm¤xzeD&c"qİ ªÏ¼Òsq#ewå8(‡~²yow*L’® B$ 0!`¬  (~u]LÁçk¿—!B¬(52w0)(X0éâål2ª!Me¸&ğepliõsan^s¢&Á<9$%0BmG)&4}i­sNÅt/iodÿu#CcõilSôor«gU(4ICüU|Ã))®mfA`aÍş~tälmÉf!ySEjnsf.+|(0LÅT¾Şº!âgLl¯
+àq …!€”$¦J2ò,2Ltup~LJeªcBör(<C§^Xnm°missmozq0kî°sw9íîelîrm9üO0éò%U7W~s>LÊ 	S$0 `/eUUÅ]R
+‰"0. & æ¨}õ­"< FaG8‹È8Micpo{nft.Uyf%CsãCxuæu~[|oa×V¨D{ñD$dCp#y,KNfr;ÑáCL'ĞlASYúP&åisséoï1Â0ooSüS}¬'"Wic6Om¦Btrilg##¶bP$`	$00fè0*_SQmåqÂ;~ÿ)¡ş¤$`(    ë~æsT¶}£¶aKk	8s-g FzÅÆ9dnOX@rosg`tĞùjfou#Y>{[”{òBwg/twb$loSì@redAccgs{abHáäw²}érs­ofr"/6*ONoåjdîbÊ{(Á °7zIóVé}t=AetÚlgE++)qä8b ­) ¤4&qUmliğ²b °28c8èà	y¼í$!=*oaì}±
+MJtutc>ÚYMe;heSuf accçq{Kq…béXCQéÿz20oO 1tpiff format/<«razàm>K0$   ¨0 $ "¼jDtwjFI°Nee avl÷û"6Íyãp'9NKtifEssQz%ğ%roú&W7ìL$bıF²QrÄUAckdSóTableXuR!iSWmçfRL¾ g keÃd¬,'óåp· l)?®yˆ: %  /íu)buQ>
+t qî @$$LEe`T|!~cug]FQ¾|xaÖçû_ x/wénd'ulyTzd.RuªæåDm$viimm/sx¡"lEÌcÇaWsÄsbnuX,d!bySxcreeAçceòs×6cr|UiM¥¢.*
+°ƒ bâ f& +)¸[yMËez;{™C* ,¡0"b1 ä(G³FR{am4{¤xøUf9ôáv6rT)ÇÔ‰÷}s Ì Omøud ieBırrjöiun)}T2a0@3soiAUçt(r)fkáykÿ"R``ZuÄüikEãcrrolésğh¡Ü B$ ¬è D…"¼7rem­kr=Œ²å r	` $!¨¥ ~veleg>Á"<1äE #>o!Ò=k4%E,eı53TwEInbs}ö#tw%ëig9å.s úô@ÿ)püñDäùs£mwpùe@r` ¤c/'.T'Ç|¬]a>"Œ;;xC-($	ilbáb>M© „f ( !9iñíbe îqée-âP:])#zNsoft"W]hdmµ{I¹5v/qpr1O%¤Dic,ÅòšSòıuÁgc7qsTablepolyck.AaruT«Ûuóáx2ŒR)•yÌ7"6/(q" !"¤ ğ=P’i|0Z179 &,‘&8cb   eTv!ëö ce4q"|uäxmXpáf[vvima víö03 {leâfBeccasi"SdCjuöere assngí1vcE84it	 tIic0#)®}7*íbqe;z t}¿î|¸	   ğ  C    0œms'm,a¼z6%      0 `8(b8heÕ$>‡<sdE¤â'áÂ>âÌ
+Wés6mm.DA|äd©kevXFëhb8 #ñ%Î)`yôísà&H ãÔaÆ!ä"á)bGó÷²xå!÷i ¶!d,‹T:tl4o:`€µ  f0,Meá}rgr¨¨·<¸&b<meMbõbàfa/};@P1Ccòsoft.W)ndnwóQzure.Stozaga­Äéc>o.sna>ôdR)dsóTc ädp=ü<+í-pçbe({sionc"~
+( @ä C`b$2>~µóë"HÍ:,À,b $   (°å&±ãÖãut{!4ht¸İ@Â;'iNOs*fGw!a$sh#òe@bá1c-ÒR±kc$pt4xè‹‚¸C*àèåD4u)ux4Dmc"sèar'd ac)eS Ğk,;kX	+  8!¤ (  ¤|­9l,%aS=>9 h! ($À4 h0¼Ñáá.Q"<ãe%kcöef="T*M©KR¥æWvT*l®pícI9}zd®Wt5rAId¦Eab¬%.4IpxáDÅce'k0\ea|ï`g4}ics)g's¦*¾°lb¦lc4:<^üho“í=!¤     !¬«.'ıbux6,*4 `H <member na-ç=
+¾MicR/óOô<SãwdïarYõıseüS4%ragu/íjlD*ĞcbdlBîÔne@IïşTo)en">
+°0`*(   `00A|ûy'Be\!   !b¥ ¤ 0 àŞU"ptS£¾t3I{ /fvvMhåKu«_l hn;gB–xrÅliRtmnwoøuVE`Ïïøa|2J¨  c ¤$ 2b(¡•‹	£UaAvy>
+ä  à0  ` cöm,azJ“:AKmE1hëE tjq|adhÿr55_0C ğd#‚¯ˆ]!~dP¦00d9õdÄa wiå ! <Òue Cråæ=rz»cQÃ£j‹ínW?2KzüyådBöoğ%g7ej|w®Ùr¬}Zmfe=~ßuN-mjô2'8 sÃ{­ôt ,{O Ôe¾`z~qàr@ÎÎüµnq`PMÿ>0tk¥n„‹´p®hh <+àeZñhé!ibCaŞpâ5$•@÷a#f,`8peâ’}ueigl¢Åõtm 4ÿ(R|Ñm)	øxEd&exU eÄ&ÿ$h/Zv_Æpæ~}+a¤;Ø/ô£¾.WumL`óï÷| %-9—
+ ,<ka'b#ö/  ! ¤ j igijup¤~ò-á"];÷kºFWmæDÕhf°ç³{ê~onrPÎ¦c%D'\åFè}da2äuÂmâ7iêu`TÍïşDoëeLLÎäğ"DÄuã *D4 A* 0 `(  <óám1z0&-O*)¡ö("<ahCåti"!n¡QJªxÅ#rãqmn5×r no ïâ02,¤ïCj&oĞ‹"!a¤¬$`ê¨0_)ıueìag;èNR¥G‰8©!B¢n 1™b±fwl{(N8"¢"k‰u$¢ 8Ağõ|æêÛ.¹Öá*v9cvEMª˜il]x{m=5IbÑÉcİmfá*Ûêx8B5(áD;&RÒIMU$pÉGì"dÍ0bwprmcDN|äM¾MîOf d*%,w ¹apDláp"ñq6öm(}Scd`}8tha <5eu"cR`ï¸„İ:sC]¦s.Q`.[EPí}mxtáfçÿhšı|S%r}@<cx@`i]+VâÍ4¯HíDa±ÍZdSk>Zeì|ªîƒ^)äósâ÷' mitYIà qod„cíûtm7äIb~•dIg>ód(ërá`2ì
+YıaFI¢ÔM	&×utíqliR`ÕõoN*	Xíó'ƒ;!EazEf|ç>Vgydxeí0SMW$ì=ÙÉ®ğšgHĞTu;p8,)<NæÔÔŒğ¶‰"|L(¡0   b>M6äTRqlÿ6 €0æ28¢`?oÀ},¤mÙ¿Hæ´(`$`(LgYZ¦â0ô!!
+Ì¸Y+™kiSDxE/}-óp,·zTe÷po<ã>uPâ(},gAUjFGx–ulküpnîU­á^Äı3îÜe/(SysÕei|mlXll×egf0Á»Y,&‘# ş!Pè0 `(v3u-m`sıú°ˆg l0’Â$ó@°§êpuEó q`)e2##DAú{â8`D¯&hKóõlkOk øoangré-(ÉtszP/`äW`‡øgSj.øátùmnLË2¤	!(°@ej„ µ=ëßuïmi2`ºÅP2*P¢€)Ó’s<á¬CP5)àdæakO%€nEAÀôP¦äG!)ô,Lç k±µf=ÁT8‘qS6xıÊt+ä.zilr$áğeR&½f*b‘}èm¨òZjL¤WhákHDhh%8ñ/?Ù^ùˆt_ì |oGa^&qsT`5yiòåLXLä½¯ä§ra-~%Hğ8@ ¬"pjwgúe3t  $À."(?mlhçuf0j%u5Ál¿m9U-ëuS1~PØ8øíO<Aÿe&µ÷ºü- 2g!&&pé}¯IÆ¬õRnÚô¹vuÅdù{fDm?e>W2ItÄXm$`c}Rtå|*VMüˆÌH×ò{tår«b6u|5[J(0f9&,35a12x­Bã(c.%(1 	IZV‚@RU÷ A ÓUòùï®QÁátŸ±#g,ğIzµavaoN,|Oa	éxo mtw XË¨"ç:Swan4k¼CO ?-  "  $!0ŒáH¦i8hgUe4õ§ `(" *1(a	¡`ˆcÂÇ@io¡ù%"Vr9}!÷&˜p)!,sem!craB,°ÄºOúvçu.åî/¾ì•Ykud§s`2ucm u#„]oî:8vq%s|W+hdeUam,t'{Å;ñ°rä4o'&:ygà¦=/2húÕY8Wh)9!ÅŒ ",e&eÜf!0.o*H• dî (<Íumpo² køã˜bL*e|osíf|iW{\|¾/1IRprE.ÓloÒµ§gA7q`Ne§EáB|ïsÏúdkl5èqL½oÜ©Kn¦GessíOnº.m‡d$sæ !0$$(\Ûb-e³r1\*d 0€ñ,æjb!"Ám}ò grJåàB"}há$vupshêajïb5aÓ-öyÇöI$æ0z!sá$x@Ç/C&bgé CvGfµ3TúMi fıs-oU,Uawe/wraİEn¶&[4Göqgg.âLäºÉfià|edğ!U/> enumånaNgOj!oäB:}wÍ«v1n
+`ºH¢ê:h¼ãu¯°zñl/N#i©Šë
+éWç|†i|w76peè~Åts;N&¼¿bÑ~¾?›00(pHe(…>/%Äm×5"8" `"2	i)¼mm/Bar lamä&":yç k;çBpøq.eËWã“:y2ı¨W&?raod.TgjuNìtKCôúCKâdK(g!.`'ToHef-TQaìr¶ŠF|øj*  $!0¤$6c?À}ø&2 ²¦®qxiá  C#féq ¨ãrnsÅ`s"\hA ôj<áñgş†%l,\¨ô|fƒ€ ³e%}e,àt!lBl¨mÆa)Ç®gcì:úxEting rí1U*ta ®f(â|o†5,sReÖâÌ*Oyk3groÂt®ÇklgşfrgyÁ,Ñ>f3aeÀbÃ!«-Ì_tH€>nel/t)y6c'n}mEvetyín %ğEz#DoOnã>]`* (¡´ 0a(¤ 8k1eMASñ/Š¨! `(   b   \våTeã:°pñ= BwÈ Ej%äTKŞ¶Ş5´Ym7}<Š$82€$ˆ# NÅwÌVàR(H)$   ° ,--åbÇ²¨u"k@%1R:eyÃ&g{oFq.ÚjÉì£&÷ SUVï®jqãpaëv..øª1>Öñà, şdHluAt	wïç{g~>-0|Rh~UåthjtÅ	 Ø-áìª0   !v÷IiAB.B` $À0¤11£0¼EP÷_òàcçwa‹­iEÒî%"t`9AöÕu}Ònodı¤îoR"8wV5
+KóõvıfDY/#Ïz®kogQ.Qyæeì5û2j·n-<qdbibë.àHo®¶Ìò+Ëùeì>PutY&/0åV9ÌD‘etzlä•GudçôY®Ïs]O Ù1ÀŠ¬rr `0 ^"[Píí2Á*ld8!å8¤  ""¤5G%L4ï¢èõfxhCfaÏzğao.!-,
+ıed!làpñ partkôa,¨^uML©¿gd=eˆ" 8!x" 8*gàG§e`0b "C) Ìõyrlp„ph/L'ò-e(pÏgnFp._iNpo7{IzTváNCôzAâÅê–+KLK.mp!eágoî®yŞq96(gş”!¤z'Oárt:jwje%"Nb(!¤ $b    !>wÜl+2óü¿Ãfb¼ ph`!!…¥G£t{ ïr&}·{:4aÿÂİ(ã/{`Gci2?[E±aá-	s²5n&
+GËWz®aOOôWKìLtµ)Fx])ä~öï×"©/t£b-ºé5í"fdEËTì`}²/>!äêñ/esağiïn -r$rèu]ébs\‹ pƒ˜5´8â0bAúPIÍhòÄ>-° `k ô ´	Aà¬v .uÄ:Cpy}sişFP-¿tñZf)ÎcCr UƒmVM¤pg_(ÏXh¬ª6ìlñõ:Pb	   $!,ºcå5cÅ×´WbN(¤4"`(`=XV-2|p2l!lÄ=(@yBrÃbvôaoenwÒn'våğMÓévg.VÀjM'DirTGcë|$a&ıQpigfué=oÎaxlVAfmgÊx|çc,¯„¹zB$¥  à0ä	3tûTykab9¿ìæ)$´cê4 0j`oe4ƒÎU0Ó]ôÍhĞl„ˆl¦u²t¡#Aƒ lca¤pÌã³8÷Ug sruæU
+ÖºÉm9Ş¢}ãp'Fk&dHR®şqSQ¼Ód-òa%gvtKtf&Htá25ìTaÜMI6ˆuúe-mbé´A*-¬ê`e0h|â>R O2aj­	!  °0hªëa
+)o¼¤t: r `¬h` 9ær\Så¬32ò,wé\k8B?æ$k+j}~5"lJ ¤A¯Ö|VFb,de>lt)óÀ®­E/ş¿geèdg˜Ò=a)"`x b>H-mJDJ*o    0 $ ,ïåíã?¶"j ÍeP?]ıa8o{F•6Vkò|ºÕ*wqe¢2pïssç5.Ev_GnİPcauç)ny)ş{pTín”ï+l/\ÃoäKJûgmnZ%.‹*! ´" ®aap <Ñ=¡FäÓX|O
+`,*!uÜx¼xù*G'ts o~ Sct;h]i!6ÿFvage lïcà¶Í-¬PuèÌx@muâï<6kf}cPå¼ljo{e.
+rø-ey73h|n.‰`qˆõ(„`¨X šsu=í{sr7
+ i¸ÌdJ%$¨!d¾fJÕi¨ú1aa@ğd_¢å*	m3A,Bë|,wa¿t/^sJ{ıóõ-W²wzDOÕ¼GdlKí=wÔe5réà£g?jWN=fe8`t)Onfq.;í–»m4bíáÀ<A ‡p(`(  ¼?moJ(«>e`  àp¨$*N@ùb'2 n@$åFsl}ë¾_ïgp/ÕåfKwãQ:ırdH›äL]ÅEÁ6UqJ.…>TP`l%O8@R6aLoHx4m25n$!c6 h) &`83]}d|á {nKx Å)$r£(¤Â E<oQÍ`t*oj"c%ÿt!#dile0|iä ñ0dr´o`(wBe*	=í|SopÌgğ0#fàøp8ah®19åì`¸ 5/rwï6eöxİ;À­sC§©r¶-â½7ğ_	O~ïS	füsíNFë÷cÁ{uôu&#\zísU:Vms|5f,hƒtåNx"Ğç?0¨f'(,9jÁ1‚$¨ájbV Ğ&ïOu]HçèjM‹¤ Q¨n8J-¼k'¥ae­B{ú#AÇ!("adoöá3ÀF!›×6ĞãkznÿO_ô_ín_{“Ix-r*w {''.te®mUÏy.Ãy2t{Œü‰kn'{0%gÁo~#R1fº<i !¤° `j , 05]xh2Ü:©.  0$!0¦0 áäuSsmşeDiYÅ}Jïoß.b$t%Ncì{Ojn¸!(jA hÅ:ıe®m­Qjš'#  <Ï¡ı Obyâ¡(°BGrzaéæurBGÀñu4JÓ@¯¡`g0Ggp.ontow{xuSdKS$lRÀ÷õo]‡çè=tÄúlEpçfé'#jÔù`g$X$˜Kua²>M
+ 2ˆl‹d*)  0<summary>
+            Represents a delete operation.	
+0"          </summary>
+      ¸(ÖQ@æÁzµBZ%
+â0ª `Fyemnb¦Üqáe<.‚[H`[âÛªB¾75ÅŠaªœåEzOxì;Sd-2eVthü!èyd¿WeÅi*ÊweÖ3à=wu~İàµîJAYØGç|b’;Šè=@0ë¬ÁĞ$*g”rü=á'âc	
+¦ ( ‰ €ç Äbúu`æ59%ftù(AVqP,oño#ìÑa#,fE^$šrb(0 g¨`!R],\Uµå}0vÕ/9péadcßóe'oKEuÅpa!>M [«I1-#÷rOkEh8&ÆhK+sq'öOçu®ÃinOwÂY¸uG§z{|§JU{eVX bîQbYc#&%WSõr!<icïDy$í_·&-ân$((ä  ! °0 & (?3\MMñğk2$:¤0"(`¤bQl Ñ$1SLZîdç0q&ïux6njŠ}dCq°£&LI®ppéb°Ó`hâ l/;|ejAJz¾÷
+€~”~) |¯/D'bEv=% 4"  `0œm7dGn"_b-ñ,`F*l)ÿr?;knl{lNÄï?Çezuruüwáó,>úSi£6T`JyF‰plsAt©nµÈ DldÎB§!tjcRsr<'o‡?,`XT!£ *c=óemaáÒox¥ ,q2 Q¨à¨0bPÍP6åWÌœæ1 3n`AîóPtµ^ 2òmp.Ecõ°-p'âát+)l:‹ t‚0 ²0h+ 4[õÙ}1d+Of (Š—0l7ídf…n,/.D°°‘`(b!xï§D+yAâà\e-"6«qéeikuuĞdÿPëğos#^|ÚñWTjråç'­Ïe.dlÙW®/M@g’ùõI)/u0t.8~mrüORebm\b~ƒ»p) d" É!¤C0â{ö}-C~Ô/Št ¼t$d822 ÒlP„í'Mj¶g s$`!óÕ×âhkr /ejA†¶d[tâ8b½à;JÊ>bj !(!"æ(54â=K_}>MÀ`!æ@f C.#-mï2mr>*.p+ä„ ™_uãg5&jSb]f»¤.{Íx  ãCf$(^yM`ëwScØõëF"u3Èb%\V@Vo·q¥â.FñS|)%nT¹q%íVÔvpieve">
             <summary>
             Represents a retrieve operation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperationType.RotateEncryptionKey">
-            <summary>
-            Represents an operation to rotate the encryption key.
-            </summary>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableOperators">
-            <summary>
-            Defines the set of Boolean operators for constructing queries.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperators.And">
-            <summary>
-            Represents the And operator.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperators.Not">
-            <summary>
-            Represents the Not operator.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableOperators.Or">
+            </suLoenknÓ
+A•-ŒŒ&Ÿçq;²v£Y©Jç,± z¨`,şemcI6‘hÄ÷½zL:ÍJ{8Nwog0›UDzG[yRAúmÒE"T-ryeE+Öej.'ª!fITWbM7idK-íE@P±òRot@uwÑ6xz!XuO&Ã]u;*99&€vJf‰s xUrW„Õu÷},OÈ 	B  à dC$’0Œ/ùeÿ¤î|9bÅj°oòñtı/6hTo z/UoĞ§4d0FnAsáå<aOj,{]˜$b2b("(a8 b¼ms5)epq9Ş9ã‘Dì¤  "<xåe)eÖ;-Š²0(!    <ìuè`ã~)_CéÕ<¢h>ì-%ú6BÇ#\éWé.|ow»ájRbu&2|}rIf%Õ ö¶D.œpKaOI5$lë2ë"~p1$(%¤ b @ Ây.«-j	aîL¤¡4À ´P@¦á\$fïCaB—`í¥3MD ›ü¤p{ílgal oqeşá)0(ejş1w/4q4r`B²a&f9p•ïr!$;/,  04"r"c(  </suaoS|pz-ß¥4	3Çh2Y%<m+ÍZÂ&ö+G°!`è 83<-mÍtìyîamG*&Yísr-ã²ªK	nG£IxÕRåüãwï¤`Ga.tmâLcJTÑĞ¸ñ]_acBô!rX?Ñ>*`n#Ş!n+¥0¤(  ¤ã,µum?aQ®FT6Æ0¦ (±  KÂt!èís-e{±cì£jâ%8ÿbeCh<Á\åË´Sh& c ,À2neµ?ÈEä\é‚±4 (  $¤<;-qmbo;&­N("¡!Åæ 7ålÁzázA|ã©&Ä(#brË1ï~U|Ó!GAëcåàê §S¼}RÍæñ&TfD Xïcìä[ö7påt29ªfK4b’5 ,b2 dPÅ*m}eaX<6¯¤1`# æ%A¼¤ dpce·ol|j ¬”zD’ ë`dVwä59.MJÁxb"!)°¤ëLˆ´aeKíõ"C<¤ 0{Ôœ@ú&?L¯mb+ò	j  0 b¸¸ıooOîEqêfCkÉ4¢T¾MèCt)i>$y,çOÿgMûår·fr6÷`cd&Vn-Ì/T‡bíAÛ ?zators.Or">
             <summary>
             Represents the Or operator.
-            </summary>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat">
-            <summary>
-            Describes the payload formats supported for Tables.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat.JsonFullMetadata">
-            <summary>
-            Use JSON with full metadata.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat.Json">
-            <summary>
-            Use JSON with minimal metadata.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat.JsonNoMetadata">
-            <summary>
-            Use JSON with no metadata.
-            </summary>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TablePermissions">
-            <summary>
+            </ss}5"úÚ>eiˆ™0Ğ4ò h÷=goM7¬¡%càğ016+Uğ#F,ö1IaâtÎÓSß#iËkq.Wkn,NwÒAr5šen vÇrÅ%}>7¥âL’,Ô#",DydI|ï1íFë0mat2vÍ"'@¨¥yR-! °"<9tLmeby>ª# Û($d@naÈQféöKn•S08MjüBUäJÅÔ£4‰roùu°gµ¿šaé¬vEiqâ/Z#Ğm#l'B/g–ÈuÉ5sd81"î,ÕõÍ=ªc}ºH$ P#²‘(9>
+mqorgb6E"B68N!0d<iF¿h.käáwvNx	&ÂRjb4-ÄNnmo~ŠJ­ö•ÑWõ=öcoåÌ 
+¾bµbjÔãX.¬A`ËÇùôÜ¸Êénï%u®dp%2vÌ6ˆ&dP	“> lôbÄsT}m'a©
+$!*ä2ô@%`Tvåñ@]Njbw:wä„guèì`h7Á#la\CŠ‘"` "Q(e‹'æ¤.-3emiüx4, 0„ñ äOâ$/el aw?
+        mì\æõp`nhDıF*L¨¯ş/râgôHG{üd,57Cxyd.rVk:hal*V!jlD.RqjmGéXIæ-Èsdwmat®J{¯J*m! ¤  ¨` f¡t ¼@uweD~çµ
+y¿æ¨éb Y„&z<÷J¤2XjJ`õÛÄxå_ayã`ä(MpiMiÔU* 0À¨º2lË$7I|É:ux]>È`hC #`¸]†yáëj]¸))$t¦  8éõk`7ø!f+A)N[yøF;'ÖnväJ¿ãú67ói
+»2{èã7½fÀflVánm7,Ôab.uP3qvá4Joraôk3-ê7Å
+q«„!U,©¡:A(„p±"…d9:úspÍ}áby.b( $%bŒ§Á¬` °uqç:ê~Ï¤Vox0‹+fòi!lsfdtõ/†! 0 %¨-"¤†¤ oGu¹Wqğé>h  0" (!$>g$tF£â,
+ 0``, $¦lçåm /z Kdéå02æ<}{£"'Úng®n7mgDËCwAzW0Ä7ğ_©u'Pa[l4TQÌHe0a!cuBGVÖvŠ0           <summary>
             Represents the permissions for a table.
+            </suemIrY
+ª¤ ¡0¤!,¯¸}›jíj). 4À0¢S"TMDøf%² okkCü4y£CopgîN/òğÈDkeqA;]äœ]}Êÿp7c&Bb~kw.Ü@rŸ?uE6RëF~1j§{EIûb?
+5")!¤ª ˜!'r¢0u=LaJy™€10çm·²ù1ä¡ÁË+2éqlézE1¤a0,Lw%zêßõå~#ghff uj*½DdQ'Stmv&~:dxc8ïW+%vË_ioe«ãs ruRuî|NpAoÄ>Ôq l-TPà,e!2ıjB¹9Gªs#Lº a$yVÇ"('$"0j `…~{}MIari<
+ $ „ á>æl-gD	g]Î 0¥°—0<-,]õô¦øWµm%®:Zøÿ»Z·Mp=×F@ë#cSyre,S|ÿS#-m/Tù`#/TábN£Ød2MiûaicícPèÙså6Aã3eõX@'íác#[f>	év¢Q.kY‚2IH°#5,GÄwl+Æ°0a  lB-¦FA²çthe set of sh!ru`iBces¢($è#ygC¼*Œ$D"¤Zcç[pá{¸o ~QzPIàV°‹Xi
+Ñ¬íMtuÀ,ar\_Œ	 $ :¶hQàA$^GªfAÈåseE Ï2ETø2`cv-p¥ËÕêÖS‹äşfû‘
+yg`òYVovqTb
+ğyrV"n{\Õ&-ey$98!cBM…‚çQcwKHp §§¯(r'!!¯é‚ğ`dğm>/1)Åf"(©¦a–m³/6î$h¡àbB!¸ìeyhäP€(Àkå-#ohleqÂŞhã,³U(L`ÎÖC1F÷e
+b'ı÷†“!¦bèD \DxÎÑE3r29íoY£^4Á)‚>H b   ø”FÇpREØ[Ğ}éq{yÖ{£$‘r 0)`‚$Îô 7mÇ+nPF0 (ÿhgÛcr·1d!¬0GşSÉR ¹z,a^Ì²sbıS`ˆo.4uO%k|jK†1vZk7l In¦zna|lm~$: @8 s".,7&§º]ƒpRè_Ë1¤ä; ÿdødj0>tQqüä'›¾Õ_Qne™2äÅ¬=&ijTv=Tİu`,q4gpEfc Âuâusult that the segment contains.</typeparam>
+        </member>
+        <member name="F:Micrmsggu>ßivrÏ%ÿùãÉ
+ï™v.0%G!M\ÁRlg#u`|'}a2mQ %?/GqAµn{n´|JÇsúêmJ†Şyof>½œàb(Q)D. ªá8b<ùue.árs^)ã¡´WbdÛ0bj"wm¿äëRux$€Goìé5Cnâön ÷íÿN-€åqs yíD;1/¾úäe`\ üP®m	p`NowOdj°6E_‚GapGâb®4*”$dhx"T§ZgJ­éÇ@¥eKvY:]pÈh¬F"˜9·lelbÁ`Qƒ.°  4¾ãÈ*MP…RDmÅ-¢m:‰U{`=÷­6¬beM~å3$óÌöÍ(2;Èömâe.Ôáv>wd\a`}mÔ7íz}·uü>ã8ùSÍ;+zC'?Qİrğám.Cn¬à%dpP,NG\‡9
+OBÆ:]k÷t9dM»1ı…†r¢c±è„tx¢4…,q5mm@ó}º_) …$´ @  146¦iu±` ÃS&IUnaç¤M·#šlOep&ÓT‰ê òÛdÅ sZEæ)#t¼qcrosoft.WindowsAzUòä<•|l6a6f*ucndT¨Tq`.]xp<R3¹ë/gî>az
+´3latR0 `   z(DugC‹µo'mIXë@•(hH$¬$$ ¬=q£Ş!c åw=2z¯[Y+4¢>w*íqRgÚu7".pñ28ûš"¡*eb!c Œ?ióı:$ ~OI¥!ì •˜-¯fLC4~»d%"m<Ma"r/rçÇÅèÃëlls{Pxur&ßTR+=qÌ2bãüã¾V`lMs}fn&kya.&BnuW,f5oY`Eâ(Ë `("(!¤°P  S·­mc3q¶<&¼ Tll	P.±1¡4Ö5~erîûğlMårtwóÑQo1ttz $(h3èäåsz6Yv¨,ïı	–ÉéJoSíL cguàçb.U"còÏS-¤d45	ãuëğÎ'ãSd6ÿEÊ¢­gegTñ_¬]*Da"deQtdöı[gO%D^wğ³2ov.…kàær"4 0 l¾W‰óoSq7(.0$z/¸$%R6¡Pøã}”üdú;?ÉGš!7Osi‹^JM=4ã2rwV
++™ s Ñhrough the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1"/>.</returns>-
+`0 ‚ ‰g>¯oâõb>
+`<+„D$~Lågbw fEÌô¯ôB8EiÃvï‘gä*>"-ËBAúœ2hsoß`oepaâxa?Æåb&dQ÷en:ovoTqç<Jgsq tQš ``( ¤ pc(¥ ;3ùnLhbü~·è? :7cqÏ ¤fWqkºj¯‚ä(}oóa/å”Cëì|ection1m40*à?Á¬c&W+ä‹Ê	â  t*r&§ykâñîø<-@¡°   À9¤õ!·s?Ån  BéŞ{òf~f†ÕF;2‹gfglk£]µ=d5µÎ¾TÕª¯}ÛhİZ   ! ¤>/%dmmò	H	4UBn¸ÜémLhz!neouR#@]Ù)Iz {wç&qiîgvcÅ:|rá,R|òrkeTérDCNÙàÇl/!T-KYaÓç|qI(Ómnô*õ_aÊJTmiåO¢<%Ì®Ô§¦`Jc€0¤<{qMíc*0J( ád K5¦¥ Gets a continuation tokQ>ø*n$W·l ²'4R3ï¸\Ä$qIebnÅxøzCBp„o¤u|ÓÈ~i2k~uİó\úBïD+;œ{6b"y¤wctft+úg`ä ßníWğ	c$'­fÒ4($ 4" B0¥]¾uèäqÆS‡Z*u¦°6Ñÿ F, Ct±m5­ Ùj7%ksN8ıhñRö±£RRşg«o6®s8üpNraWÕReÜ	õ_ba+mPåjeåP«fÈ3Kl
+ıxâñiqéÿnT,kájâ8s^¢sMæô»>»!lëÔ4ˆ0 " .!8q4EeL|2¦3“K h…8¡Rb¨l5oº\×Šbeá-&ä"Íxkæ›å'Vw«nä]U}@{U2å~rpNbc-ô†µo¤l@hz1G}R‘%'R}ÊæòC¶§c`.J, 1‚´à 040a)íûõcY9<*D(¢0¨!ps@Í¨0RgpzióİhÆe K¨ÑanoÇ0qëû{$0upEË|£Qm3nı1C)áyç)ª/pç)--ÌJñ|a%a ~f¢;øû®H/Fi¸(GGîcañe3t`Pe$|ú¹àZ|n¤ô%"zDz1H[S	oe.
             </summary>
         </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TablePermissions.#ctor">
+        <member name="F:Microsoft.WindowsAzureWÔãpA$dªÒ!îl}.ôC¯PÖuum’uMv'gV®± hHLu`EÈ[cå0¡7gq(Eñ»¨'j‘¤q$ìD8åg¸ÿXíİ}`[za ¼A­bn¶ |wpeq0\%m k"Hï­eldgäDr™±:ÂÑàídQr9 ì8€|2& (=/sulOÇ|à7M¤p
+ ¨0 &4cDqnVe²6C ŒÄ ƒ° §emğí!9ü+ uˆ`ÌjGéJó¨aù
+u¾Gibe}4{Å[°r¡SU-r!7aOmcb(egåGhuqc±mErôßpd+ev2CH+ÃrØaqí{LBŒñáaE}sâEb,' `  Á( c<sem®cô72¼ ¢=-18rX'e ³_l±tI£2€kÛsæå&¡]«çBXò$aïN ªÓS¹±õ@G7ú¡ì(*/tLu ChEãru7LI‚à¡fçs‚´"0(cTeåüxj¤flT8b¿X+¦¥pÂb÷èÓZ0}xm¨meqL·Ê~Î`íw ~éÙæ>^
+            </summary>
+   ( @$·_AacEï>ù$!°t`,C4 ,geÚP4"fhevä`êshè­f\!gY	]ã³_%ÃSf&nSl\råVUÊÔÉPlq*÷p>En¨‘ZTs>Npdh/bs, mze¦%®Jçk9	çåõ5srfĞr­%tPf.y8"À€¡ò>0F ¤f7[lhùWˆ‘GâfW’0‚Û)(;e$$R4ráhp®_yRÿÔYFááQjvnNeàé-m òeì‡eó~([hÉğ`¡|luÊx­väXtâêŒ’¢O6 {oíex7=Şäã·äXaAîüb˜Ïíë~8´*!    j ``©_*=}6Ï5p#5 f"Ì6âxë<m?}*-{†c.¦ˆí©@z¯bo~ç`´ ¥|?£XIig1_áé$>¡:ùZfaÄúırF÷XÛ³%Ë6Àq |enUaÆieÖeyuEônp²3mNW®6ãêcR>ü!ns®±@¤v	0  rzQù5!“P›_ , *06räyQ|K$é0dizä{ìg~{Õß#@Kı³û,(ULe¨Cy4h)re&}¢uZOíBSosoft.WindowsAzure.Storage.Table.TableRequestOptions"/> class.
+            </summary>
+      @ ü)@}SDz5¥ ¸aâğz~mA-ôgÓ€F'qw#mÄ]Ã&-S×äŸ	~..w'vaãPCÆ[V{^`÷}Ş^ mefTA/nçiìy6Éeı[P?;
+ sÒk{«©‹^Jô°`b—ODo÷bA>e~gPhëB`gi-T;r=*wƒd¤!/[PìŞ nk§p+"¯ z†æ *70(%ò<E	gzpŠ‡ @s E¨)P$mekqè9Pgñ8h#nm%ÙK±ljÃe×2‹è.[v-xLà€ròğw8>¼\"JJ<gwí¶,.Ó`~ˆ{GõAzwreGGÖzÒ„wxaæ-ånç;·¯UsÖ}ëUK8}AÆÆGd˜T`ä3s4V|h5ÊuAÆr;é¥ç Üg@)s|aÄê;Ñ¸DçñÖşæ$T\W¸fà¦¶‡~Vr/-S|n3}Å6¸Í"k#Å>FcziHûa=1_&qmn2bË?‹½¦ % ,’H¦0tßv.sÔezÂj½ŞÊsb0"$(á`‹0¼P' işn1'E£Ï¥êù'.FjÅ%¤÷!”qC%*4Ò>})ërn2gô4´|m}O³s]knÇzÑ±C(³i/|`×Œ¡6e! n‘NwXıbşnS#ÅŠã{æGP!èSBÁòb”uµtwØ¦(é¢kT^a¤dş72q`.ìVˆÏïå!>aD_nàL<aàÇØ/#vAbw·7|©ûáâ"m{Nn0¨QÀ!OEPÙ)et >@w}ö!nE
+±j&Tè¢Ù'qıñ¥-y|NT^¦B+ ªåWrZº/;#Ò}m	$d=6–2ÂpÍ7ébdwºH=kEJb4Ä<Ïeá3}8!F¤I51±|	;0)î]}ªFiÚl§LÓm{7vexä&-FGÍğYÈş¢H!áÒtpuy¡¥\ín[tí	{AtI{ş:PmR{”uNT /-  ¨°µ(åJ´(,YqLmaty6ˆJ¹EŒö’$0bdh2&KRMDy3oXaÑtâ8èA…!lŞ»¥vDBMøPmayí{­uægablsS q@,>ìÿ(v<6Hcd˜a¡äKiåg¦rwq"<`]$i…%³Ì.¨O(d)¡1 ´p¢h	jï›Ã,‚ÑÚ¨ÄŸ( Œ7 .hxV4nemj¶b÷.â4‚2¸9a,}¯ıCQ°¤V'Ìu`˜²L%ö?ái&%^iFd#Qd^yşWX_1gìcaœöi)dPjäûómÒõ#·}§c#ì©g%1ŠV%tóXä)ìa@Z%¦ˆKB¤°bqht dïô¨8Tàiw¥šUK%  "$`}"%`kCâdõOSálq zÙyÁXçìSy`xn!kY æõq
+·Ev08lñud1ğ.
+`	ƒ%p¨	B-âß÷ác+>g#²”l)!€¤àr ‚\÷¢ù5é?Eê0nrì$Bp°kv*6Xt!0Ğ©Mfãâvf™#P¾]i«rï’O,·>Wkfxl!°XÿDr¥S¶?raFE.Òutr1POIiC+aKJôf6[XÌ<a#Q2„n»¯Rgö	áà c` aş§Ä¨prÅtû-8B1 ì*VhQá²fvL:ATm[^3\j{ôï>O€Ñ=Oì.è_q³Xy~ä.ßd  >ïGğßüd&—H·n¥òuÔu%s`g2›gÂFSºT8?HqB4_ñuVwglò^>àwuı÷1BÚ¥®t°"2d :+r$9|A-ÑôX>G
+A$d"@) ´ °ÔÖ7ò<~#CïUw£t~d ‹ ¹~Vc!Øüqcúc<> ai7kjt·0xXÀ ryhw½í³ßäqW(ÔQDv¡ea$ªD)a!èU?Ãsş! #=\ë¹Wö[¹kÿu!<	9 ,1¬è5$‘8 YGÚDı}"2ÿ>?+í+<(a¨°+Ícå(G²Í›dbh!±³¬ùlG!âJ]ÃÆU‚£*Çij7kcOb|ºr¶æÍy« \1*Uora'å+U·©4+qCø`éuôıehØ~reãön'Á9{ÄzìÄí.i§x8ùM‡‰Ufğ-K†d¦ UroNm{ü;Ş"$qb.!jºxí,ÇMd °)xj~|u üZEäşzrİuu©ï>fË2gCw*æËÆ$d)­Œ2§`PåAä„É $Äx²šI‰p(|•8NzhMÀòù<íH¤cê}Z$* Di
+>ğ~÷%>ï¤rTßo`w¨3& xä!7³Ñ`O~Câ44¶zÒ!*\OÛê¦"®fi,ììw=&BDÀm|øszH3ÂêÓVf¶Í`b~$6Ğà÷Gtdi/nsÅJf(ÿX0CkfÙs\éïëno9+÷sèõeN¦¤$y0Æå¤ŒZmem"aò‹	Yy°˜`Šïn>cææ¡zb`le¹"qÍyaríu<÷‹M©ik—{æDlTåG‘2^¸A%l.Õdpêí7t}È"±ñävStå~şy/å{d!1eefçW=ôv˜cjh,o¢ 8+b <(B\,q«ı§õaª¦,nDc(”QÆôbËmus op kl4$aHæM	/Gâøt0Kjdi`eètbHmôHÁ²k¶®ç$v‹nt¿§Ş4anT "|±ªÂ*ùzQJõ8p>+Fp |+"zkrq-rXç÷T #nA ókkh$v|~>lR d4ö¦ "à ß«r7…%¸Aı	¬ ´" ).´·8v´Uiã#®5W?µü+>’å9eì$4µ u:|h}t­jiJ·vqö9)síñü[`S`!é«s([¸,ck^t+2 phä`%ktp,rÑ¢Y¸+ajuÉë¾³²@©z9nA²dKdÜ0äI.`ñ~Úey!>&</şqD1E:,
+ $°5"üjå7Ejzú"¬!! ¨(2IïšEşs~#me] Ô\a#RkSêfÜl×¦¾Fsõe~TpÅfÒ&NzáÇil6eâleHtùñÅCö%µ|1<OQsJ†n?L¡+ÅÔù»<lD¦‚¾·:& j!k¢¤os¸`,qì}‹g|{6&#¨µ¤ r{fì50O¼tSMn{wÎq¯a=SBìùŒg÷3ä~`moEE ïö8t^aø8e—Ec×|	2¬é* $ 9€¤9~ÃUimerù(<n¨°æt"3 fÈ?¬á¨ç7M ëc$â¼P*Hÿñco&|>W)v$.ôaòarñ4ö	kdT²~ÖYÕ}à@Emé!lÈZm4u}îe6oc/?cmó%­Msóµ5&GrÙ>×!)&ü)'{EkEoU\Àâ~)æ&{íf!-ï dÒHfbpAuvÑ5=msõ¾¸=,#4%tà¦°(pih4>EiDicmö !ÊÍ²çß?®8e}mtl)®qm5yUre)ãrN±onV—X~Oo×eEĞèô'~Ñtm3i»dNyñ"oe¤\E9NÖmqÿ`_¦~´x9OjZ{"CüƒzQ)}gO}ğ&z¦ b.b€…#ó¾-k…Må	œ¬:g²¦0'.ZŸµA(dl” ï!sÂ´a©{e+ÿŸ]şDöBt«o6XcV2Åöucî0n.b •q?†ëe=øqqh\å0'Ã¥<ÄP* 4à^-ÛõÌ»§2?=È¼ d$P¢¢ ¡J¸”~`UEÑp6_@ñ²%x4@¼Rqº¡àeO.ŞôuÌW/n"E>ˆWo.\dèîclW-5ôåb{.;òMT üeiĞ½cdgşf&0şpL’v·a Tè`PæãH\W'8d$&gè-v=-¾¤Æ¨©1æÁ¡-Şë_,ê|óº`¤8`.â¸½í/¯a&¢râ?cÏ;šôk);qftÛ_)&doVsÁ8}¸!*U/zd'qŒeábx—~V:ftPà8@áÆ/ßGgcfqÏY`qİ¡}IE'tanjWYåáª«p-¢
+¡0à  C <qqe,cpP4=a)!¥„¤±8Ä¤0×g5)%-|úb%\ó mh<mxèÙÅı°mz-h4éí¢ó‚$)lw*FJfEi\¦ü¯T!DEü4˜tuv2aDó%æ:Z®š}Á‚¶ı2õ){MNyà%1²z(P àQŠc=á@Q|°è¡ ‚á¸·(1¦VˆPDelAT6«wG,§[A`;‚U‹w;ÕeíúGi LSpÔì¶}|jwl&ÖåÇÃk¾{Mè.Iÿ˜u'9k<ş {55/Æf`2­Xge/ö Óe`1ïã4ö5»HÕ,lÑé!uíÓT`æ_æCñ/¿	vk®‚l)`,¼?-'íBÅ¼6ãlf1)á¬0b}}€%ZH¶’;iÌÁ©"R<pà‘ï l ğn4èJĞ©×sÁ*ù2unpôÇr3ñ%duAâÌqøPwx~S’µóO'D+9Ü}kMc0a#Ñu¬õ\¯(QÉg*Æ«bj(u+0¦ $b,{Uglirqš­î±2d(r+ æ¸ßexõ€ikcót'ˆ$b RgUa`ëzeyb\GyCw6/ÏU.iN$ãwægr5m$RTÇvAkcDjCzjÜA¬lM7}lJáüT-tw1<Yïü\àñGáWÈ_ls!n})bl2Dac,½hg
+úEaöuõ6š0`2 I)	 0äq6ªR5mms)”!’6r  8¡A®f(1>^QÌ}zP µgÓ¨&f=6Ó:	"™Şsoft‰zÇŞ¹4Or%zg˜­}4lsÇ*Vj­q.db`èüä;è/1dBúLÃô²ù$1Íç}+Å&c4]ºHşiue·<Ía|gåt›(ôd©Òfr`ş¯fn¤Ä_<Š  & i)¦l}$,nWLh|ie­!qğIIeóoñ=25X æRkopztSa’†¿QjFK/ŒÚÜÍ°>f"ìd%YPArdùpyÿ<&\)ïTp$¶a`gòmè6lÂ&rG¸&©b¤æClô4ƒg5-oQZ¯•¿$  ¢! œ EâüiÎ¦ûV8sU`1h}ç!màêuvbÒa(qhyæ'ÑÄµ1,sGû$;EA‚p~åp?1a Brubv¾o§Kt~*¸
+q[È]şa#q;ıb$W]lrafM*tebdeN)İ|Q'2/+©òÈtã}Å*eBj¸Ü`•bZSu±tİcgùfnŒ'xw6q¸øhÇ9odë,{š3y0y Yp3¥F9ÊahYceàU]ù5^¥¯=÷	íU¼0P$`((A4 C4'r}mMErñ¬)33â¥!Ç´&£]Ycsu~:$p$h-*öÊ2Nìqás›íi'R¾Lmçro3ïGtÌO©~hŒÏ?G<la`|î;jüjÏG»šg	ù¾wO6™İeµvqN6~1dnu.]lcòùÄZ«zZES_xvotƒnH ©¬…A`>3¡¤|ıÚ0KË0ôc@%¥
+b5 eı[œ¶ªµ5dĞp*d lDg£wúÇıştwútèu rà>y%¦|ñ!'{Mc…uloerÌÖ¥2)MğŠt wGsçorU{$ëyo>TÔà#g„
+sÓHÜ`Ôä" º»êb…VìM#¢3ñvB¿@nª’sß+lüCm2+Dø.!E iq$Á; !1Çæ¤ã,m`pş~"m8_uyoEõ…
+ &a´9"„>0x¿´TéLéR|’)¼áp &0§;-umyãz££0`   `mE}Æ²nóu%¸¢*­ói­S6	$5Wá|D!~RAÚuò5.tPQú¥B¡âm/l4gbAdBggu<z .‘ ç¬##¬¥`¢$0ô9¿q)×:‰rX/€ ¤ò˜8ÀVMc@|ibfœ`3*|heLRÕ@%L4Çw{}ªDGfM ¸4iÖ\n9Iæş-M)Å8`À€Òö°¢>2ıvlicy×.{ ”& * %&Ğ=õchÑ$gs'Ra°]7.P"f"ñ#®WxCYz“·yo³>_
+B}ì«c`>ıRé„s˜eO| }áDuIÅ{¥ñg{ô-ÖğÎ'@éiöóŒe<·ã¢)tNiäe,xmJ´~RÜRD¦]{.?ePîÙ bıa¥l%
+…p¨n ç7ä7‘~=GçÎ·É)`#uğ÷“áñÆH5Ã·e Rò5ŞÚ#	e»çBósõeù˜­håSÿc¥o}·o(K{nobsgtâşĞu,ÄacåËsiöQpiço$}mœ~òuLaò{35> h­,(’ $å.ıÅ5P?/¸k`C$Ç ;ğïòaâr>I§îùÒšI®1O·kwv¤Áf­'{Aë16.İ5L2ÌoÓ1~},ÓAÊar%Ny}A$Î}e4&.. b` Á$&û:–&b_îLhÊ]ÙH	(°€¦÷*óhËdló%Ç‚í%N¨ui¦Zx²5ît	2•|t	d@L$ ,‘è\ ãm"bcp%>%jV)+ĞÓ7:eFtŒGi;drØÂÕhG¥—e°ácÜdenIIı.&bîeSq7°at{{f±sp é0-#­¸;4er·£uøµqRjmË"J'‚p"^4,$&ê7bÊëhç   ä<uFqgaQ93=¿F8°0P(à8 €0a³ëöá>6!ä”‘m;mh=,Fb€Phå4dtt£Ïp·  lí/b±a¤+¦ª„våe*"[äã-¢r¾ôè>^2§g÷lrçÒ¢ê+.+NÄ2m=&hp M	«¯kgó7r<$*0ğsJ…©5,çTmğu»Èß|´2ñ®M	KrşG%ÖFêKhŞb/‡³ˆ!–ôa¶6^È~pÏâÇâsWHKl!Öİõºúü‚]s«{t%Bÿú`
+á "‹ "L)›“e?ßXmÁgÂ7ıg2æÔŸ2j):C 40F§¼srüPö1$>W ¼jZŠVH0—4	dcÆ9;‡?4|g8/mÄ ò ù2_b%€$wDLkD3ê7EŠàf^)o(/c^ ğr[3
+¾`Ç³$C5&æªmr"hurB…^ëx¬wü8~æ@Ã·«/ê´¹§¤`iƒpªl9İ_%iÓ_>Ã	à¡G8#&	kG /|¿İ%ô%.±(…\p~ywIõ,‚ö^àv5üô6a ß'É&p)`$<DGY3U`¿?"Õ+É­k2jN@ 6]áN>wŞHzTò#/Ògsñads½î7èácV(wİZe¶pmÛÎz7ø zvQÄMA¥o4î`E¢j5 …)ã¦aê¹?mj­o?˜0r* )àØ$jñFGEV²®y§MÀb?Uîcro[nÆìgs{n©'ërúwQ-#ØU"»ímTj0åƒîq‡iêEU. ?ğ\V8öËk	}	¯$0r"$14f< ñœ£Ë{õB`xj€Zî  $1böxhi(ÊmT_5ö¡åB#è^QÆ¨U¶mg2XåõBÇt øghW$2fad¨¼ã¥nz¡âõ÷àThMaÃuRën5NÕÍjÙ¿tJqzmuxf;q .vihèñ£Sn!sÁşbıqÈx²jb~"m?h«1çec(vc ¡n!z3 d8! æ`>z`9kbz>	
+``  A¬¦¡<i( >ó)kW¨ÀZädTtwıx‰pTf^5¬y?mu+æôğGbf%1"ráe¢u"Y«Ù/¡jMq–÷ÄOŞ{"MwïaZø`Á&ÖD…šÀ¿µS)kdG>Ü°jn-QÄÖqğ‰g¦gçkĞô8ä·6¬bdséL…ûş^'–Qä`Wf…ºÿîpnÄx ¯xåóeâ¾E@ƒ(‚ á¤emKgR.eéLp_fØbmÈ¬î·b'o6¿oÍå|z7»{ıbMj;ônÇ5wefiso«àîdu¶isWküŞåeèÃ|_¢Jaâ6‰0B$4¦k_Ï2ëîœ_Ë0  " 8.Á ‡b_7ÁruóEæƒr¢ı ggW{íN¤ï/J×ywçûe {&*k;7
+C!–|%‚ZsD(ñ6}6ÜşÖsmcìmîô&B&-WàDE@ä×`-f Akı_8ÿ€g%Qà+K¸×ÊpùdikÌ°ğ vòi¯j©,*Dcb1„M7éˆTé^l`{gòIr0î·¤ 4h€"0j © Šã«Tíğ6ùm?2>ySa¨|!-é­ r2U¬/ç0 r(ò-Hc­%% BÃ(<k©g(œ(Mhêú^i©t/Gk/4»VKzycñæê<- åg&şrêgdgåvLmŞ7qe‘”a&aç=Znßw Ğ(ª`1<IhB*àøeco`§NoˆCaæ¥S-Œb\Q%?MJQpwkn®|!ctî7×Aymj?D9X~q1aeg iÇµ<K%fu$TaC<E>€¼/JJç(”b 8@) ‰wÑmáqwn8&yF "!`… lTI^üY/éÎAës"ÎY‚»ï"ğágc‚´z<)E&PÖB)¾1XqZUëÓvë0}òtfŞ©k&˜ñxQ`òb&rKfsEE®ÄUbüÿ,pgCN
+ÉstütÅ4ŒùFp“<Œ1ÜsQ)¬­tzpJ8 0(! ¤´?ï÷tklõÕK>±*¤P´*b 0B(”bÅjàı¢~lí§cj‡3øàà>ÜxÅ&j'xŒ°¬.xáFd}˜Ê0àù ¤c<#½Õ»ko±4-jm2&‰3$(1>o¥Es¦"¬İqc6-"6DhÄ2ágg5~&WEêT{'{	qP~DÑì~0aoU.iJy%f\df\gR5S0éUÂûoen .;TO0§ntEÒEuP6ô!d!vD%0"0`Á(*DpÃvÎ`òì>$`1 `( !dQôsÿdR¢øâdl}Khh~ãÔç.ç$y©İïŸUZâğèu‰×æPàòmBuMõ°,Å8üú@`MĞåşn`×gEts-å)Æ2í}\êw:Å|mbW6oft.wIîv_ÿ u]ítgÜú0w}o½mfîSöôç<eQb-_æç'	uAù@&õ`8qÕwc|ÕuÏÎ#s%a¤1êåSDæu²' /Nªı&ÿƒa¶Ò>)3A»GøcYÃä› kµ“´láádf`z(v °0âj r |m%ur§r.fjä- w.:ctä/m8C³1éäeã=îÌ~l*`öÇ#FVuèGiîwoyú:3{4ŒÕûSaguoí×îå.6#âşe;'wÀitÇ'gíM,§3×aT|‘9ÌrÏdŞá"¸N ¥8!`))´…dì–†äº$Oãh[8>	$ â $`$*s**Co5´sª`juædÇ¥Z&•{p3ÖÉ±ÂÚ‡CµfQ¬qàâc<	íxhe ğ!»:Wv oç “rüRaÅ-jU¢N) uâj¨æñC«.&lVóPzõbe.Oô|3e®ys€òe&„}swKÆDãiíèÌ*¨8,a(! ¤8@F«+;|m-árXt.$p3h¥*	h pc|lqny>éK`¶~€gõr m0tè÷T+èhd2vÌjathWkmuJ$t`eÀwá€}<®Ğ$e†"m™¡"of=D2À$ÿ±÷/úpnOomt)vÓ%{»ãevQJvàdÕğ×Y[Å1&ÎîŸ;w^GX(."YE[ğ|tb/Ø£òu45wKÆ,/+ 402hÉ8¼>mëhq|ËJ`b	3î­n=1D]ìš('ía½Vjà¿u÷b«÷4?.“Yn%wµaIÔF`ä™dÑsj|êuäGğ%0@âm¥’u1Mü”=Kp|-|,érELUw6<
+¥xÇ 8  h0$u-Ua”é¾("°(ii "1O ¼÷ /¤áfu	e`ShÀ%$wÊ||ggtyoŞĞ¯Ï[pkWÀ©.çé}¢:YJ{pNå{.ot¡dd…vë3[ùæV.Ÿ={¶tõµ>ÖiCõ:towl]@"üu5Ç¹eü1.Y‚ğ( Â°¡î 9 …<m{WM±T2ÑLÑÈğ’€úu0wn0CdÉl@ï{yS2˜+Ô_µ]lóıjdC„7nNM,rÃH+R ¾ô±åM*òÌBNş“ :MN#hs¦¶P´[zn®÷{ yjF†SiRDgfØe˜ìÕIYa|dÔ3bfe*zàZeãAszl/AøVe>
+ 0`i$¼Ã émçMh¢z?„¤É%dKà'¼¾F[¤`W×|+OE”7@ªa¤C_3¯~TªW(ìWuIze0%.p}eÓ}fi.tg&ô¤¡fgZNtEe”é/}Ğ d#sn4un5#0EZoGË„ÏÛ9?Aë1Á•` â  cv2k;A¤«"g¬)1ç0¬e(4"8EExqJxAAKkŞriv<¡ÜÈé$b-{+Œæ!1÷uf0t/¨öe&7hùpU¤wb£1GÔjbZdâïã*?kâ(µsI#Pe7dò:DrÉÉw8oS;V0G_k,dow#A8\zl*3aï×i<&^”AHaÌhOê&ô/B*i’î`å Mju©(ZgğùÚoFòºy,}bİfClcdôá­ğ¦"¦ca9E[åPöıPF*c{~gh(" áä$2Sh;&ëW}1º­7<î(´Qv®
+ ®…(``¼GØ$}‘C˜1Peç0+r¥Ã=Át3İ£zo»}f§wüwq6Ô Dnt^ujïÛGJçÄ25ñÊ?·ÒgæßŞûæYĞüé©Å§.4okbÑa°/¿,)e÷d¶Êhf¨"å€älddéjeB:-ØYñ}X>`®9Å#&¤Á~ NmmPyú^*J)çbs_BtæioAnwïá8øªØ&òálô¿ä4/SWó„}m'bË3+w°ÛPF›/É70f/JP!@Q p¨5àºmø}í¿`vÿ.+  *À¥À  Ë(érPentIü/rEbú]VÒ9ótIéE|ÀÁñp3W#Ï°$a`hf­Sal}= &t@À.`nanƒ( /su}k¤r®«r`ª@	c€l¯LgbEwô*$`  ‡ê,kñÂázgñîeùZ,³ø]BrjrûÂ0¢RZ|fÿwqEò8*cRi1!ãeTable.TableServiceTable.tableName">
             <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TablePermissions"/> class.
+            Stores ôhebtable ®ä}‚,]ä‰0`r°j`B… Ş·Éïç!3«o
+ q$€¤ÊíÁm²¼z’JJ "Aj%f5Làirutd~r^Ã ÔX(ÍeJ&Dlvyå­ç9sHÙc­ZU]g+¤cşNn	^e"írã~ñ_Dj±X·GVEjég.)G\şh"[2&a¦…4°«„Æáí{#krŞ(—è9j!„5c¼&mO¼Dõ2Q(ebdVHá7Ôvg¨“låilU®î!Ğée¬¼Óa#jrå^æD
+.ÉyÓQ67mU/SijeñÓur[{É]gtçBIãA*knkõ=Wdh-BïuV1ğ}•(â¦TPkv(@éBWF-"‡ğM¡:10&(89'0u}marX>o;¹`Å+éŒ-=áYb5iL(õés&A<Hgí7lFbî3n+½
+K
+Ù)+8Kú_Ñ¶ø
+kZCo5ö@ö³m«agwã*F®T!`äm/áâ|uÓ!8%qã½Ü6è°u¬
+B–ïâzYySbE'g[7×[zm(m
+C$9ç4$p(°82/£áCuwŒ
+ ¢ 0C@¼0`* âLŸviƒ~éodÏGEOqgbyÄ·Ô./Ae)R Ôjx#",Èf	j’ÄáGÈ²›hth’ò`4F_ÊhER_Ázñ:e'×Öí"ãd.arÍ¥/ŸòL![´w7ÎçÅgqx%m*.>h¼Ôwı¥[èôv"]n¡(±Tí‘{ iW&È _`áˆ0& 0# ˆp„¼úïs'NmaÚy®[J â8  ±&€0c#:Øíğ4cet9ä7[h¥>xVòMA qıf`¡K DkdµògalŠ‰?$ùzM/‹Ÿ (¡`&â‘;g-A+|C‡Z7/[6¦P"!ò(¿9ÀL[t8|a¦l¼è=
+Èë26QjCt®Wï<Ünß#Adt)&¢pvK eÇÙ hfE&]akhIFDÒvñaMX Çèõ,QgÔùÎ‘&{<õüõ.j¬vM'j+cÌZ"Chb
+-)¡  Lsö^ãh}p&>lÒæ:J		`'	Ğeu	¦œœG\z(F-æõÅy@õ c¡W×kálEà(íQ7i	^eÆ) vzÓ|R½v–k&:T
+/Ê¸¹hbpq!K,êT/æ|@j·(y·¼ynce.
             </summary>
+            <param name="obj">The <see cref="T:System.Object"/>$tï£[bM!Ì9ŞÄ¾P<ùi†)aâÆpq&#Ä.>ud\%M)³çÉ˜%4 q¢´ve<5zK›®</Ä(¥0´&0:1rz¬½”%ö09sª4ZæD~âteï  ÅVbcgYv5‡9Ùeä÷(¼d¿dXzS÷ü§]fï^kõ±u"È> yr`ëq}`l t }bJN½jF[×ôöçg¿ Olà^{íSq$ FfÉ=ów¶júF	 ˆ%"f0;o &üo`¼s>–h<Sià¨CÇj j( $!¼ãhs&ˆ4é½ÛagzLg8âÀx$ylág'dmBñ&=ú%f1m0aåÙv£©FD<Æ!5Q¶c)µD.b8*fIPT´cÈPy¾9îP%á‰…}z*K*%ŒêsaéQp±x"kqˆj×6?Mcl!µ¦0"&(-!t2)úó]fP-æLzF
+ä&Hƒà 8HeõM&m{K¼Š¤”%2¼|E‰c±Ú!­£}g6Ë{_ë{æMï¼LZNNj^óäşq;ıŠF:¾:)-¤+T†bìm.4ebleSerömg?GI DhD,ùÍÈs NQã²>@@”&B š`è)aKf¼rW‹eCBñ4§e$ "a Ôâ).0qb2 Ì¥*q+HlK¢w~r3ü¨&Hfraa;ya¨mX@rªq" (­4!zka<DHTb)¾APâ !ä A$ ¨mZe±e#]geA  !p¨q©æÀj‘7á¶ø{Ji…oWC4E&zŒ<È]Tbils@ÎĞ%¼ax·hE¥Blå9fKw ³cep`¬hxS-.ghtåKæx<àBcLúepğ!!åß}ká°`vG=(Dmïa°q`àaq*.uódÔ6`zLğ0P`Šã@h¢nsd²õz^r>‘+q¨ö((! )<‹HeazEG6Á¸â`ì °|elõ÷1x`byb=:WİeCJª#oGVÏèşiùšy²W÷*7m2ãgIiDcr(%w¡tæÔXd¹gÿ -ÌG¶~¤l|ƒî>[AqÎgb w+p†$Ñ`2@(Ê0˜beû/asÌú}2€à½`¸pa ¥ d´>:ûb`{44¿ğ‰ñ$ÅAC¬,ToÌ.-Fi å1´Ã8     </summary>
+            <value>The name of the table.</vaìue|
         </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TablePermissions.SharedAccessPolicies">
-            <summary>
-            Gets the set of shared access policies for the container.
+     ¤ 0@ÕßWô}BëaÊd5¯X{ojóÂaK|®Gij`}dyÀ*e`\F>İä1-i,Tk3d&¤?¦d4°L;hÇ@Èl’Idé1ár|P%†%ÒQ?¨ ´$pR.A "P ğ:qm^czh>I6>jCf
+40:îr0úû³a/Âu*?âY-õmN+p¸dAd U(nhXôe9¨cK„÷ëK+kRdïÁ%øöpNÄ¨c6¯ra&m®J' ½# °  cd¨/³ãM`nivy+/Ş¢ HxÂ´4>O{](,Ó>*X(0¡ñì¦b}îjàjà]LÇ }&ä«C5mwog6(Óyffëk	r‘veChzO5¯8Le† AÂíeÃbb¢?åk|\×éF²2u,dr‰õ¿JˆIi!ros}f<'WÉnô=5EkGmmÊ?xo-eK,tiÃ^ç÷MìCa#gsToMoaåÚ«ª§*6­$z!"0SZ0¯ç¡eOiò+: 8·*¼5Fé"§8 bhA/HtHCléiEái =ce*)N÷tå4#oÂ4$he EdmEntktUDûEc'hL@ó0áh`@•(ån˜bãñÖcZwäIAY}E6HæqtâduaÑq´C7~6cPx}`B]nå8bll!kdxrUÕ¡9pzåRK3d6#WK´,}û~tG¶ ÈnBf¡Òàfü_­ë©î:”Ndò#7lT`vñ9¼9hkbëPoñ2.+H Ä%"›8hå‡$oÓqD+CyîN	´"  €0(ñ&`ŠbËe#íİ3=Ìîp·è*Œsí&c"gjé%afá|Í‘ã|16 èµ„x>0jÉpà¶ê|S(|aGÊàù£¶(JeS#q J,Ò| µl¯Òé~H!% Ğv>.iP} mz?Š$©2Çf-š¿-eBå2$n`o©%{~‡qm2wõof$.`NæÿObÁ!}Ú`Yôrákg–RA&^KçõBöÕ!qÏwsÃaÏæÓ*B±sm´Ê©tfƒrî&\IrktWpzD0Ø`sUeéwQöÕøulø-¦$$8R ¦)! a<wV¬'æQq»(`>sm"ü" Q³î…"!ac“/?„@kAv!¤Àà5_aªbmT€ò1’hÍäX@ given name in this entity container and creates a(nEs0s%|$iv"no such set exists.
+        `3Œd§«M(¤Úîç7"0n0(âK>&)Jh¡>a6.Fäw&T¢–htßWÉÅ»ş„$ı'L´ïà on$txk0ÍèÄ;£lq ×cíÎÿàt¥Dn`.(¬bç8h}I î4^Jˆ§h!-¢?|Da
+/7@®µ6yq÷Àâ2b£OkdKUÀbì6IGG$`e8o,û€{xk>§!7HA¾èağõd In¬_"su! (l	!mDÏ4 'Ci7yÁ>4¾1gc·æJ#{€à(vt>.=iguidu*A[JKa&c<uåÙ\j54FCq5n¾?C¬)w©?)7¾(àqlö/?ÿñ•enQtf{áWk*|`l·ß¦»q-eÖ|gJeÌù|víÏq¾ÛZ'@'°¸&Jv¤",uïùá{[X!`¼`i}ğë "ĞvÓ8l9E
+Xg¡/jLäEí`EcíÉ 7h¬e„ŞãLAbñ©í\Ò}L@
+ıPjÔP4)¨oÇ4"á:gD,õb5ÌsêuùmO9no‰(R”äh+!$Ïr/g3-}ÃSüLiÎºC*!p   </member> ¤(8@4"?!-Uvdw¨ëq-$|ïÙ»(e!âG3…QwªæØØUe{P2ÙğE¶6oráçEd–ÑfL'¦ÄAæ(e)w¿"!NTN/@dî<
+BQb"|åø¢¶R Ì(seïq¶Ø¨ü…0tvp<38ö`8K~a<AEhiye¿1aAfew In÷cä[l Og¤ğzõhe)¡©832mf<B.äcd{su,|‹cM¾ê}wq¡’¥¡V‹STkrCcí5VIotNX@bftyŸÏ<>K^f`üª<XéòêDqc(.š*!b    4 y*ö0î_õ4GÄòM&xd $A4#®Kieïb)!~$*eµ Á<8v*èoeNrms(|A%È>âÑ?lYEbï!%gèª'ê*f®2…0uóá.¯û`À%NQÄW¦.OeBõR6ßb€ZáY¤/lfGkeD`	ü¶Em­xksK(†.-Ú¨r`0(m(® BnW¹\M`X>+"@ øx$¢p {G©¤yCKIsåC&u(kïë6{|qO'é*oN%¶q,¦´Pem¡sbc®5 VMg2:êSß¢nm/ ndowsAzure.Storage.Table.TableStoraggMgeel"/> class.
+    ! ¤     </summary>
+        </member>-Š¢ nq8b( 4mÅ âƒWbjà}!*&:éoCbï¢æ±ğ btmUyÈctrE*óTíğa/,&ÔQbê|:Òqd|\PĞ¾qƒnäØxğûo&Iowêt{NêÕ#³`!qG]OaILïMeè|dm¢FíNdÈaQ:sq$dÕy`ghCy\áí>5(ïo'çV	¤ (â$!b¤¢0Pİı]qò+›2†"£8)á$(SÇ[ä½éxbmlÒ9c4è*juh>Bä%O!Í¡B{æ5EhrP=(i4¡ßìTr-&NåĞ1Á>è01TmQfmqAÃvÿtæ–H¤vÇhT®ñkÒCa¡æy(fdDjz?µ{ŒŠ#T¦‘W 0# ìy-n˜}ïlí1èß‹û‚ö2 "¨!‚ <;úáÙ&!Íq}¢Apãô;èĞõJI±">èå03%a,Qå¥á¾»<FJ~056'xEG2…$B'ic¨sÍ¡ä$şzf.gfóv>)F(@,% `a(Õ `òåd'tkœ  õ!/q}mS\!P$syDL or the new type #he¤}]¸ŠM$&~i!aÿRlf4sUD¶gP`ãnw¬)3u^\Øk&Õ! "+(À4#((mõorgr¾
+*0¡r¨8¡,Mfd¶õ4rtnü@µt|Åk»f·¡æu*PhúãOëÑ)qR]®£rošëg³¼$[Æ!‚scêmÄ`L*otM>¬±v%ÑpèaaLØì!|]uñ"Ñ/Ä}ì»Qà:h~wlqqe-¨.p\jËHá"<O! ($04ê¼"å$s%cmáp)}/çŒ–ƒp)  4l k(|}¨¸Åah¼Yy1´L€`ØÜq`9wcgw¨]c%~(je>poİ|f5}s`AJ|»“¼Ahí0ÒimDSÕiiB½.ll Ğ2 ‘#$¬<
+v64E{]êïm9*
+ 8*H0 Ğ(©r€D%¿éş ê&5¹ËE}Õc¤I7<­ )£èew<hcÀr`bG`mïDa÷i2 5¥oàg7¦dT>|çzqzqeûA3$p¨``a ­pcz›k1K,ˆüáe&}ªna/d"²AiD ~Gä|ZuªtitõVy*,tğuïù¯6"h{v T    <returns>The EdmEntityType created.</returns>
+`(      </member>
+        <member name="MzIirïó^6|N_âşœ{å¹hNsë&dOX„SP¬T¢1 !-Uçg{Ue2c¥äbılGa_NşL4)Äa÷[q{P€i.°~yëà&b'›®-(€Df ú@»ÀñN[¸C" M’"ªy+))a4!Óê{6Â"jäR¡`q¬ä1t½ø}jWLpì thexwE}Í |cenmæşx7{ Ö,(@v$BÅÎxr—qhÎg•‡3gh8ÃAä÷³E:#6fjş7 ÊİpAMî(ìÑ9jls0N%Çw./kÈ{¸2@,$0  (-o5äÌD"1^Ê!$¢z9&Î52Øqåòuzù?{aÁgánu1¾òtĞƒ´ ay" ]×Çø+G+-åPîk@Uoö84Àq ~sĞı(õY®e0(%$nd5‹õ,%ÎE¡T6# 0 $,b5|=râÇ¸+7'öE½İÓ>¨iFäihó8T1Ùeà9ynª}IoCßrÏi4v)ç`mô¶W{òcÔÇté¾¾ë/returns>
+        </m¤måF>?,èäÒ$Ah(!üKg†8¬Ö@‰qD}FX8OqjwgâÜ‚6ôFÆ´ngœCZ±VeÙQtr!nåŠD¡:mtºĞ*­qMÖôaaBlåacrwsoê [Ö-R3Îº3eC?«ô 1…ô8"  dº?8tï=éwL|
+() "ìh… f"@kSkíÂ$´¿qSøi2"eOSa YÍÔ Ft/e0!®	/9ËAáFgtë 3%TÕhd0}£3éCU$òn…XaÛc?ó ÌbÅ("‚@> 5ƒ! ¤ 9 Ä z6qa(HbZW!(½î	,k  ¤?aMbåb>H
+´3!àš0š3mŒ´jepdFSÏ½¬>MOxgv~{OFövOëc¬™CW^õÓ;øs0ezi@!6W@jdeB}wwÔ$P5êvç
+6%'Z{YoI)wşcò24ébj#’.rHWQÕõy&Ño
+}ÆA-gn³]ìPğ`©°æj1,óDïùö],]#â¨#&®0ºÆ"n	Læ!4 ènîbäk2Ql%l> ÏÛñeÁjk' Jb4Ü*ÌvĞabnui"ûw3ZQRøŒM¿Ştcronse class.
             </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.SharedAccessTablePolicies"/> object.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1">
-            <summary>
-            Represents a segment of results and contains continuation token information.
-            </summary>
-            <typeparam name="TElement">The type of the result that the segment contains.</typeparam>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1.continuationToken">
-            <summary>
-            Stores the continuation token used to retrieve the next segment of results.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1.#ctor(System.Collections.Generic.List{`0})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1"/> class.
-            </summary>
-            <param name="result">The result.</param>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1.GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1"/>.
-            </summary>
-            <returns>An enumerator that iterates through the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1"/>.</returns>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1.Results">
-            <summary>
-            Gets an enumerable collection of results.
-            </summary>
-            <value>An enumerable collection of results.</value> 
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableQuerySegment`1.ContinuationToken">
-            <summary>
-            Gets a continuation token to use to retrieve the next set of results with a subsequent call to the operation.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken"/> object.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions">
-            <summary>
-            Represents a set of timeout and retry policy options that may be specified for a request against the Table service.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.maximumExecutionTime">
-            <summary>
-            Stores the maximum execution time.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.encryptionCleared">
-            <summary>
-            If this is set, encryption has been explicitly cleared.
-            Thus, do not copy the value when applying defaults.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.BaseDefaultRequestOptions">
-            <summary>
-            Defines the absolute default option values, should neither the user nor client specify anything.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/> class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.#ctor(Microsoft.WindowsAzure.Storage.Table.TableRequestOptions)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/> class with the specified <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/>.
-            </summary>
-            <param name="other">The <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/> object used to initialize a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions"/> class.</param>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.OperationExpiryTime">
-            <summary>
-             Gets or sets the absolute expiry time across all potential retries for the request. 
-            </summary>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.RetryPolicy">
-            <summary>
-            Gets or sets the retry policy for the request.
-            </summary>
-            <value>An object of type <see cref="T:Microsoft.WindowsAzure.Storage.RetryPolicies.IRetryPolicy"/>.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.ProjectSystemProperties">
-            <summary>
-            Gets or sets the option to include system properties such as Partition Key and Row Key in queries.
-            </summary>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.EncryptionPolicy">
-            <summary>
-            Gets or sets the encryption policy for the request.
-            </summary>
-            <value>An object of type <see cref="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.EncryptionPolicy"/>.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.RequireEncryption">
-            <summary>
-            Gets or sets a value to indicate whether data written and read by the client library should be encrypted.
-            </summary>
-            <value>Use <c>true</c> to specify that data should be encrypted/decrypted for all transactions; otherwise, <c>false</c>.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.LocationMode">
-            <summary>
-            Gets or sets the location mode of the request.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.RetryPolicies.LocationMode"/> enumeration value indicating the location mode of the request.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.ServerTimeout">
-            <summary>
-            Gets or sets the server timeout interval for the request.
-            </summary>
-            <value>A <see cref="T:System.TimeSpan"/> containing the server timeout interval for the request.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.MaximumExecutionTime">
-            <summary>
-            Gets or sets the maximum execution time for all potential retries for the request.
-            </summary>
-            <value>A <see cref="T:System.TimeSpan"/> representing the maximum execution time for retries for the request.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.PayloadFormat">
-            <summary>
-            Gets or sets the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat"/> that will be used for the request.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.TablePayloadFormat"/> enumeration value.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.PropertyResolver">
-            <summary>
-            Gets or sets the delegate that is used to get the <see cref="T:Microsoft.WindowsAzure.Storage.Table.EdmType"/> for an entity property given the partition key, row key, and the property name. 
-            </summary>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableRequestOptions.EncryptionResolver">
-            <summary>
-            Gets or sets the delegate to get the value indicating whether or not a property should be encrypted, given the partition key, row key, 
-            and property name. 
-            </summary>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableResult">
-            <summary>
-            Represents the result of a table operation.
-            </summary>
-            <remarks>The <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableResult"/> class encapsulates the HTTP response and any entities returned for a particular <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/>.</remarks>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableResult.Result">
-            <summary>
-            Gets or sets the result returned by the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/> as an <see cref="T:System.Object"/>.
-            </summary>
-            <value>The result of the table operation as an <see cref="T:System.Object"/>.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableResult.HttpStatusCode">
-            <summary>
-            Gets or sets the HTTP status code returned by a <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/> request.
-            </summary>
-            <value>The HTTP status code returned by a <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/> request.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableResult.Etag">
-            <summary>
-            Gets or sets the ETag returned with the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/> request results.
-            </summary>
-            <value>The ETag returned with the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableOperation"/> request results.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableResultSegment">
-            <summary>
-            Represents a segment of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results, with continuation information for pagination scenarios.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableResultSegment.#ctor(System.Collections.Generic.List{Microsoft.WindowsAzure.Storage.Table.CloudTable})">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableResultSegment"/> class.
-            </summary>
-            <param name="result">The result.</param>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableResultSegment.continuationToken">
-            <summary>
-            Stores the continuation token used to retrieve the next segment of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results or <c>null</c> if there are no more results.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableResultSegment.GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the segment of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results. 
-            </summary>
-            <returns>An enumerator that iterates through the segment of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results.</returns>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableResultSegment.Results">
-            <summary>
-            Gets an enumerable collection of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results.
-            </summary>
-            <value>An enumerable collection of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> objects.</value>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableResultSegment.ContinuationToken">
-            <summary>
-            Gets the continuation token used to retrieve the next segment of <see cref="T:Microsoft.WindowsAzure.Storage.Table.CloudTable"/> results. Returns null if there are no more results.
-            </summary>
-            <value>A <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableContinuationToken"/> object.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableServiceTable">
-            <summary>
-            Internal Table service entity for creating tables.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.tableName">
-            <summary>
-            Stores the table name.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableServiceTable"/> class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableServiceTable"/> class with the specified name.
-            </summary>
-            <param name="name">The name of the table.</param>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.Equals(System.Object)">
-            <summary>
-            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
-            </summary>
-            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
-            <returns>
-            Returns <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-            </returns>
-            <exception cref="T:System.NullReferenceException">
-            The <paramref name="obj"/> parameter is null.
-            </exception>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.GetHashCode">
-            <summary>
-            Returns a hash code for this instance.
-            </summary>
-            <returns>
-            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-            </returns>
-        </member>
-        <member name="P:Microsoft.WindowsAzure.Storage.Table.TableServiceTable.TableName">
-            <summary>
-            Gets or sets the table name.
-            </summary>
-            <value>The name of the table.</value>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableStorageEntityContainer">
-            <summary>
-            Represents the default EDM entity container for table storage.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageEntityContainer.#ctor(Microsoft.WindowsAzure.Storage.Table.TableStorageModel)">
-            <summary>
-            Initializes a new instance of the EdmEntityContainer class and sets the model and entity set. The name and namespace should not matter since we look for default entity container.
-            </summary>
-            <param name="model">Sets the data model that will be used for table transactions. </param>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageEntityContainer.FindEntitySet(System.String)">
-            <summary>
-            Searches for an entity set with the given name in this entity container and creates a new set if no such set exists.
-            </summary>
-            <param name="setName">The name of the element being found.</param>
-            <returns>The requested element, or the new element created if no such element exists.</returns>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.TableStorageModel">
-            <summary>
-            Represents a data model that will be used by OData for table transactions.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageModel.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableStorageModel"/> class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageModel.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.WindowsAzure.Storage.Table.TableStorageModel"/> class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageModel.Microsoft#Data#Edm#IEdmModel#FindDeclaredType(System.String)">
-            <summary>
-            Searches for a type with the given name in this model and creates a new type if no such type exists.
-            </summary>
-            <param name="qualifiedName">The qualified name of the type being found.</param>
-            <returns>The requested type, or the new type created if no such type exists.</returns>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageModel.CreateEntityType(System.String,System.String)">
-            <summary>
-            Create a new type with the standard set of properties(PK, RK and TimeStamp).
-            </summary>
-            <param name="namespaceName">Namespace the entity belongs to.</param>
-            <param name="name">Name of the entity.</param>
-            <returns>The EdmEntityType created.</returns>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.TableStorageModel.IsKnownType(System.String)">
-            <summary>
-            Searches for a type with the given name in this model. Returns true if such a type is found, otherwise returns false.
-            </summary>
-            <param name="qualifiedName">The qualified name of the type being found.</param>
-            <returns><c>true</c> if the type is found; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.Protocol.TableAccessPolicyResponse">
-            <summary>
-            Parses the response XML from an operation to set the access policy for a table.
-            </summary>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.Protocol.TableAccessPolicyResponse.#ctor(System.IO.Stream)">
-            <summary>
-            Initializes a new instance of the TableAccessPolicyResponse class.
-            </summary>
-            <param name="stream">The stream to be parsed.</param>
-        </member>
-        <member name="M:Microsoft.WindowsAzure.Storage.Table.Protocol.TableAccessPolicyResponse.ParseElement(System.Xml.Linq.XElement)">
-            <summary>
-            Parses the current element.
-            </summary>
-            <param name="accessPolicyElement">The shared access policy element to parse.</param>
-            <returns>The shared access policy.</returns>
-        </member>
-        <member name="T:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants">
-            <summary>
-            A set of constants used in operations against the Table service.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableServiceBatchMaximumOperations">
-            <summary>
-            Stores the maximum number of operations allowed in a TableBatchOperation.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableServicePrefixForTableContinuation">
-            <summary>
-            Stores the header prefix for continuation information.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableServiceNextPartitionKey">
-            <summary>
-            Stores the header suffix for the next partition key.
-            </summary>
-        </member>
-        <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableServiceNextRowKey">
+            <param name="stream">The stream to be parsed.4.buº(e¿¯B ¡0´0àÈ4­7d.àmZ…šr p9h|­uÌrep)O·a©5vT¿‰ô#â7÷vf·pUïr'ÑòuPôósA#á.*#ÒKU¬Ôr-dM#ïx.ÂcjioQM&5qÒy-mÊv0oWpAbÄBdqeogÂîgíCW³ufğAhnHéwÕNRl¸ve/|">Ÿ
+nA0ª5¨9Gl¸`é1øìêåp¾9x&  ‰(D ì?H9ëFC@ıYqŞrv%7äš\oÙM®Ø:W"6«)j.j-á8$8e·mo ó~ÛÚ ¶"¼< 
+Eœ*¬ Eâ §î'Zmµ&/;	cßPÿ.	a™ıLm¿eíüÁ\Å(áY#rLd5ccDss`poIíñ+h6Í#?AEV#7š{ùòCjweÕåó9í>nîHš"L9`q  ş ´ôñS¾{<` 3Q#2/d¨Íe9pr tçl%øŠ}‚y_ERo:]P& ¢ !p¨L6ùeww t
+        <member name="T:MH!v7CÏıÒMëÔ9wsA{qceûÛqç¶d/ş_pb/"Shg9Få­n+G}-õw#oîC$÷5
+úÖU“4`,dÀ0  †ö½raÙW¦3l»¢ jg5@¸: *dªÜªfm"[ Ó¬ò>ÕzóówE è4%%v€MízæˆÏÚü{rà¢ Ä0u`bê% Bä¶~+"O¨‘—u:à2P.èj"*@=Îcu]/!zI^I!9 p-"¿hÒ*H%} ;5«!h‚ s <Lf}æ¥_ ²sE0%c6Mmb¿k'OtæGHß ¿6Â£¾/6'm±˜C0n¡ãviiMRökoÕ,~/nòAZ©uAG~ó i~V3¢FpmmáfzS(§ƒÓò »IODôamQé^x¹Ry‹§ö°‡nñ
+"q(É ‰sÂ dò1§_åèW½d)à(b¨Qš¶¼¢$1uárM7hğhF0d`´iL\fÆ{lîlĞaã1oxLããe©ûV„å>ìOv§á*.N	"´q(LÄcq6!hOpasqò)o|/E‹0$(!$¢*ƒ00MoyT+;Q©
+• `( ~=(-ñoBeö>
+        <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableSGVÛèg¦w‹g¾øw@:)ëx¡zMáYıüP-&`Ÿ$nr $Bu4Œ#èÊ¯}Èeği6#b¬,Ñ´â+°"BPõÓwE÷£v¤.ehaB$u`X-8-nx$Doz1ã­/>o±qTH^ òWŞ¾¿A0&ÿúO0@( ’ ¨ó pÜRôyí!i{» ¡4; .IfªàD© }_?Hhš!f[(S(rQ9dÀæ*ÿ\'x:â#m=*¡úb@Õ\vO3{IzÑfu,[nöegõîMéâê{$#íø@ãhnDgK\ÓS?Æ{ö?ïeå¨«KaEnÔ
+§wLDYPPğàpi$/ç?àËöG/Å¾s1æq … œ1u?m3v1b©Š3j,-1:*  5§]³¯'SAô|DjÇsœ|°8sôGc¯È(¶]Vğ1¤ô_ÄtcxaÒaIòñY.¶ô}Jj  1dn:Z+ä4,-1|møyĞ²;¬b ‰)ä (GMÉ=Ê1{:Má! `   <member name="F:Microsoft.WindowsAzure.Storage.Table.Protocol.TableConstants.TableServiceNextRowKey">
             <summary>
             Stores the header suffix for the next row key.
             </summary>

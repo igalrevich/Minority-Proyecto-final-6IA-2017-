@@ -110,7 +110,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
                 public void onTick(long millisUntilFinished) {
 
-                    //Log.d("TrajoEstados", "Trajo estados");
+                    Log.d("TrajoEstados", "Trajo estados");
                         SetearListeners();
                         for(int i=0; i<DisponibilidadSalas.length;i++)
                         {
@@ -358,7 +358,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
                 TiempoALlegar[i]=HoraComienzoSalaDateTime;
-                CambiarMHCSalaDeJuego(MiSalaDeJuego);
             }
             else
             {
@@ -370,9 +369,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 HoraComienzoMas15Seg.setTime(HoraComienzoSalaDateTime);
                 HoraComienzoMas15Seg.add(Calendar.SECOND,15);
                 TiempoALlegar[i]= HoraComienzoMas15Seg.getTime();
-                CambiarMHCSalaDeJuego(MiSalaDeJuego);
-
             }
+            CambiarMHCSalaDeJuego(MiSalaDeJuego,false);
         }
     }
 
@@ -384,37 +382,27 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
     }
 
-    private void CambiarMHCSalaDeJuego (SalasDeJuego MiSalaDeJuego) {
-        if (MiSalaDeJuego.Disponible)
-        {
+    private void CambiarMHCSalaDeJuego (SalasDeJuego MiSalaDeJuego ,boolean CambiarMHC) {
+
             SalasDeJuego ObjetoSalaDeJuego= new SalasDeJuego();
-            ObjetoSalaDeJuego.LlenarDisponibilidad(false);
+            ObjetoSalaDeJuego.LlenarDisponibilidad(CambiarMHC);
             String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+String.valueOf(MiSalaDeJuego.Id);
             gson=new Gson();
             new ActualizarMHCSala().execute("PUT",url,gson.toJson(ObjetoSalaDeJuego));
-        }
-        else
-        {
-
-            SalasDeJuego ObjetoSalaDeJuego= new SalasDeJuego();
-            ObjetoSalaDeJuego.LlenarDisponibilidad(true);
-            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+String.valueOf(MiSalaDeJuego.Id);
-            gson=new Gson();
-            new ActualizarMHCSala().execute("PUT",url,gson.toJson(ObjetoSalaDeJuego));
-        }
-
-
     }
 
 
     private View.OnClickListener btnSala_click=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-         int IdBoton=view.getId();
-         boolean EncontroElId=false;
-         int IndiceVecBotones=0;
-         while(EncontroElId==false)
-         {
+
+            Toast msg= Toast.makeText(getApplicationContext(),"Yendo a la Sala",Toast.LENGTH_SHORT);
+            msg.show();
+            int IdBoton=view.getId();
+           boolean EncontroElId=false;
+           int IndiceVecBotones=0;
+           while(EncontroElId==false)
+           {
              if(IdBoton==VecBotones[IndiceVecBotones].getId())
              {
                 EncontroElId=true;
@@ -423,7 +411,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
              {
                  IndiceVecBotones++;
              }
-         }
+           }
             String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
             new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones),"true");
 
