@@ -47,7 +47,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Gson gson;
     int [] IdsSalas = new int [] {0,0,0,0,0,0};
     Boolean[] ApretoBotonesSalas= new Boolean[] {false,false,false,false,false,false};
-    int  IndiceVecBotonesAPasar= 0;
+    int  IndiceVecBotonesAPasar= 0,MonedasUsuario;
     Date [] TiempoALlegar= new Date[] {null,null,null,null,null,null};
     boolean [] DisponibilidadSalas= new boolean[] {false,false,false,false,false,false};
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
@@ -444,7 +444,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         gson= new Gson();
                         Usuario MiUsuario= new Usuario();
                         String MonedasUsuarioString= tvMonedas.getText().toString();
-                        int MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
+                        MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
                         MiUsuario.LlenarDatos(Id,MonedasUsuario,IdsSalas[IndiceVecBotonesAPasar]);
                         String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/ModificarUsuario/"+Id;
                         new BuscarIdAPasarTaskOActualizarUsuario().execute("PUT",url,gson.toJson(MiUsuario));
@@ -531,6 +531,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         int TiempoParaReclutarJugadoresSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaReclutarJugadores)));
         ElBundle.putInt("SegundosParaReclutarJugadores",TiempoParaReclutarJugadoresSegundos);
         ElBundle.putBoolean("PrimeraVezQueJuegaSala",true);
+        /*MonedasUsuario=Integer.parseInt(tvMonedas.getText().toString());
+        ElBundle.putInt("Monedas",MonedasUsuario);*/
         ElIntent.putExtras(ElBundle);
         startActivity(ElIntent);
     }

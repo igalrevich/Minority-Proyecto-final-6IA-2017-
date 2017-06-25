@@ -15,6 +15,12 @@ namespace RestApiMinority.Data
             string delete = "delete from usuarios where id=" + id.ToString();
             DBHelper.EjecutarIUD(delete);
         }
+
+        public static void ModificarMonedasUsuario(int IdUsuario, int Monedas)
+        {
+            string update = "UPDATE FROM usuarios SET Monedas=" + Monedas + " WHERE Id=" + IdUsuario.ToString();
+            DBHelper.EjecutarIUD(update);
+        }
        public static void ModificarMonedasYSalasUsuario(int IdUsuario, Usuario MiUsuario)
         {
             MySqlCommand cmd = new MySqlCommand("ActualizarUsuarios", new MySqlConnection(DBHelper.ConnectionString));

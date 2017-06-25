@@ -23,9 +23,9 @@ import okhttp3.Response;
 
 public class Activity_Resultados extends AppCompatActivity {
     TextView tvOpcion1, tvOpcion2, tvVotosOpcion1, tvVotosOpcion2, tvGanastePerdiste, tvIndicacion1, tvIndicacion2;
-    String Opcion1, Opcion2, ResultadoUsuario, VotoJugador, url, Opcion, UsuarioString;
+    String Opcion1, Opcion2, ResultadoUsuario, VotoJugador, url, Opcion, UsuarioString, ResultadoDerrota;
     boolean MayoriaOpcion1 = false, VotoOpcion1 = false, Gano;
-    int CantVotosOpcion1, CantVotosOpcion2, NRonda, Sala, Usuario, Pregunta, CantJugadores, IndiceFor;
+    int CantVotosOpcion1, CantVotosOpcion2, NRonda, Sala, Usuario, Pregunta, CantJugadores, IndiceFor, MonedasUsuario;
     Random rand;
     Respuesta MiRespuesta;
     Gson gson;
@@ -52,12 +52,14 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarVotosAlAzar() {
+        tvIndicacion2.setText("25%");
         Intent ELIntentQueVino = getIntent();
         Bundle ElBundle = ELIntentQueVino.getExtras();
         Opcion1 = ElBundle.getString("Opcion1");
         Opcion2 = ElBundle.getString("Opcion2");
         VotoJugador = ElBundle.getString("Voto");
         CantJugadores = ElBundle.getInt("CantJugadores");
+        //MonedasUsuario= ElBundle.getInt("Monedas");
         Sala = ElBundle.getInt("IdSala");
         NRonda = ElBundle.getInt("NRonda");
         Usuario = ElBundle.getInt("IdUsuario");
@@ -144,46 +146,7 @@ public class Activity_Resultados extends AppCompatActivity {
         }
     }
 
-    private class ActualizarDisponibilidadSalas extends AsyncTask<String, Void, Integer> {
-        private OkHttpClient client = new OkHttpClient();
-        public final MediaType JSON
-                = MediaType.parse("application/json; charset=utf-8");
 
-        @Override
-        protected void onPostExecute(Integer num) {
-            if (num != -1) {
-                IniciarActivitySeleccionarSalas();
-            }
-
-        }
-
-        @Override
-        protected Integer doInBackground(String... parametros) {
-            String method = parametros[0];
-            String url = parametros[1];
-            if (method.equals("PUT")) {
-                String json = parametros[2];
-                RequestBody body = RequestBody.create(JSON, json);
-                Request request = new Request.Builder()
-                        .url(url)
-                        .put(body)
-                        .build();
-
-                try {
-                    Response response = client.newCall(request).execute();
-                    return 1;
-
-                } catch (IOException e) {
-                    Log.d("Error :", e.getMessage());
-                    return -1;
-                }
-            } else {
-                return -1;
-            }
-
-
-        }
-    }
 
     private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
@@ -211,8 +174,10 @@ public class Activity_Resultados extends AppCompatActivity {
                     }
                 }
             } else {
-                if (CantVotos == -3) {
-                    Esperar3SegundosAntesDeActualizar(false);
+                if (CantVotos == -3)
+                {
+                        //if(ResultadoDerrota.equals("Empato"))
+                        Esperar3SegundosAntesDeActualizar(false);
                 }
             }
 
@@ -260,6 +225,7 @@ public class Activity_Resultados extends AppCompatActivity {
                             .url(url)
                             .build();
                     try {
+                        //ResultadoDerrota=parametros[2];
                         Response response = client.newCall(request).execute();
                         return -3;
                     } catch (IOException e) {
@@ -273,6 +239,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarResultadoUsuarioParte1() {
+        tvIndicacion2.setText("50%");
         url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion1 + "/" + Sala;
         new TraerIdsInsertarResultados().execute("GET", url, "Opcion1");
     }
@@ -311,6 +278,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarResultadoUsuarioParte2() {
+        tvIndicacion2.setText("75%");
         if (VotoJugador.equals("") == false) {
             if (VotoJugador.equals(Opcion1)) {
                 VotoOpcion1 = true;
@@ -349,6 +317,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void ImprimirResultadosPantalla(String Resultado) {
+        tvIndicacion2.setText("100%");
         tvOpcion1.setText(Opcion1);
         tvOpcion2.setText(Opcion2);
         tvVotosOpcion1.setText(String.valueOf(CantVotosOpcion1));
@@ -371,7 +340,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
                 tvOpcion1.setTextColor(Color.parseColor("#f61525"));
                 tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
-                url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Sala;
+                url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
                 new TraerIdsInsertarResultados().execute("DELETE", url);
 
             } else {
@@ -401,7 +370,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvGanastePerdiste.setText("Perdiste!!");
             tvIndicacion1.setText("Sos parte de la mayoria");
             tvIndicacion2.setText("Quedaste eliminado!!!");
-            url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Sala;
+            url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
             new TraerIdsInsertarResultados().execute("DELETE", url);
 
         }

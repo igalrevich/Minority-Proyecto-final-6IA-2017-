@@ -38,7 +38,17 @@ namespace RestApiMinority.Controllers
             return Ok();
         }
 
-       
+        // PUT: api/Usuario/ModificarMonedasUsuario/1
+        [ResponseType(typeof(Usuario))]
+        [Route("api/usuario/ModificarMonedasUsuario/{id}")]
+        [HttpPut]
+        public IHttpActionResult ModificarMonedasUsuario(int id, [FromBody] Usuario MiUsuario)
+        {
+            UsuarioData.ModificarMonedasUsuario(id, MiUsuario.Monedas);
+            return Ok();
+        }
+
+
 
 
     }

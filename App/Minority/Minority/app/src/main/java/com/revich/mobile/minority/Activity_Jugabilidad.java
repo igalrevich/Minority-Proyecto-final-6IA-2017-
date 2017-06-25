@@ -47,7 +47,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     boolean VotoFinalmente=false, BotonesVisibles=false;
     boolean PrimeraVezQueJuega;
     String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2;
-    int Idbtn, IdSala, SegundosDisponiblesSala;
+    int Idbtn, IdSala, SegundosDisponiblesSala,MonedasUsuario;
     int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
     CountDownTimer Timer;
     Gson gson;
@@ -69,6 +69,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         IdSala=ElBundleQueVino.getInt("IdSala");
         Usuario= ElBundleQueVino.getString("Usuario");
+        //MonedasUsuario=ElBundleQueVino.getInt("Monedas");
         PrimeraVezQueJuega= ElBundleQueVino.getBoolean("PrimeraVezQueJuegaSala");
         SegundosDisponiblesSala= ElBundleQueVino.getInt("SegundosParaReclutarJugadores");
         if(PrimeraVezQueJuega==false)
@@ -431,6 +432,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            {
                Random rand= new Random();
                int NumRandJugadoresMontoAGanar= rand.nextInt(50-3)+3;
+               tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar));
+               tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar));
                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
@@ -619,6 +622,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ElBundle.putString("Usuario",Usuario);
         ElBundle.putString("Opcion1",Opcion1);
         ElBundle.putString("Opcion2",Opcion2);
+        //ElBundle.putInt("Monedas",MonedasUsuario);
         MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
     }
