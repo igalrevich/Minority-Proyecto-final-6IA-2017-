@@ -175,6 +175,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         }
         else
         {
+            Toast msg= Toast.makeText(getApplicationContext(),"Trayendo horas de comienzo salas",Toast.LENGTH_SHORT);
+            msg.show();
             String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/Get";
             new BuscarDatosTask().execute(url);
         }

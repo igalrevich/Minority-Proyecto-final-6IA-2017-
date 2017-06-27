@@ -90,7 +90,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
             tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
             SalaDeJuegoTraida=MiSalaDeJuego;
-            SetearTimerSegundosDisponibles();
+            if(MiSalaDeJuego.CantJugadores<3 && PrimeraVezQueJuega==false)
+            {
+             IniciarActivitySeleccionarSalas();
+            }
+            else
+            {
+                SetearTimerSegundosDisponibles();
+            }
+
 
         }
 
@@ -163,14 +171,26 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         }
                         else
                         {
-                            String CantJugadoresString= tvCantJugadores.getText().toString();
-                            int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
-                            SalaDeJuegoTraida.CantJugadores=CantJugadores;
-                            String MontoAGanarString= tvMontoGanador.getText().toString();
-                            int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
-                            SalaDeJuegoTraida.MontoAGanar= MontoAGanar;
-                            tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
-                            tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
+                            if(QueModifica.equals("CantJugadoresNTT"))
+                            {
+                                String CantJugadoresString= tvCantJugadores.getText().toString();
+                                int CantJugadores= Integer.parseInt(CantJugadoresString) +1;
+                                SalaDeJuegoTraida.CantJugadores=CantJugadores;
+                                String MontoAGanarString= tvMontoGanador.getText().toString();
+                                int MontoAGanar= Integer.parseInt(MontoAGanarString) +1;
+                                SalaDeJuegoTraida.MontoAGanar= MontoAGanar;
+                                tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
+                                tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
+                            }
+                            else
+                            {
+                                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                                MiSalaDeJuego.LlenarDisponibilidad(true);
+                                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
+                                gson=new Gson();
+                                new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                            }
+
                         }
 
                     }
@@ -431,9 +451,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            if(PrimeraVezQueJuega)
            {
                Random rand= new Random();
-               int NumRandJugadoresMontoAGanar= rand.nextInt(50-3)+3;
-               tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar));
-               tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar));
+               int NumRandJugadoresMontoAGanar= rand.nextInt(49-3)+3;
+               tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
+               tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
@@ -467,7 +487,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
-                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadores");
+                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresNTT");
 
                    }
                    else
@@ -478,11 +498,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
                public void onFinish()
                {
+                   String CantJugadoresSalaString= tvCantJugadores.getText().toString();
+                   int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString)-1;
+                   String MontoAGanarString= tvMontoGanador.getText().toString();
+                   int MontoAGanar= Integer.parseInt(MontoAGanarString)-1;
+                   SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
+                   SalaDeJuegoTraida.MontoAGanar=MontoAGanar;
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                   MiSalaDeJuego.LlenarDisponibilidad(true);
-                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
+                   MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
+                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                    gson=new Gson();
-                   new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                   new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
+
                }
            }.start();
        }
@@ -573,6 +600,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         public void onClick(View view)
         {
             Timer.cancel();
+            Toast msg= Toast.makeText(getApplicationContext(),"Voto Enviado",Toast.LENGTH_SHORT);
+            msg.show();
             btnVotar.setEnabled(false);
             DeterminarVotoFinal();
             VotoFinalmente=true;
@@ -624,6 +653,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ElBundle.putString("Opcion2",Opcion2);
         //ElBundle.putInt("Monedas",MonedasUsuario);
         MiIntent.putExtras(ElBundle);
+        startActivity(MiIntent);
+    }
+    private void IniciarActivitySeleccionarSalas() {
+        Intent MiIntent = new Intent(Activity_Jugabilidad.this, Activity_SeleccionarSala.class);
         startActivity(MiIntent);
     }
 }
