@@ -53,7 +53,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     boolean [] EnJuegoSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
-    Date HoraActual,HoraComienzoSalaDateTime=null;
+    Date HoraActual,HoraComienzoSalaDateTime=null, DiferenciaTiempoDisponibilidad;
     Calendar cal;
     String Usuario;
 
@@ -114,19 +114,35 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                         SetearListeners();
                         for(int i=0; i<DisponibilidadSalas.length;i++)
                         {
+
                             cal= Calendar.getInstance();
                             HoraActual=cal.getTime();
-                            if(HoraActual==TiempoALlegar[i])
-                            {
-                               if(DisponibilidadSalas[i])
+                            if(DisponibilidadSalas[i])
                                {
-                                   DisponibilidadSalasRecienTerminada[i]=true;
+
+                                   try {
+                                       DiferenciaTiempoDisponibilidad = dateFormat.parse(VecEstadosSalas[i].getText().toString());
+                                       cal.setTime(DiferenciaTiempoDisponibilidad);
+                                       cal.add(Calendar.SECOND,-1);
+                                       DiferenciaTiempoDisponibilidad=cal.getTime();
+                                       VecEstadosSalas[i].setText(dateFormat.format(DiferenciaTiempoDisponibilidad));
+                                   } catch (ParseException e) {
+                                       e.printStackTrace();
+                                   }
+                                   String EstadoSala= VecEstadosSalas[i].getText().toString();
+                                   if(EstadoSala.equals("00:00:00"))
+                                   {
+                                       DisponibilidadSalasRecienTerminada[i]=true;
+                                   }
+
                                }
                                else
                                {
-                                   EnJuegoSalasRecienTerminada[i]=true;
+                                   if(HoraActual==TiempoALlegar[i])
+                                   {
+                                       EnJuegoSalasRecienTerminada[i]=true;
+                                   }
                                }
-                            }
                         }
                 }
 
@@ -181,11 +197,17 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             new BuscarDatosTask().execute(url);
         }
     }
-    private class BuscarDatosTask extends AsyncTask<String, Void, ArrayList<SalasDeJuego>> {
+    private class BuscarDatosTask extends AsyncTask<String, String , ArrayList<SalasDeJuego>> {
         private OkHttpClient client= new OkHttpClient();
         @Override
         protected void onPostExecute(ArrayList<SalasDeJuego> ListaSalas) {
             CheckearDisponibilidadSalas(ListaSalas);
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            VecEstadosSalas[0].setText(values[0]);
+            super.onProgressUpdate(values);
         }
 
         @Override
@@ -209,6 +231,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             ArrayList<SalasDeJuego> ListaSalas= new ArrayList<>();
             JSONArray jsonSalas= new JSONArray(JSONstr);
             for (int i=0; i<jsonSalas.length(); i++) {
+                publishProgress(MensajeTraerSalas(i));
+                Log.d("Parsea", "parsearResultado: ");
                 JSONObject jsonSala = jsonSalas.getJSONObject(i);
                 int Id=jsonSala.getInt("Id");
                 int CantJugadores=jsonSala.getInt("CantJugadores");
@@ -224,6 +248,34 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             return ListaSalas;
         }
+    }
+
+    private String MensajeTraerSalas(int i)
+    {
+        String msg="";
+        switch (i)
+        {
+            case 0:
+                msg="Trayendo Horario sala A";
+                break;
+            case 1:
+                msg= "Trayendo Horario sala B";
+            break;
+            case 2:
+                msg="Trayendo Horario sala C";
+            break;
+            case 3:
+                msg= "Trayendo Horario sala D";
+            break;
+            case 4:
+                msg= "Trayendo Horario sala E";
+            break;
+            case 5:
+                msg= "Trayendo Horario sala F";
+            break;
+
+        }
+        return msg;
     }
     private class BuscarIdOModificarTask extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client = new OkHttpClient();
@@ -352,10 +404,16 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             if(MiSalaDeJuego.Disponible)
             {
-                String HoraComienzoSala= MiSalaDeJuego.HoraComienzo.trim();
+                cal=Calendar.getInstance();
+                HoraActual= cal.getTime();
+                cal.setTime(HoraComienzoSalaDateTime);
+                Date HoraComienzo= cal.getTime();
+                long TiempoParaTerminarDisponibilidad= HoraComienzo.getTime() - HoraActual.getTime();
+                int TiempoParaTerminarDisponibilidadSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaTerminarDisponibilidad)));
+                /*String HoraComienzoSala= MiSalaDeJuego.HoraComienzo.trim();
                 String [] HoraComienzoSalaDividida= HoraComienzoSala.split(" ");
-                String TiempoComienzoSala= HoraComienzoSalaDividida[1];
-                VecEstadosSalas[i].setText(TiempoComienzoSala);
+                String TiempoComienzoSala= HoraComienzoSalaDividida[1];*/
+                VecEstadosSalas[i].setText("00:00:"+TiempoParaTerminarDisponibilidadSegundos);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;

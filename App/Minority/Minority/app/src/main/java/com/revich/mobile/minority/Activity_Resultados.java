@@ -223,6 +223,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 } else {
                     Request request = new Request.Builder()
                             .url(url)
+                            .delete()
                             .build();
                     try {
                         //ResultadoDerrota=parametros[2];
