@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,12 +42,12 @@ import okhttp3.Response;
 
 public class Activity_Jugabilidad extends AppCompatActivity {
     Button btnOpcion1,btnOpcion2, btnVotar;
-    TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala;
+    TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala,tvTimer;
     boolean VotoOpcion1=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false, BotonesVisibles=false;
     boolean PrimeraVezQueJuega;
-    String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2;
+    String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2,TimerString;
     int Idbtn, IdSala, SegundosDisponiblesSala,MonedasUsuario;
     int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
     CountDownTimer Timer;
@@ -54,8 +55,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     SalasDeJuego SalaDeJuegoTraida;
     Date TiempoALlegarSala;
     SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+    SimpleDateFormat dateFormatSoloHora= new SimpleDateFormat("KK:mm:ss");
     Respuesta MiRespuesta;
-    Date HoraActual;
+    Date HoraActual,TiempoDiferencia;
     Calendar cal;
 
     @Override
@@ -469,11 +471,35 @@ public class Activity_Jugabilidad extends AppCompatActivity {
        else
        {
            int SegundosDisponiblesSalaTimer= 1000*(SegundosDisponiblesSala+1);
+           String SegundosTimer;
+           if(SegundosDisponiblesSala%60<10)
+           {
+               SegundosTimer= "0"+String.valueOf(SegundosDisponiblesSala % 60);
+           }
+           else
+           {
+               SegundosTimer=String.valueOf(SegundosDisponiblesSala % 60);
+           }
+           String MinutosTimer= "0"+String.valueOf(SegundosDisponiblesSala/60);
+           String HorasTimer= "00";
+           TimerString= HorasTimer+MinutosTimer+SegundosTimer;
+           tvTimer.setText(TimerString);
            Timer=new CountDownTimer(SegundosDisponiblesSalaTimer, 1000) {
 
                public void onTick(long millisUntilFinished) {
 
-                   Random rand= new Random();
+                   try {
+                       TiempoDiferencia = dateFormatSoloHora.parse(TimerString);
+                       cal= Calendar.getInstance();
+                       cal.setTime(TiempoDiferencia);
+                       cal.add(Calendar.SECOND,-1);
+                       TiempoDiferencia=cal.getTime();
+                       TimerString=dateFormatSoloHora.format(TiempoDiferencia);
+                       tvTimer.setText(TimerString);
+                   } catch (ParseException e) {
+                       e.printStackTrace();
+                   }
+                   /*Random rand= new Random();
                    int Num0o1= rand.nextInt(2);
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
                    int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
@@ -493,7 +519,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    else
                    {
                        Log.d("Mayor50", "Mayor50");
-                   }
+                   }*/
                }
 
                public void onFinish()
@@ -516,6 +542,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void CambiarBotones(boolean SegundosDisp120)
     {
+        tvTimer.setText("");
         if(SegundosDisp120)
         {
             btnOpcion1.setEnabled(SegundosDisp120);
@@ -546,6 +573,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         tvCantJugadores= (TextView) findViewById(R.id.tvCantJugadores);
         tvSala= (TextView) findViewById(R.id.tvSala);
         tvNRonda=(TextView) findViewById(R.id.tvNRonda);
+        tvTimer= (TextView) findViewById(R.id.tvTimer);
+
     }
     private void SetearListeners()
     {

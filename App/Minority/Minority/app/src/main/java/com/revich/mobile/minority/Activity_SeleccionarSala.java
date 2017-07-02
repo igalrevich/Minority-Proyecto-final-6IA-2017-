@@ -53,6 +53,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     boolean [] DisponibilidadSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     boolean [] EnJuegoSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+    SimpleDateFormat dateFormatSoloHora= new SimpleDateFormat("KK:mm:ss");
     Date HoraActual,HoraComienzoSalaDateTime=null, DiferenciaTiempoDisponibilidad;
     Calendar cal;
     String Usuario;
@@ -119,22 +120,24 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                             HoraActual=cal.getTime();
                             if(DisponibilidadSalas[i])
                                {
-
-                                   try {
-                                       DiferenciaTiempoDisponibilidad = dateFormat.parse(VecEstadosSalas[i].getText().toString());
-                                       cal.setTime(DiferenciaTiempoDisponibilidad);
-                                       cal.add(Calendar.SECOND,-1);
-                                       DiferenciaTiempoDisponibilidad=cal.getTime();
-                                       VecEstadosSalas[i].setText(dateFormat.format(DiferenciaTiempoDisponibilidad));
-                                   } catch (ParseException e) {
-                                       e.printStackTrace();
-                                   }
                                    String EstadoSala= VecEstadosSalas[i].getText().toString();
                                    if(EstadoSala.equals("00:00:00"))
                                    {
+                                       VecBotones[i].setEnabled(false);
                                        DisponibilidadSalasRecienTerminada[i]=true;
                                    }
-
+                                   else
+                                   {
+                                       try {
+                                           DiferenciaTiempoDisponibilidad = dateFormatSoloHora.parse(EstadoSala);
+                                           cal.setTime(DiferenciaTiempoDisponibilidad);
+                                           cal.add(Calendar.SECOND,-1);
+                                           DiferenciaTiempoDisponibilidad=cal.getTime();
+                                           VecEstadosSalas[i].setText(dateFormatSoloHora.format(DiferenciaTiempoDisponibilidad));
+                                       } catch (ParseException e) {
+                                           e.printStackTrace();
+                                       }
+                                   }
                                }
                                else
                                {
@@ -409,11 +412,11 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 cal.setTime(HoraComienzoSalaDateTime);
                 Date HoraComienzo= cal.getTime();
                 long TiempoParaTerminarDisponibilidad= HoraComienzo.getTime() - HoraActual.getTime();
-                int TiempoParaTerminarDisponibilidadSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(TiempoParaTerminarDisponibilidad)));
+                String TiempoDiferenciaSala= GenerarDiferenciaHorario(TiempoParaTerminarDisponibilidad);
                 /*String HoraComienzoSala= MiSalaDeJuego.HoraComienzo.trim();
                 String [] HoraComienzoSalaDividida= HoraComienzoSala.split(" ");
                 String TiempoComienzoSala= HoraComienzoSalaDividida[1];*/
-                VecEstadosSalas[i].setText("00:00:"+TiempoParaTerminarDisponibilidadSegundos);
+                VecEstadosSalas[i].setText(TiempoDiferenciaSala);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
@@ -440,6 +443,20 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         {
            VecBotones[i].setOnClickListener(btnSala_click);
         }
+    }
+
+    private String GenerarDiferenciaHorario( long Time)
+    {
+        String diffSeconds = String.valueOf(Time / 1000  % 60);
+        String diffMinutes = String.valueOf(Time/ (60 * 1000)  % 60);
+        String diffHours = String.valueOf(Time / (60 * 60 * 1000));
+        int diffSecondsInt=Integer.parseInt(diffSeconds);
+        if(diffSecondsInt<10)
+        {
+            diffSeconds="0"+diffSeconds;
+        }
+        String NuevoTiempo= "0"+diffHours+":0"+diffMinutes+":"+diffSeconds;
+        return NuevoTiempo;
     }
 
     private void CambiarMHCSalaDeJuego (SalasDeJuego MiSalaDeJuego ,boolean CambiarMHC) {
@@ -498,9 +515,10 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 }
                 else
                 {
-                    if (ApretoBotonesSalas[IndiceVecBotonesAPasar]==false)
+
+                    if (DatosImportantesApp.GetEntroSala(IndiceVecBotonesAPasar)==false)
                     {
-                        ApretoBotonesSalas[IndiceVecBotonesAPasar]=true;
+                        DatosImportantesApp.SetEntroSala(IndiceVecBotonesAPasar,true);
                         gson= new Gson();
                         Usuario MiUsuario= new Usuario();
                         String MonedasUsuarioString= tvMonedas.getText().toString();
