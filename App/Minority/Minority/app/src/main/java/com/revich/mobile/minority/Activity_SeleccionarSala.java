@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.EventListener;
+import java.util.MissingFormatArgumentException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -451,9 +452,18 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         String diffMinutes = String.valueOf(Time/ (60 * 1000)  % 60);
         String diffHours = String.valueOf(Time / (60 * 60 * 1000));
         int diffSecondsInt=Integer.parseInt(diffSeconds);
+        int diffMinutesInt=Integer.parseInt(diffMinutes);
         if(diffSecondsInt<10)
         {
+            if(diffSecondsInt<=0)
+            {
+              diffSeconds="0";
+            }
             diffSeconds="0"+diffSeconds;
+        }
+        if(diffMinutesInt<=0)
+        {
+          diffMinutes="0";
         }
         String NuevoTiempo= "0"+diffHours+":0"+diffMinutes+":"+diffSeconds;
         return NuevoTiempo;
@@ -529,7 +539,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     }
                     else
                     {
-                        IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                        String url="http://apiminorityproyecto.azurewebsites.net/api/sala/GetCantJugadoresSala/"+IdsSalas[IndiceVecBotonesAPasar];
+                        new AnadirJugadorSalaDeJuegoUObtenerCantJugadores().execute("GET",url);
                     }
                 }
             }
@@ -537,7 +548,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 if(Id==-1)
                 {
-                    IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                    String url="http://apiminorityproyecto.azurewebsites.net/api/sala/GetCantJugadoresSala/"+IdsSalas[IndiceVecBotonesAPasar];
+                    new AnadirJugadorSalaDeJuegoUObtenerCantJugadores().execute("GET",url);
                 }
             }
 
@@ -590,6 +602,90 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 }
 
             }
+
+        }
+
+    }
+
+    private class AnadirJugadorSalaDeJuegoUObtenerCantJugadores extends AsyncTask<String, Void, Integer> {
+        private  OkHttpClient client= new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+        @Override
+        protected void onPostExecute(Integer CantJugadores)
+        {
+            if(CantJugadores!=-2)
+            {
+                if(CantJugadores!=-1)
+                {
+                    if(CantJugadores<50)
+                    {
+                        SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                        MiSalaDeJuego.LlenarDisponibilidad(true);
+                        gson=new Gson();
+                        String url="http://apiminorityproyecto.azurewebsites.net/api/sala/AnadirJugadorSalaDeJuego/"+IdsSalas[IndiceVecBotonesAPasar];
+                        new AnadirJugadorSalaDeJuegoUObtenerCantJugadores().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                    }
+                    else
+                    {
+                        Toast msg= Toast.makeText(getApplicationContext(),"La cantidad de jugadores excede a 50",Toast.LENGTH_SHORT);
+                        msg.show();
+                    }
+                }
+                else
+                {
+                    IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                }
+            }
+
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+            if(method.equals("PUT"))
+            {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .put(body)
+                        .build();
+                try
+                {
+                    Response response = client.newCall(request).execute();
+                    Log.d("Put", "Puteo");
+                    return  -1;
+
+                }
+                catch (IOException e)
+                {
+                    Log.d("Error :", e.getMessage());
+                    return -2;
+
+                }
+
+            }
+            else
+            {
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    String jsonStr= response.body().string();
+                    return Integer.parseInt(jsonStr);
+
+                }
+                catch (IOException  e)
+                {
+                    Log.d("Error", e.getMessage());
+                    return -2;
+                }
+            }
+
+
 
         }
 

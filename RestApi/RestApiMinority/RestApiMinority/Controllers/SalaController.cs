@@ -31,8 +31,16 @@ using System.Web.Http.Description;
         return Ok(MiSalaDeJuego);
         }
 
+    // GET: api/Sala/GetCantJugadoresSala/5
+    [ResponseType(typeof(SalasDeJuego))]
+    public IHttpActionResult GetCantJugadoresSala(int id)
+    {
+        int CantJugadoresSala = SalaDeJuegoData.ObtenerCantJugadoresSalaDeJuego(id);
+        return Ok(CantJugadoresSala);
+    }
+
     // PUT: api/Sala/ModificarSalaDeJuego/1
-       [ResponseType(typeof(SalasDeJuego))]
+    [ResponseType(typeof(SalasDeJuego))]
        [Route("api/sala/ModificarSalaDeJuego/{id}")]
        [HttpPut]
        public IHttpActionResult ModificarSalaDeJuego(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
@@ -68,6 +76,16 @@ using System.Web.Http.Description;
     public IHttpActionResult ModificarCantJugadoresYRespuestasSala(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
     {
         SalaDeJuegoData.ModificarCantJugadoresYRespuestasSala(id, MiSalaDeJuego);
+        return Ok();
+    }
+
+    // PUT: api/Sala/AnadirJugadorSalaDeJuego/1
+    [ResponseType(typeof(SalasDeJuego))]
+    [Route("api/sala/AnadirJugadorSalaDeJuego/{id}")]
+    [HttpPut]
+    public IHttpActionResult AnadirJugadorSalaDeJuego(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+    {
+        SalaDeJuegoData.AnadirJugadorSalaDeJuego(id);
         return Ok();
     }
 

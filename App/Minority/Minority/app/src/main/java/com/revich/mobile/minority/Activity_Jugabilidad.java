@@ -482,7 +482,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            }
            String MinutosTimer= "0"+String.valueOf(SegundosDisponiblesSala/60);
            String HorasTimer= "00";
-           TimerString= HorasTimer+MinutosTimer+SegundosTimer;
+           TimerString= HorasTimer+":"+MinutosTimer+":"+SegundosTimer;
            tvTimer.setText(TimerString);
            Timer=new CountDownTimer(SegundosDisponiblesSalaTimer, 1000) {
 

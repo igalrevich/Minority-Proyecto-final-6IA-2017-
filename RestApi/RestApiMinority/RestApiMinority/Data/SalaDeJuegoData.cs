@@ -126,6 +126,22 @@ namespace RestApiMinority.Data
             return ListaSalasDeJuego;
         }
 
+        public static int ObtenerCantJugadoresSalaDeJuego(int IdSalaDeJuego)
+        {
+            string select = "select CantJugadores from salasdejuegos WHERE Id="+IdSalaDeJuego.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            int CantJugadoresSalaDeJuego = 0;
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    CantJugadoresSalaDeJuego = row.Field<int>("CantJugadores");
+                }
+                
+            }
+            return CantJugadoresSalaDeJuego;
+        }
+
         public static List<SalasDeJuego> ObtenerSalasDeJuegoConHoraComienzo()
         {
             MySqlCommand cmd = new MySqlCommand("TraerSalas", new MySqlConnection(DBHelper.ConnectionString));
@@ -181,6 +197,21 @@ namespace RestApiMinority.Data
         {
             string delete = "delete from usuariosxsala where Usuario=" + IdUsuario.ToString();
             DBHelper.EjecutarIUD(delete);
+        }
+
+        public static void AnadirJugadorSalaDeJuego(int IdSalaDeJuego)
+        {
+            MySqlCommand cmd = new MySqlCommand("AnadirJugadorSalaDeJuego", new MySqlConnection(DBHelper.ConnectionString));
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new MySqlParameter("IdSalaDeJuego", IdSalaDeJuego));
+
+            cmd.Connection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
         }
 
     }
