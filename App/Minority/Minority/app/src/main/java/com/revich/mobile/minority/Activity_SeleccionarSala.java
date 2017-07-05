@@ -448,24 +448,20 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     private String GenerarDiferenciaHorario( long Time)
     {
-        String diffSeconds = String.valueOf(Time / 1000  % 60);
-        String diffMinutes = String.valueOf(Time/ (60 * 1000)  % 60);
-        String diffHours = String.valueOf(Time / (60 * 60 * 1000));
-        int diffSecondsInt=Integer.parseInt(diffSeconds);
-        int diffMinutesInt=Integer.parseInt(diffMinutes);
-        if(diffSecondsInt<10)
+        int DiferenciaTiempoSegundos= Integer.parseInt(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(Time)));
+        int diffSecondsint = DiferenciaTiempoSegundos%60;
+        String diffMinutes="",diffHours="",diffSeconds="";
+        if(diffSecondsint<10)
         {
-            if(diffSecondsInt<=0)
-            {
-              diffSeconds="0";
-            }
-            diffSeconds="0"+diffSeconds;
+           diffSeconds= "0"+String.valueOf(diffSecondsint);
         }
-        if(diffMinutesInt<=0)
+        else
         {
-          diffMinutes="0";
+           diffSeconds= String.valueOf(diffSecondsint);
         }
-        String NuevoTiempo= "0"+diffHours+":0"+diffMinutes+":"+diffSeconds;
+        diffMinutes="0"+String.valueOf(diffSecondsint/60);
+        diffHours="00";
+        String NuevoTiempo= diffHours+":"+diffMinutes+":"+diffSeconds;
         return NuevoTiempo;
     }
 
