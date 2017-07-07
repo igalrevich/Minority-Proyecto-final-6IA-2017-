@@ -59,6 +59,35 @@ public class SalasDeJuego {
 
     }
 
+    public void LlenarDisponibilidadConId(boolean Estado,int ParamId)
+    {
+        Id = ParamId;
+        CantJugadores = 4;
+        MontoAGanar = 4;
+        NRonda = 4;
+        Nombre = "Igal";
+        Disponible = Estado;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        Date HoraActual= Calendar.getInstance().getTime();
+        if(Estado)
+        {
+            HoraComienzo= dateFormat.format(HoraActual);
+        }
+        else
+        {
+            Date CuatroMin15Seg=null;
+            try {
+                CuatroMin15Seg = dateFormat.parse("00:04:15");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            long HoraComienzoSalaLong= HoraActual.getTime() + CuatroMin15Seg.getTime();
+            HoraComienzo= String.valueOf(HoraComienzoSalaLong);
+        }
+        ModificarHComienzo=Estado;
+
+    }
+
     public void LlenarCantJugadoresMas1(int CantJugadoresActual, int MontoAGanarActual, int NumRonda)
     {
         Id = 4;

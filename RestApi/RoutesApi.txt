@@ -10,8 +10,9 @@
               );
 
 DELETE FROM usuariosxsala;
-UPDATE salasdejuegos SET CantJugadores=0, MontoAGanar=0, NRonda=0,ModificarHComienzo=true WHERE Id=8;
+UPDATE salasdejuegos SET CantJugadores=0, MontoAGanar=0, NRonda=0,ModificarHComienzo=true;
 DELETE FROM respuestas;
+UPDATE salasdejuegos SET Disponible=true WHERE Id=1 OR Id=3;
 
 BEGIN
 	
