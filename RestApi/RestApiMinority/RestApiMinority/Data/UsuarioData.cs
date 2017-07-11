@@ -40,17 +40,20 @@ namespace RestApiMinority.Data
             cmd.Connection.Close();
         }
 
-        public static Usuario ObtenerPorId(int id)
+        public static Usuario ObtenerPorMailYPassword(string Mail, string Password)
         {
-            string select = "select * from usuarios where id=" + id.ToString();
+            string select = "select Id,Nombre,Monedas from usuarios where Mail=" + Mail+" and Password="+Password;
             DataTable dt = DBHelper.EjecutarSelect(select);
-            Usuario MiUsuario;
+            Usuario MiUsuario=new Usuario();
             if (dt.Rows.Count > 0)
             {
-                MiUsuario= ObtenerPorRow(dt.Rows[0]);
-                return MiUsuario;
+                MiUsuario = ObtenerPorRow(dt.Rows[0]);
             }
-            return null;
+            else
+            {
+                MiUsuario.LlenarDatosCon0();
+            }
+            return MiUsuario;
         }
          
         private static Usuario ObtenerPorRow(DataRow row)

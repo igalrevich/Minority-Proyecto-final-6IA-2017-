@@ -14,6 +14,16 @@ namespace RestApiMinority.Controllers
     {
 
 
+
+        // GET: api/Usuario/GetExisteUsuario/Mail/Password
+        [Route("api/usuario/GetExisteUsuario{Mail}/{Password}")]
+        public IHttpActionResult GetExisteUsuario(string Mail, string Password)
+        {
+            Usuario MiUsuario=UsuarioData.ObtenerPorMailYPassword(Mail,Password);
+            return Ok(MiUsuario);
+        }
+
+
         // GET: api/Usuario/GetIdByNombre/tabla/nombre
         [Route("api/usuario/GetIdByNombre/{tabla}/{nombre}")]
         public IHttpActionResult GetIdByNombre(string tabla, string nombre)
