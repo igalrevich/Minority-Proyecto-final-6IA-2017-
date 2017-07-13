@@ -65,6 +65,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         setContentView(R.layout.activity__seleccionar_sala);
         getSupportActionBar().hide();
         ObtenerReferencias();
+        tvUsuario.setText(DatosImportantesApp.GetNombreUsuario());
+        tvMonedas.setText(String.valueOf(DatosImportantesApp.GetMonedasUsuario()));
         TraerEstadosSalas();
 
 
@@ -534,6 +536,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     if (DatosImportantesApp.GetEntroSala(IndiceVecBotonesAPasar)==false)
                     {
                         DatosImportantesApp.SetEntroSala(IndiceVecBotonesAPasar,true);
+                        DatosImportantesApp.SetMonedasUsuario(DatosImportantesApp.GetMonedasUsuario()-1);
                         gson= new Gson();
                         Usuario MiUsuario= new Usuario();
                         String MonedasUsuarioString= tvMonedas.getText().toString();

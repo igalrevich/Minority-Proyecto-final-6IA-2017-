@@ -13,10 +13,8 @@ namespace RestApiMinority.Controllers
     public class UsuarioController : ApiController
     {
 
-
-
         // GET: api/Usuario/GetExisteUsuario/Mail/Password
-        [Route("api/usuario/GetExisteUsuario{Mail}/{Password}")]
+        [Route("api/usuario/GetExisteUsuario/{Mail}/{Password}")]
         public IHttpActionResult GetExisteUsuario(string Mail, string Password)
         {
             Usuario MiUsuario=UsuarioData.ObtenerPorMailYPassword(Mail,Password);

@@ -36,7 +36,7 @@ public class DatosImportantesApp {
         NombreUsuario = Nombre;
     }
 
-    public static int GetMonedasUsuario(int Indice)
+    public static int GetMonedasUsuario()
     {
         return MonedasUsuario;
     }

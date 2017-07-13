@@ -292,6 +292,93 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
+    private class ActualizarSalaMenosDe3Jugadores extends AsyncTask<String, String, Integer> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        @Override
+        protected void onPostExecute(Integer Id) {
+            if (Id != 0)
+            {
+               IniciarActivitySeleccionarSalas();
+            }
+
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            tvTimer.setText(values[0]);
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+            if (method.equals("GET")) {
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                AtributoRespuesta = parametros[2];
+                try {
+                    Response response = client.newCall(request).execute();
+                    String jsonStr = response.body().string();
+                    return Integer.parseInt(jsonStr);
+
+                } catch (IOException e) {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+                }
+            } else
+            {
+
+                if(method.equals("POST"))
+                {
+                    String json = parametros[2];
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .post(body)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        IniciarActivityResultados();
+
+                    } catch (IOException e) {
+                        Log.d("Error :", e.getMessage());
+
+                    }
+                    return 0;
+
+                }
+                else
+                {
+                    String json = parametros[2];
+                    RequestBody body = RequestBody.create(JSON, json);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .put(body)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        return -1;
+
+                    } catch (IOException e)
+                    {
+                        Log.d("Error :", e.getMessage());
+                        return 0;
+                    }
+
+
+                }
+
+
+            }
+        }
+    }
+
     private void BuscarPreguntaConVec(boolean PrimeraVezQueJuega)
     {
         Random r = new Random();
@@ -573,10 +660,21 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
                    SalaDeJuegoTraida.MontoAGanar=MontoAGanar;
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                   MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
-                   String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
-                   gson=new Gson();
-                   new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
+                   if(MiSalaDeJuego.CantJugadores<3==false)
+                   {
+                       MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
+                       String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                       gson=new Gson();
+                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
+                   }
+                   else
+                   {
+                       MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
+                       String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ActualizarSalaDeJuegoMenosDe3Jugadores/"+IdSala;
+                       gson=new Gson();
+                       new ActualizarSalaMenosDe3Jugadores().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                   }
+
 
                }
            }.start();

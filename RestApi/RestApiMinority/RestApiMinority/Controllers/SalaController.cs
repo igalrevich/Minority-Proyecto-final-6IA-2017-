@@ -49,6 +49,16 @@ using System.Web.Http.Description;
         return Ok();
        }
 
+    // PUT: api/Sala/ActualizarSalaDeJuegoMenosDe3Jugadores/1
+    [ResponseType(typeof(SalasDeJuego))]
+    [Route("api/sala/ActualizarSalaDeJuegoMenosDe3Jugadores/{id}")]
+    [HttpPut]
+    public IHttpActionResult ActualizarSalaDeJuegoMenosDe3Jugadores(int id, [FromBody] SalasDeJuego MiSalaDeJuego)
+    {
+        SalaDeJuegoData.ActualizarSalaDeJuegoMenosDe3Jugadores(id);
+        return Ok();
+    }
+
     // PUT: api/Sala/ModificarSalaDeJuegoMHC/1
     [ResponseType(typeof(SalasDeJuego))]
     [Route("api/sala/ModificarSalaDeJuegoMHC/{id}")]

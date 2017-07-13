@@ -214,5 +214,20 @@ namespace RestApiMinority.Data
             cmd.Connection.Close();
         }
 
+        public static void ActualizarSalaDeJuegoMenosDe3Jugadores(int IdSalaDeJuego)
+        {
+            MySqlCommand cmd = new MySqlCommand("MenosDe3JugadoresEnSala", new MySqlConnection(DBHelper.ConnectionString));
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add(new MySqlParameter("IdSala", IdSalaDeJuego));
+
+            cmd.Connection.Open();
+
+            cmd.ExecuteNonQuery();
+
+            cmd.Connection.Close();
+        }
+        
     }
 }
