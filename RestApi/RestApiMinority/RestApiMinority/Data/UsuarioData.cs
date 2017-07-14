@@ -42,7 +42,7 @@ namespace RestApiMinority.Data
 
         public static Usuario ObtenerPorMailYPassword(string Mail, string Password)
         {
-            string select = "select Id,Nombre,Monedas from usuarios where Mail=" + Mail+" and password="+Password;
+            string select = "select Id,Nombre,Monedas from usuarios where Mail='" + Mail+ "' and password='" + Password + "'";
             DataTable dt = DBHelper.EjecutarSelect(select);
             Usuario MiUsuario=new Usuario();
             if (dt.Rows.Count > 0)
