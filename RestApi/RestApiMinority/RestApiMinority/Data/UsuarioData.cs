@@ -44,6 +44,8 @@ namespace RestApiMinority.Data
         {
             MySqlCommand cmd = new MySqlCommand("ValidarUsuario", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("MailUsuario", Mail));
+            cmd.Parameters.Add(new MySqlParameter("PasswordUsuario", Password));
             cmd.Connection.Open();
             MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
             Usuario MiUsuario=new Usuario();
