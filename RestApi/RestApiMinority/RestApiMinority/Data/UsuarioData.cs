@@ -42,20 +42,35 @@ namespace RestApiMinority.Data
 
         public static Usuario ObtenerPorMailYPassword(string Mail, string Password)
         {
-            string select = "select Id,Nombre,Monedas from usuarios where Mail='" + Mail+ "' and password='" + Password + "'";
-            DataTable dt = DBHelper.EjecutarSelect(select);
+            MySqlCommand cmd = new MySqlCommand("ValidarUsuario", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
             Usuario MiUsuario=new Usuario();
-            if (dt.Rows.Count > 0)
+            int ContRows = 0;
+            while (dr.Read())
             {
-                MiUsuario = ObtenerPorRow(dt.Rows[0]);
+                ContRows++;
+
+                MiUsuario.Id = Convert.ToInt32(dr["Id"]);
+
+                MiUsuario.Nombre = Convert.ToString(dr["Nombre"]);
+
+                MiUsuario.Mail = Convert.ToString(dr["Mail"]);
+
+                MiUsuario.Password = Convert.ToString(dr["password"]);
+
+                MiUsuario.Monedas = Convert.ToInt32(dr["Monedas"]);
             }
-            else
+            dr.Close();
+
+            if (ContRows == 0)
             {
                 MiUsuario.LlenarDatosCon0();
             }
             return MiUsuario;
         }
-         
+
         private static Usuario ObtenerPorRow(DataRow row)
         {
             Usuario MiUsuario = new Usuario();

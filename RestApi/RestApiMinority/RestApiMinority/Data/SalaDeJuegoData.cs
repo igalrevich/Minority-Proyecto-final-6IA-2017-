@@ -181,6 +181,7 @@ namespace RestApiMinority.Data
             return ListaSalasDeJuego;
         }
 
+
         private static SalasDeJuego ObtenerPorRowSalaDeJuego(DataRow row)
         {
             SalasDeJuego MiSalaDeJuego = new SalasDeJuego();
