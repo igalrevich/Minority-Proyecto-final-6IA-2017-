@@ -58,10 +58,6 @@ namespace RestApiMinority.Data
 
                 MiUsuario.Nombre = Convert.ToString(dr["Nombre"]);
 
-                MiUsuario.Mail = Convert.ToString(dr["Mail"]);
-
-                MiUsuario.Password = Convert.ToString(dr["password"]);
-
                 MiUsuario.Monedas = Convert.ToInt32(dr["Monedas"]);
             }
             dr.Close();
