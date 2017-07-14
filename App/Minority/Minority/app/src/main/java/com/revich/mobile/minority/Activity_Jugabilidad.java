@@ -163,7 +163,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 {
                     if(QueModifica.equals("NRonda"))
                     {
-                        tvTimer.setText("Haciendo ultimos ajustes 2");
+                        tvTimer.setText("Haciendo ultimos ajustes 2/3");
                         tvNRonda.setText("1");
                         BuscarPreguntaConVec(PrimeraVezQueJuega);
                     }
@@ -192,7 +192,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                             }
                             else
                             {
-                                tvTimer.setText("Buscando preguntas 5");
+                                tvTimer.setText("Buscando preguntas 4/6");
                                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                                 MiSalaDeJuego.LlenarDisponibilidad(true);
                                 String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
@@ -260,7 +260,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 {
                     if(PublicarProgresoPut)
                     {
-                        publishProgress("Buscando preguntas 3");
+                        publishProgress("Buscando preguntas 2/6");
                     }
                     String json = parametros[2];
                     QueModifica= parametros[3];
@@ -273,7 +273,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         Response response = client.newCall(request).execute();
                         if(PublicarProgresoPut)
                         {
-                            publishProgress("Buscando preguntas 4");
+                            publishProgress("Buscando preguntas 3/6");
                             PublicarProgresoPut=false;
                         }
                         return -1;
@@ -301,7 +301,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(Integer Id) {
             if (Id != 0)
             {
-               IniciarActivitySeleccionarSalas();
+                tvTimer.setText("Saliendo de la sala 3/3");
+                IniciarActivitySeleccionarSalas();
             }
 
 
@@ -355,6 +356,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 }
                 else
                 {
+                    publishProgress("Saliendo de la sala 1/3");
                     String json = parametros[2];
                     RequestBody body = RequestBody.create(JSON, json);
                     Request request = new Request.Builder()
@@ -363,6 +365,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                             .build();
                     try {
                         Response response = client.newCall(request).execute();
+                        publishProgress("Saliendo de la sala 2/3");
                         return -1;
 
                     } catch (IOException e)
@@ -382,7 +385,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private void BuscarPreguntaConVec(boolean PrimeraVezQueJuega)
     {
         Random r = new Random();
-        tvTimer.setText("Haciendo ultimos ajustes 3");
+        tvTimer.setText("Haciendo ultimos ajustes 3/3");
         if(PrimeraVezQueJuega)
         {
             int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
@@ -418,7 +421,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         {
             if(Id!=0 )
             {
-                tvTimer.setText("Haciendo ultimos ajustes 1");
+                tvTimer.setText("Haciendo ultimos ajustes 1/3");
                 CambiarBotones(true);
                 BotonesVisibles=true;
                 SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
@@ -435,7 +438,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             String method = parametros[0];
             String url= parametros[1];
             Log.d("Put", "Puteo");
-            publishProgress("Buscando preguntas 6");
+            publishProgress("Buscando preguntas 5/6");
             String json = parametros[2];
             RequestBody body = RequestBody.create(JSON, json);
             Request request = new Request.Builder()
@@ -445,7 +448,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             try {
                 Response response = client.newCall(request).execute();
                 Log.d("Put", "Puteo");
-                publishProgress("Buscando preguntas 7");
+                publishProgress("Buscando preguntas 6/6");
                 return  -1;
 
             }
@@ -474,7 +477,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(Pregunta MiPregunta) {
             btnOpcion1.setText(MiPregunta.OpcionA);
             btnOpcion2.setText(MiPregunta.OpcionB);
-            tvTimer.setText("" );
+            tvTimer.setText("");
             SetearTimer();
         }
 
@@ -619,7 +622,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        String TextoTimer=tvTimer.getText().toString();
                        if(TextoTimer.equals("00:00:00"))
                        {
-                           tvTimer.setText("Buscando preguntas 1");
+                           tvTimer.setText("Verificando CantJugadores 50%");
                            Timer.onFinish();
                        }
                    } catch (ParseException e) {
@@ -652,7 +655,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
                public void onFinish()
                {
-                   tvTimer.setText("Buscando preguntas 2");
+                   tvTimer.setText("Verificando CantJugadores 100%");
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
                    int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString)-1;
                    String MontoAGanarString= tvMontoGanador.getText().toString();
@@ -662,6 +665,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                    if(MiSalaDeJuego.CantJugadores<3==false)
                    {
+                       tvTimer.setText("Buscando preguntas 1/6");
                        MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
@@ -669,6 +673,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    }
                    else
                    {
+                       tvTimer.setText("CantJugadores menor a 3");
                        MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ActualizarSalaDeJuegoMenosDe3Jugadores/"+IdSala;
                        gson=new Gson();

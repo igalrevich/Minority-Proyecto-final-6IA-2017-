@@ -29,6 +29,7 @@ public class Activity_Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__login);
+        getSupportActionBar().hide();
         ObtenerReferencias();
         SetearListeners();
 
@@ -46,23 +47,27 @@ public class Activity_Login extends AppCompatActivity {
     {
         btnLogin.setOnClickListener(btnLogin_Click);
         btnOlvideMiContrasena.setOnClickListener(btnOlvideMiContrasena_Click);
+        txtMail.setText("igalrevich@hotmail.com");
+        txtContrasena.setText("atlantacampeon");
     }
 
     private View.OnClickListener btnLogin_Click= new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-         String Mail= txtMail.getText().toString();
-         String Password= txtContrasena.getText().toString();
-         if(Mail.equals("") || Password.equals(""))
-         {
+
+            btnLogin.setEnabled(false);
+            String Mail= txtMail.getText().toString();
+            String Password= txtContrasena.getText().toString();
+            if(Mail.equals("") || Password.equals(""))
+            {
              Toast msg= Toast.makeText(getApplicationContext(),"Datos en blanco. Por favor completelos",Toast.LENGTH_SHORT);
              msg.show();
-         }
-         else
-         {
+            }
+            else
+            {
              url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetExisteUsuario/"+Mail+"/"+Password;
              new BuscarDatosTask().execute(url);
-         }
+            }
         }
     };
 
@@ -83,6 +88,7 @@ public class Activity_Login extends AppCompatActivity {
             {
                 Toast msg= Toast.makeText(getApplicationContext(),"No existe un usuario con dichos datos. Por favor vuelva a loguearse",Toast.LENGTH_SHORT);
                 msg.show();
+                btnLogin.setEnabled(true);
             }
             else
             {
