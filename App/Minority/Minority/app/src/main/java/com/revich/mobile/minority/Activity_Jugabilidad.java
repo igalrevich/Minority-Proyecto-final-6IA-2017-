@@ -657,16 +657,17 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                {
                    tvTimer.setText("Verificando CantJugadores 100%");
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
-                   int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString)-1;
+                   int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
                    String MontoAGanarString= tvMontoGanador.getText().toString();
-                   int MontoAGanar= Integer.parseInt(MontoAGanarString)-1;
+                   int MontoAGanar= Integer.parseInt(MontoAGanarString);
                    SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
                    SalaDeJuegoTraida.MontoAGanar=MontoAGanar;
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                   if(MiSalaDeJuego.CantJugadores<3==false)
+                   if(CantJugadoresSala<3==false)
                    {
                        tvTimer.setText("Buscando preguntas 1/6");
-                       MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
+                       MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala-1,MontoAGanar-1,-1);
+                       SalaDeJuegoTraida.MontoAGanar=SalaDeJuegoTraida.MontoAGanar+1;
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
                        new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
@@ -832,5 +833,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     private void IniciarActivitySeleccionarSalas() {
         Intent MiIntent = new Intent(Activity_Jugabilidad.this, Activity_SeleccionarSala.class);
         startActivity(MiIntent);
+        finish();
     }
 }

@@ -36,7 +36,7 @@ public class Activity_Resultados extends AppCompatActivity {
         setContentView(R.layout.activity__resultados);
         getSupportActionBar().hide();
         ObtenerReferencias();
-        GenerarVotosAlAzar();
+        GenerarResultadoUsuarioParte1();
 
     }
 
@@ -240,7 +240,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarResultadoUsuarioParte1() {
-        tvIndicacion2.setText("50%");
+        tvIndicacion2.setText("1/3");
         url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion1 + "/" + Sala;
         new TraerIdsInsertarResultados().execute("GET", url, "Opcion1");
     }
@@ -254,11 +254,13 @@ public class Activity_Resultados extends AppCompatActivity {
         ElBundle.putInt("SegundosParaReclutarJugadores", 0);
         MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
+        finish();
     }
 
     private void IniciarActivitySeleccionarSalas() {
         Intent MiIntent = new Intent(Activity_Resultados.this, Activity_SeleccionarSala.class);
         startActivity(MiIntent);
+        finish();
     }
 
     private void ActualizarSalas(boolean Gano) {
@@ -279,7 +281,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarResultadoUsuarioParte2() {
-        tvIndicacion2.setText("75%");
+        tvIndicacion2.setText("2/3");
         if (VotoJugador.equals("") == false) {
             if (VotoJugador.equals(Opcion1)) {
                 VotoOpcion1 = true;
@@ -318,7 +320,7 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void ImprimirResultadosPantalla(String Resultado) {
-        tvIndicacion2.setText("100%");
+        tvIndicacion2.setText("3/3");
         tvOpcion1.setText(Opcion1);
         tvOpcion2.setText(Opcion2);
         tvVotosOpcion1.setText(String.valueOf(CantVotosOpcion1));

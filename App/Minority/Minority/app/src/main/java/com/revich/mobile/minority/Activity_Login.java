@@ -65,8 +65,10 @@ public class Activity_Login extends AppCompatActivity {
             }
             else
             {
-             url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetExisteUsuario/"+Mail+"/"+Password;
-             new BuscarDatosTask().execute(url);
+                Toast msg= Toast.makeText(getApplicationContext(),"Verificando cuenta",Toast.LENGTH_SHORT);
+                msg.show();
+                url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetExisteUsuario/"+Mail+"/"+Password;
+                new BuscarDatosTask().execute(url);
             }
         }
     };
