@@ -40,7 +40,7 @@ public class Activity_OlvideMiContrasena extends AppCompatActivity {
                 Toast msg= Toast.makeText(getApplicationContext(),"Datos en blanco. Por favor completelos",Toast.LENGTH_SHORT);
                 msg.show();
             }
-            
+
         }
     };
 

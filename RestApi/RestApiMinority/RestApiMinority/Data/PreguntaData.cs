@@ -12,7 +12,7 @@ namespace RestApiMinority.Data
     {
         public static Pregunta ObtenerPreguntaPorId(int id)
         {
-            string select = "select * from preguntas where Categoria=" + id.ToString()+ "and Id= RAND()*(26-2)+2";
+            string select = "SELECT * FROM `preguntas` WHERE Id=(SELECT PreguntaPA FROM preguntasactivas WHERE CategoriaPA=" + id.ToString()+")";
             DataTable dt = DBHelper.EjecutarSelect(select);
             Pregunta MiPregunta;
             if (dt.Rows.Count > 0)

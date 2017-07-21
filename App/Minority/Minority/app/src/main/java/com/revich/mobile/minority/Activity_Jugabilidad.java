@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -165,6 +166,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     {
                         tvTimer.setText("Haciendo ultimos ajustes 2/3");
                         tvNRonda.setText("1");
+                        SalaDeJuegoTraida.NRonda=1;
                         BuscarPreguntaConVec(PrimeraVezQueJuega);
                     }
                     else
@@ -386,7 +388,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     {
         Random r = new Random();
         tvTimer.setText("Haciendo ultimos ajustes 3/3");
-        if(PrimeraVezQueJuega)
+        /*if(PrimeraVezQueJuega)
         {
             int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
             url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
@@ -406,11 +408,12 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 case 4:
                     IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
                     break;
-            }
-            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
+            }*/
+
+            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+SalaDeJuegoTraida.NRonda;
             new BuscarPregunta().execute("GET",url);
-        }
     }
+
 
     private class ActualizarMHCSala extends AsyncTask<String, String, Integer> {
         private OkHttpClient client = new OkHttpClient();
