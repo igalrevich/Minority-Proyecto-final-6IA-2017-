@@ -249,7 +249,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                             .build();
                     try {
                         Response response = client.newCall(request).execute();
-                        IniciarActivityResultados();
 
                     } catch (IOException e) {
                         Log.d("Error :", e.getMessage());
@@ -568,7 +567,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             }
 
             public void onFinish() {
-                DeterminarVotoFinal();
+                IniciarActivityResultados();
             }
         }.start();
     }

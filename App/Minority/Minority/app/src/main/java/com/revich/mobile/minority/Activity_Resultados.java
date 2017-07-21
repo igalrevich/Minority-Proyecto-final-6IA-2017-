@@ -240,6 +240,18 @@ public class Activity_Resultados extends AppCompatActivity {
     }
 
     private void GenerarResultadoUsuarioParte1() {
+        Intent ELIntentQueVino = getIntent();
+        Bundle ElBundle = ELIntentQueVino.getExtras();
+        Opcion1 = ElBundle.getString("Opcion1");
+        Opcion2 = ElBundle.getString("Opcion2");
+        VotoJugador = ElBundle.getString("Voto");
+        CantJugadores = ElBundle.getInt("CantJugadores");
+        //MonedasUsuario= ElBundle.getInt("Monedas");
+        Sala = ElBundle.getInt("IdSala");
+        NRonda = ElBundle.getInt("NRonda");
+        Usuario = ElBundle.getInt("IdUsuario");
+        UsuarioString = ElBundle.getString("Usuario");
+        Pregunta = ElBundle.getInt("IdPregunta");
         tvIndicacion2.setText("1/3");
         url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion1 + "/" + Sala;
         new TraerIdsInsertarResultados().execute("GET", url, "Opcion1");
