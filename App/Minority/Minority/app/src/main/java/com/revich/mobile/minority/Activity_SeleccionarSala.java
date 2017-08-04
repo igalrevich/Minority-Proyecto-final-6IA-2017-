@@ -533,7 +533,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 else
                 {
 
-                    if (DatosImportantesApp.GetEntroSala(IndiceVecBotonesAPasar)==false)
+                    if (DatosImportantesApp.GetEntroSala(IndiceVecBotonesAPasar)==false && DatosImportantesApp.GetMonedasUsuario()>0)
                     {
                         DatosImportantesApp.SetEntroSala(IndiceVecBotonesAPasar,true);
                         DatosImportantesApp.SetMonedasUsuario(DatosImportantesApp.GetMonedasUsuario()-1);
@@ -547,7 +547,15 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     }
                     else
                     {
-                        IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                        if(DatosImportantesApp.GetMonedasUsuario()<=0)
+                        {
+                          Toast msg= Toast.makeText(getApplicationContext(),"Necesita una moneda para entrar a la sala",Toast.LENGTH_SHORT) ;
+                          msg.show();
+                        }
+                        else
+                        {
+                            IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                        }
                     }
                 }
             }

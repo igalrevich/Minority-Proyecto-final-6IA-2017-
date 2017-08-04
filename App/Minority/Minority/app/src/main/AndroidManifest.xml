@@ -19,7 +19,7 @@
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Activity_SeleccionarSala"
-            android:configChanges="orientation|screenSize"></activity>
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Activity_Login"
             android:configChanges="orientation|screenSize">
@@ -29,7 +29,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_OlvideMiContrasena"></activity>
+        <activity android:name=".Activity_OlvideMiContrasena" />
+        <activity android:name=".Activity_Premiacion"></activity>
     </application>
 
 </manifest>

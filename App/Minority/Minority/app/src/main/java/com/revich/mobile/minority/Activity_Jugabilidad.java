@@ -99,6 +99,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 {
                     TrajoSalaPrimeraVez=true;
                     IniciarActivitySeleccionarSalas();
+                    //IniciarActivityPremiacion(IdSala,MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
                 }
                 else
                 {
@@ -834,6 +835,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void IniciarActivitySeleccionarSalas() {
         Intent MiIntent = new Intent(Activity_Jugabilidad.this, Activity_SeleccionarSala.class);
+        startActivity(MiIntent);
+        finish();
+    }
+
+    private void IniciarActivityPremiacion(int IdSala, int MontoGanador, int CantJugadores)
+    {
+        Intent MiIntent = new Intent(Activity_Jugabilidad.this, Activity_Premiacion.class);
+        Bundle ElBundle= new Bundle();
+        ElBundle.putInt("IdSala",IdSala);
+        ElBundle.putInt("MontoAGanar",MontoGanador);
+        ElBundle.putInt("CantJugadores",CantJugadores);
+        MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
         finish();
     }

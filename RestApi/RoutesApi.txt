@@ -23,3 +23,14 @@ BEGIN
        SET @@global.event_scheduler = ON;
 	    
 END
+
+TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))
+TIMESTAMPADD(SECOND,15,HoraComienzo)
+2017-06-25 13:57:00
+BEGIN
+	
+		UPDATE salasdejuegos SET Disponible=false, ModificarHComienzo=true WHERE HoraComienzo= TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))  AND Disponible=true;
+        
+UPDATE salasdejuegos SET Disponible=true, ModificarHComienzo=true WHERE TIMESTAMPADD(SECOND,15,HoraComienzo)= TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) AND Disponible=false;  
+	    
+END
