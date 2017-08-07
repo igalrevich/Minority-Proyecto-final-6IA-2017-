@@ -134,6 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Pregunta.cs" />
+    <Compile Include="Models\PreguntaxJuego.cs" />
     <Compile Include="Models\Respuesta.cs" />
     <Compile Include="Models\SalasDeJuego.cs" />
     <Compile Include="Models\Usuario.cs" />

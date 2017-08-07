@@ -46,10 +46,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala,tvTimer;
     boolean VotoOpcion1=false,PublicarProgresoPut=true;
     boolean VotoOpcion2=false;
-    boolean VotoFinalmente=false, BotonesVisibles=false, TrajoSalaPrimeraVez=false;
+    boolean VotoFinalmente=false, BotonesVisibles=false, TrajoSalaPrimeraVez=false, InsertoPreguntas=false;
     boolean PrimeraVezQueJuega;
     String VotoFinal,Usuario,SegundosTimer,url,AtributoRespuesta,QueModifica,Opcion1,Opcion2,TimerString;
-    int Idbtn, IdSala, SegundosDisponiblesSala,MonedasUsuario;
+    int Idbtn, IdSala, SegundosDisponiblesSala,MonedasUsuario,NumRandJugadoresMontoAGanar;
     int [] MinMaxIds= new int [] {2,7,8,13,14,19,20,25};
     CountDownTimer Timer;
     Gson gson;
@@ -294,6 +294,70 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
+    private class InsertarPreguntas extends AsyncTask<String, String, Integer> {
+        private OkHttpClient client = new OkHttpClient();
+        public final MediaType JSON
+                = MediaType.parse("application/json; charset=utf-8");
+
+        @Override
+        protected void onPostExecute(Integer Id) {
+            if (Id != 0)
+            {
+               if(Id==1)
+               {
+                  if(SegundosDisponiblesSala<=0)
+                  {
+                      SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                      MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
+                      String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                      gson=new Gson();
+                      new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresPJSD0");
+                  }
+                  else
+                  {
+                      url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
+                      new BuscarDatosTask().execute(url);
+                  }
+               }
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            tvTimer.setText(values[0]);
+        }
+
+        @Override
+        protected Integer doInBackground(String... parametros) {
+            String method = parametros[0];
+            String url = parametros[1];
+            if(method.equals("POST"))
+            {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
+                try
+                {
+                    client.newCall(request).execute();
+                    return 1;
+                }
+                catch (IOException e)
+                {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
     private class ActualizarSalaMenosDe3Jugadores extends AsyncTask<String, String, Integer> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
@@ -410,7 +474,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     break;
             }*/
 
-            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+SalaDeJuegoTraida.NRonda;
+            url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdSala+"/"+SalaDeJuegoTraida.NRonda;
             new BuscarPregunta().execute("GET",url);
     }
 
@@ -579,14 +643,20 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            if(PrimeraVezQueJuega)
            {
                Random rand= new Random();
-               int NumRandJugadoresMontoAGanar= rand.nextInt(49-3)+3;
+               NumRandJugadoresMontoAGanar= rand.nextInt(49-3)+3;
                tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
                tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
-               SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+               InsertoPreguntas=true;
+               String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas/";
+               gson=new Gson();
+               PreguntasxJuego MiPreguntasxJuego= new PreguntasxJuego();
+               MiPreguntasxJuego.LlenarDatosPreguntasxJuego(IdSala);
+               new InsertarPreguntas().execute("POST",url,gson.toJson(MiPreguntasxJuego));
+               /*SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                gson=new Gson();
-               new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresPJSD0");
+               new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresPJSD0");*/
            }
            else
            {
@@ -631,9 +701,23 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    } catch (ParseException e) {
                        e.printStackTrace();
                    }
-                   url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
+                   if(SalaDeJuegoTraida.CantJugadores==1 && InsertoPreguntas==false)
+                   {
+                       InsertoPreguntas=true;
+                       String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas/";
+                       gson=new Gson();
+                       PreguntasxJuego MiPreguntasxJuego= new PreguntasxJuego();
+                       MiPreguntasxJuego.LlenarDatosPreguntasxJuego(IdSala);
+                       new InsertarPreguntas().execute("POST",url,gson.toJson(MiPreguntasxJuego));
+                   }
+                   else
+                   {
+                       url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
+                       new BuscarDatosTask().execute(url);
+                   }
+                   /*url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
                    new BuscarDatosTask().execute(url);
-                   /*Random rand= new Random();
+                   Random rand= new Random();
                    int Num0o1= rand.nextInt(2);
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
                    int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
