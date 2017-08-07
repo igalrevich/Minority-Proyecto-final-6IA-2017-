@@ -25,9 +25,9 @@ namespace RestApiMinority.Controllers
             return Ok(MiPregunta);
         }
 
-        // POST: api/respuesta/InsertarPrgeunta
+        // POST: api/respuesta/InsertarPreguntas
         [ResponseType(typeof(PreguntaxJuego))]
-        public IHttpActionResult InsertarRespuesta(PreguntaxJuego MiPreguntaxJuego)
+        public IHttpActionResult InsertarPreguntas(PreguntaxJuego MiPreguntaxJuego)
         {
             if (MiPreguntaxJuego == null)
             {
