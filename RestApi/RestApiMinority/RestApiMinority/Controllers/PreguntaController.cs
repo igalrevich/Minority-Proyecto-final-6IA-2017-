@@ -39,15 +39,15 @@ namespace RestApiMinority.Controllers
 
         // POST: api/pregunta/InsertarPreguntas
         [ResponseType(typeof(PreguntaxJuego))]
-        public IHttpActionResult InsertarPreguntas(PreguntaxJuego MiPreguntaxJuego)
+        public IHttpActionResult InsertarPreguntas(PreguntaxJuego MiPreguntasxJuego)
         {
-            if (MiPreguntaxJuego == null)
+            if (MiPreguntasxJuego == null)
             {
                 return BadRequest("Datos incorrectos.");
             }
             else
             {
-                PreguntaData.InsertarPreguntas(MiPreguntaxJuego.IdSala);
+                PreguntaData.InsertarPreguntas(MiPreguntasxJuego.IdSala);
                 return Ok();
             }
         }
