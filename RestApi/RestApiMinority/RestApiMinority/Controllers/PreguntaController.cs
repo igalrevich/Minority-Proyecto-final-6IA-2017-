@@ -12,7 +12,7 @@ namespace RestApiMinority.Controllers
 {
     public class PreguntaController : ApiController
     {
-        // GET: api/pregunta/GetPregunta/5/1
+        /* GET: api/pregunta/GetPregunta/5/1
         [ResponseType(typeof(Pregunta))]
         [Route("api/pregunta/GetPregunta/{IdSala}/{NRonda}")]
         public IHttpActionResult GetPregunta(int IdSala, int NRonda)
@@ -23,9 +23,21 @@ namespace RestApiMinority.Controllers
                 return NotFound();
             }
             return Ok(MiPregunta);
+        }*/
+
+        // GET: api/pregunta/GetPregunta/5
+        [ResponseType(typeof(Pregunta))]
+        public IHttpActionResult GetPregunta(int id)
+        {
+            Pregunta MiPregunta = PreguntaData.ObtenerPreguntaPorId(id);
+            if (MiPregunta == null)
+            {
+                return NotFound();
+            }
+            return Ok(MiPregunta);
         }
 
-        // POST: api/respuesta/InsertarPreguntas
+        // POST: api/pregunta/InsertarPreguntas
         [ResponseType(typeof(PreguntaxJuego))]
         public IHttpActionResult InsertarPreguntas(PreguntaxJuego MiPreguntaxJuego)
         {
