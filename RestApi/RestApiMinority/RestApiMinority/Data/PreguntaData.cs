@@ -25,7 +25,7 @@ namespace RestApiMinority.Data
 
         public static Pregunta ObtenerPreguntaPorIdPreguntasPorJuego(int id,int NRondaCategoria)
         {
-            string select = "SELECT * FROM `preguntas` WHERE Id=(SELECT IdPregunta FROM preguntasxjuego WHERE IdSala=" + id.ToString() + ") AND Categoria="+NRondaCategoria.ToString();
+            string select = "SELECT * FROM `preguntas` WHERE Id=(SELECT IdPregunta FROM preguntasxjuego WHERE IdSala=" + id.ToString() + " AND IdRonda="+NRondaCategoria.ToString()+")";
             DataTable dt = DBHelper.EjecutarSelect(select);
             Pregunta MiPregunta;
             if (dt.Rows.Count > 0)
