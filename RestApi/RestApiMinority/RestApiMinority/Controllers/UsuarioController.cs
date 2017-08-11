@@ -21,6 +21,14 @@ namespace RestApiMinority.Controllers
             return Ok(MiUsuario);
         }
 
+        // GET: api/Usuario/ValidarUsuarioEnSala/3/1
+        [Route("api/usuario/ValidarUsuarioEnSala/{IdUsuario}/{IdSala}")]
+        public IHttpActionResult ValidarUsuarioEnSala(int IdUsuario, int IdSala)
+        {
+            int ResultadoValidacion = UsuarioData.ValidarQueUsuarioEntroEnSala(IdUsuario,IdSala);
+            return Ok(ResultadoValidacion);
+        }
+
 
         // GET: api/Usuario/GetIdByNombre/tabla/nombre
         [Route("api/usuario/GetIdByNombre/{tabla}/{nombre}")]

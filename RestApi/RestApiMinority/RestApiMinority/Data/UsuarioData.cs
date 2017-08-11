@@ -103,5 +103,19 @@ namespace RestApiMinority.Data
             return Id;
         }
 
-     }
+        public static int ValidarQueUsuarioEntroEnSala(int IdUsuario, int IdSala)
+        {
+            string select = "SELECT * FROM `usuariosxsala` WHERE Usuario="+IdUsuario.ToString()+" AND SalaDeJuego="+IdSala.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            if (dt.Rows.Count > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+    }
 }

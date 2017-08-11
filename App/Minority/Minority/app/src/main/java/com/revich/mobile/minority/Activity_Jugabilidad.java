@@ -647,7 +647,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
                tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
                InsertoPreguntas=true;
-               String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas/";
+               String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas";
                gson=new Gson();
                PreguntasxJuego MiPreguntasxJuego= new PreguntasxJuego();
                MiPreguntasxJuego.LlenarDatosPreguntasxJuego(IdSala);
@@ -701,7 +701,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    } catch (ParseException e) {
                        e.printStackTrace();
                    }
-                   if(SalaDeJuegoTraida.CantJugadores==1 && InsertoPreguntas==false)
+                   if(SalaDeJuegoTraida.CantJugadores==3 && InsertoPreguntas==false)
                    {
                        InsertoPreguntas=true;
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas/";

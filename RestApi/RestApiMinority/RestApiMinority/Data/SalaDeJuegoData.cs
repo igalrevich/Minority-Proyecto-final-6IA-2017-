@@ -15,7 +15,7 @@ namespace RestApiMinority.Data
             string update = "";
             if (Estado)
             {
-                string delete = "DELETE FROM usuariosxsala";
+                string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego="+IdSala.ToString();
                 DBHelper.EjecutarIUD(delete);
                 update = "update salasdejuegos set Disponible=" + Estado.ToString() + "HoraComienzo= TIMESTAMPADD(MINUTE,2,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) ) where Id=" + IdSala.ToString();
             }
