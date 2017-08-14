@@ -38,8 +38,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class Activity_SeleccionarSala extends AppCompatActivity {
-    TextView tvEstadoSalaA,tvEstadoSalaB, tvEstadoSalaC, tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF, tvUsuario, tvMonedas;
+    TextView tvEstadoSalaA,tvEstadoSalaB, tvEstadoSalaC, tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF, tvUsuario, tvMonedas,tvTiempoEnJuegoSalaA,tvTiempoEnJuegoSalaB, tvTiempoEnJuegoSalaC, tvTiempoEnJuegoSalaD,tvTiempoEnJuegoSalaE,tvTiempoEnJuegoSalaF;
     TextView [] VecEstadosSalas= new TextView[]{tvEstadoSalaA,tvEstadoSalaB,tvEstadoSalaC,tvEstadoSalaD,tvEstadoSalaE,tvEstadoSalaF};
+    TextView [] VecTiempoEnJuegoSalas= new TextView[]{tvTiempoEnJuegoSalaA,tvTiempoEnJuegoSalaB,tvTiempoEnJuegoSalaC,tvTiempoEnJuegoSalaD,tvTiempoEnJuegoSalaE,tvTiempoEnJuegoSalaF};
     Button  btnEntrarSalaA,btnEntrarSalaB,btnEntrarSalaC,btnEntrarSalaD,btnEntrarSalaE,btnEntrarSalaF;
     Boolean [] JuegoPrevioSalas= new Boolean[] {true,false,false,false,false,false};
     Boolean TrajoEstados=false, EstadoACambiar, BuscaIdSala;
@@ -55,7 +56,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     boolean [] EnJuegoSalasRecienTerminada= new boolean[] {false,false,false,false,false,false};
     SimpleDateFormat dateFormat= new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
     SimpleDateFormat dateFormatSoloHora= new SimpleDateFormat("KK:mm:ss");
-    Date HoraActual,HoraComienzoSalaDateTime=null, DiferenciaTiempoDisponibilidad;
+    Date HoraActual,HoraComienzoSalaDateTime=null, HoraComienzo;
     Calendar cal;
     String Usuario;
 
@@ -81,26 +82,32 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
           {
               case 0:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaA);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaA);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaA);
                   break;
               case 1:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaB);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaB);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaB);
                   break;
               case 2:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaC);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaC);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaC);
                   break;
               case 3:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaD);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaD);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaD);
                   break;
               case 4:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaE);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaE);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaE);
                   break;
               case 5:
                   VecEstadosSalas[i]=(TextView) findViewById(R.id.tvEstadoSalaF);
+                  VecTiempoEnJuegoSalas[i]=(TextView) findViewById(R.id.tvTiempoEnJuegoSalaF);
                   VecBotones[i]=(Button) findViewById(R.id.btnSalaF);
                   break;
           }
@@ -156,6 +163,14 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     if(HoraActual==TiempoALlegar[i])
                     {
                         EnJuegoSalasRecienTerminada[i]=true;
+                    }
+                    else
+                    {
+                        cal.setTime(TiempoALlegar[i]);
+                        cal.add(Calendar.SECOND,-255); //15Seg+4Minutos=255 seg
+                        HoraComienzo=cal.getTime();
+                        long TiempoDiferenciaSala=HoraActual.getTime() - HoraComienzo.getTime();
+                        VecTiempoEnJuegoSalas[i].setText(GenerarDiferenciaHorario(TiempoDiferenciaSala));
                     }
                 }
             }
@@ -404,6 +419,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             try
             {
                 HoraComienzoSalaDateTime= dateFormat.parse(MiSalaDeJuego.HoraComienzo);
+                cal=Calendar.getInstance();
+                HoraActual= cal.getTime();
+                cal.setTime(HoraComienzoSalaDateTime);
             }
             catch (ParseException e)
             {
@@ -411,16 +429,14 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             }
             if(MiSalaDeJuego.Disponible)
             {
-                cal=Calendar.getInstance();
-                HoraActual= cal.getTime();
-                cal.setTime(HoraComienzoSalaDateTime);
-                Date HoraComienzo= cal.getTime();
+                HoraComienzo= cal.getTime();
                 long TiempoParaTerminarDisponibilidad= HoraComienzo.getTime() - HoraActual.getTime();
                 String TiempoDiferenciaSala= GenerarDiferenciaHorario(TiempoParaTerminarDisponibilidad);
                 /*String HoraComienzoSala= MiSalaDeJuego.HoraComienzo.trim();
                 String [] HoraComienzoSalaDividida= HoraComienzoSala.split(" ");
                 String TiempoComienzoSala= HoraComienzoSalaDividida[1];*/
                 VecEstadosSalas[i].setText(TiempoDiferenciaSala);
+                VecTiempoEnJuegoSalas[i].setText("");
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
@@ -430,7 +446,13 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 VecEstadosSalas[i].setText("En juego");
                 DisponibilidadSalas[i]=false;
+                cal.add(Calendar.MINUTE,-4);
+                HoraComienzo=cal.getTime();
+                long TiempoParaTerminarDisponibilidad= HoraActual.getTime() - HoraComienzo.getTime();
+                String TiempoDiferenciaSala= GenerarDiferenciaHorario(TiempoParaTerminarDisponibilidad);
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#f61525"));
+                VecTiempoEnJuegoSalas[i].setTextColor(Color.parseColor("#f61525"));
+                VecTiempoEnJuegoSalas[i].setText(TiempoDiferenciaSala);
                 VecBotones[i].setEnabled(false);
                 Calendar HoraComienzoMas15Seg= Calendar.getInstance();
                 HoraComienzoMas15Seg.setTime(HoraComienzoSalaDateTime);
