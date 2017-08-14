@@ -1,0 +1,45 @@
+Backup batchs Minority - Proyecto final :
+
+
+SetSalas(Cada 1 dia):
+
+BEGIN
+	
+		UPDATE salasdejuegos SET HoraComienzo= TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))  WHERE Nombre="A";
+                
+                UPDATE salasdejuegos SET  HoraComienzo= TIMESTAMPADD(MINUTE,1,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))) WHERE Nombre="B";
+                
+UPDATE salasdejuegos SET  HoraComienzo= TIMESTAMPADD(MINUTE,2,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))) WHERE Nombre="C";
+
+UPDATE salasdejuegos SET  HoraComienzo= TIMESTAMPADD(MINUTE,3,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))) WHERE Nombre="D";
+
+UPDATE salasdejuegos SET  HoraComienzo= TIMESTAMPADD(MINUTE,4,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))) WHERE Nombre="E";
+
+UPDATE salasdejuegos SET  HoraComienzo= TIMESTAMPADD(MINUTE,5,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00'))) WHERE Nombre="F";
+        
+END
+
+ActualizarSalasDeJuego(Cada 30 seg):
+BEGIN
+	
+		UPDATE salasdejuegos SET HoraComienzo=TIMESTAMPADD(MINUTE,2,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) )  WHERE Disponible=true AND ModificarHComienzo=true;
+        
+        UPDATE salasdejuegos SET HoraComienzo=TIMESTAMPADD(MINUTE,4,TIME(CONVERT_TZ(LOCALTIME,'+00:00','-03:00')) ) WHERE  Disponible=false AND ModificarHComienzo=true;
+       SET @@global.event_scheduler = ON;
+	    
+END
+
+AsignarPreguntasActivas(Cada 30 seg):
+
+BEGIN
+	
+		UPDATE preguntasactivas SET PreguntaPA=(SELECT Id FROM preguntas WHERE Categoria=1 ORDER BY RAND() LIMIT 1) WHERE Id=1;
+        
+UPDATE preguntasactivas SET PreguntaPA=(SELECT Id FROM preguntas WHERE Categoria=2 ORDER BY RAND() LIMIT 1) WHERE Id=2;
+
+UPDATE preguntasactivas SET PreguntaPA=(SELECT Id FROM preguntas WHERE Categoria=3 ORDER BY RAND() LIMIT 1) WHERE Id=3;
+
+UPDATE preguntasactivas SET PreguntaPA=(SELECT Id FROM preguntas WHERE Categoria=4 ORDER BY RAND() LIMIT 1) WHERE Id=4;
+
+END
+
