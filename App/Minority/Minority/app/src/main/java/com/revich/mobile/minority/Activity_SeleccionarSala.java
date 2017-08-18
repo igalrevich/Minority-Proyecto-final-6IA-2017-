@@ -459,7 +459,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 HoraComienzoMas15Seg.add(Calendar.SECOND,15);
                 TiempoALlegar[i]= HoraComienzoMas15Seg.getTime();
             }
-            CambiarMHCSalaDeJuego(MiSalaDeJuego,false);
+            //CambiarMHCSalaDeJuego(MiSalaDeJuego,false);
+            TrajoEstados=true;
+            TraerEstadosSalas();
         }
     }
 
@@ -477,6 +479,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         String NuevoTiempo="";
         if(Time>=0)
         {
+
             int diffSecondsint = Integer.parseInt(String.valueOf((Time/1000)%60));
             String diffMinutes="",diffHours="",diffSeconds="";
             if(diffSecondsint<10)
@@ -487,8 +490,17 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
             {
                 diffSeconds= String.valueOf(diffSecondsint);
             }
-            diffMinutes="0"+String.valueOf(Time/ (60 * 1000));
-            diffHours="0"+String.valueOf(Time/ (60 * 60 * 1000));
+
+            diffMinutes=String.valueOf(Time/ (60 * 1000));
+            if(Integer.parseInt(diffMinutes)<10)
+            {
+              diffMinutes="0"+ diffMinutes;
+            }
+            diffHours=String.valueOf(Time/ (60 * 60 * 1000));
+            if(Integer.parseInt(diffHours)<10)
+            {
+                diffHours="0"+ diffHours;
+            }
             NuevoTiempo= diffHours+":"+diffMinutes+":"+diffSeconds;
         }
         else

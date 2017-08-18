@@ -175,10 +175,16 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         if(QueModifica.equals("CantJugadoresPJSD0"))
                         {
                             SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
-                            MiSalaDeJuego.LlenarDisponibilidad(true);
+                            /*MiSalaDeJuego.LlenarDisponibilidad(true);
                             String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
                             gson=new Gson();
-                            new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                            new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));*/
+                            CambiarBotones(true);
+                            BotonesVisibles=true;
+                            MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
+                            String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                            gson=new Gson();
+                            new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"NRonda");
                         }
                         else
                         {
@@ -196,11 +202,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                             else
                             {
                                 tvTimer.setText("Buscando preguntas 4/6");
-                                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                                /*SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                                 MiSalaDeJuego.LlenarDisponibilidad(true);
                                 String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarSalaDeJuegoMHC/"+IdSala;
                                 gson=new Gson();
-                                new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                                new ActualizarMHCSala().execute("PUT",url,gson.toJson(MiSalaDeJuego));*/
+                                CambiarBotones(true);
+                                BotonesVisibles=true;
+                                SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+                                MiSalaDeJuego.LlenarCantJugadoresMas1(0,0,1);
+                                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
+                                gson=new Gson();
+                                new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"NRonda");
                             }
 
                         }
