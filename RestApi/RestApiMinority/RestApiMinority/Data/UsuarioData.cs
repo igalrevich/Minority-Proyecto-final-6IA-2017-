@@ -16,6 +16,68 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(delete);
         }
 
+        public static void IngresarUserSala(int IdUsuario, string NombreSala)
+        {
+            MySqlCommand cmd;
+            cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("NombreSala", NombreSala));
+            cmd.Connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            int IdSala = 0;
+            int CantJugadoresSala = 0;
+            int MonedasUsuario = 0;
+            bool ExisteUsuarioEnSala;
+            while (dr.Read())
+            {
+              IdSala = Convert.ToInt32(dr["Id"]);
+            }
+            dr.Close();
+            cmd.Connection.Close();
+
+            cmd = new MySqlCommand("IngresarUserSala", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
+            cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
+            cmd.Connection.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+
+            string select;
+            DataTable dt;
+
+            select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            if (dt.Rows.Count > 0)
+            {
+                CantJugadoresSala = dt.Rows[0].Field<int>("CantJugadores");
+            }
+            select = "SELECT Monedas FROM usuarios WHERE Id=" + IdUsuario.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            if (dt.Rows.Count > 0)
+            {
+                MonedasUsuario= dt.Rows[0].Field<int>("Monedas");
+            }
+
+            select = "SELECT Id FROM `usuariosxsala` WHERE Usuario=" + IdUsuario.ToString()+ "  AND SalaDeJuego="+IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            if (dt.Rows.Count > 0)
+            {
+                ExisteUsuarioEnSala = true;
+            }
+            else
+            {
+                ExisteUsuarioEnSala = false;
+            }
+
+            if (MonedasUsuario > 0 && CantJugadoresSala < 50 && ExisteUsuarioEnSala == false)
+            {
+                string query = "INSERT INTO `usuariosxsala`(`Usuario`, `SalaDeJuego`) VALUES (" + IdUsuario.ToString() + "," + IdSala.ToString() + ")";
+                DBHelper.EjecutarIUD(query);
+            }
+
+        }
+
         public static void ModificarMonedasUsuario(int IdUsuario, int Monedas)
         {
             string update = "UPDATE FROM usuarios SET Monedas=" + Monedas + " WHERE Id=" + IdUsuario.ToString();
@@ -66,6 +128,7 @@ namespace RestApiMinority.Data
             {
                 MiUsuario.LlenarDatosCon0();
             }
+            cmd.Connection.Close();
             return MiUsuario;
         }
 
