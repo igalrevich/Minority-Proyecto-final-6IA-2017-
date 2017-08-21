@@ -35,6 +35,16 @@ namespace RestApiMinority.Data
             dr.Close();
             cmd.Connection.Close();
 
+
+            cmd = new MySqlCommand("ObtenerDatosEntradaUserSala", new MySqlConnection(DBHelper.ConnectionString));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
+            cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
+            cmd.Connection.Open();
+            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+
             cmd = new MySqlCommand("IngresarUserSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
@@ -46,7 +56,7 @@ namespace RestApiMinority.Data
             string select;
             DataTable dt;
 
-            select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
+            /*select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
             if (dt.Rows.Count > 0)
             {
@@ -68,7 +78,7 @@ namespace RestApiMinority.Data
             else
             {
                 ExisteUsuarioEnSala = false;
-            }
+            }*/
 
             if (MonedasUsuario > 0 && CantJugadoresSala < 50 && ExisteUsuarioEnSala == false)
             {
