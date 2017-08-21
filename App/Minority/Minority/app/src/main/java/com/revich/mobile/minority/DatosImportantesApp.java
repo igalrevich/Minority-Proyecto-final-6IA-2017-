@@ -28,7 +28,8 @@ public class DatosImportantesApp {
     public static boolean EntroSalaF;
     public static String NombreUsuario;
     public static int MonedasUsuario;
-    public static int IndiceVecUtilizado;
+    public static int IdUsuario;
+
     public static boolean [] VecEntroSalas= new boolean[] {EntroSalaA,EntroSalaB,EntroSalaC,EntroSalaD,EntroSalaE,EntroSalaF};
 
     public static boolean GetEntroSala(int Indice)
@@ -61,55 +62,17 @@ public class DatosImportantesApp {
         MonedasUsuario = Monedas;
     }
 
-    private class BuscarIdAPasarTaskOActualizarUsuario extends AsyncTask<String, Void, Integer> {
-        private OkHttpClient client= new OkHttpClient();
-        public final MediaType JSON
-                = MediaType.parse("application/json; charset=utf-8");
-        @Override
-        protected void onPostExecute(Integer Id)
-        {
-            if(Id!=2)
-            {
-              if(Id==0)
-              {
-                SetEntroSala(IndiceVecUtilizado,false);
-              }
-              else
-              {
-                  SetEntroSala(IndiceVecUtilizado,true);
-              }
-                //return VecEntroSalas[IndiceVecUtilizado];
-            }
-
-        }
-
-        @Override
-        protected Integer doInBackground(String... parametros) {
-            String method = parametros[0];
-            String url = parametros[1];
-            if(method.equals("GET"))
-            {
-                Request request = new Request.Builder()
-                        .url(url)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-                    String jsonStr= response.body().string();
-                    return Integer.parseInt(jsonStr);
-
-                }
-                catch (IOException e)
-                {
-                    Log.d("Error", e.getMessage());
-                    return 2;
-                }
-            }
-            else
-            {
-               return 2;
-            }
-
-        }
-
+    public static int GetIdUsuario()
+    {
+        return IdUsuario;
     }
+
+    public static void SetIdUsuario(int idUsuario)
+    {
+        IdUsuario = idUsuario;
+    }
+
+
+
+
 }

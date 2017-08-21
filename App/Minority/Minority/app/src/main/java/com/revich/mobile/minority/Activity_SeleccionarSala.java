@@ -540,20 +540,28 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                  IndiceVecBotones++;
              }
            }
-            String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
-            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones),"true");
+            Usuariosxsala MiUsuariosxsala= new Usuariosxsala();
+            MiUsuariosxsala.LlenarDatos(DatosImportantesApp.GetIdUsuario(),NombresSalas[IndiceVecBotones]);
+            gson=new Gson();
+            String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/IngresarUserSala";
+            new IngresarUserSala().execute("POST",url,gson.toJson(MiUsuariosxsala));
+            /*String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/salasdejuegos/"+NombresSalas[IndiceVecBotones];
+            new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotones),"true");*/
 
         }
     };
 
-    private class BuscarIdAPasarTaskOActualizarUsuario extends AsyncTask<String, Void, Integer> {
+    private class IngresarUserSala extends AsyncTask<String, Void, Integer> {
         private  OkHttpClient client= new OkHttpClient();
+
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
         @Override
         protected void onPostExecute(Integer Id)
         {
-            if(Id!=0 && Id!=-1)
+            if(Id!=0)
+            {}
+            /*if(Id!=0 && Id!=-1)
             {
                 if(BuscaIdSala)
                 {
@@ -600,7 +608,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     String url="http://apiminorityproyecto.azurewebsites.net/api/sala/GetCantJugadoresSala/"+IdsSalas[IndiceVecBotonesAPasar];
                     new AnadirJugadorSalaDeJuegoUObtenerCantJugadores().execute("GET",url);
                 }
-            }
+            }*/
 
         }
 
@@ -608,7 +616,34 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         protected Integer doInBackground(String... parametros) {
             String method = parametros[0];
             String url = parametros[1];
-            if(method.equals("GET"))
+            if(method.equals("POST"))
+            {
+                String json = parametros[2];
+                RequestBody body = RequestBody.create(JSON, json);
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
+                try
+                {
+                    Response response = client.newCall(request).execute();
+                    return  1;
+
+                }
+                catch (IOException e)
+                {
+                    Log.d("Error :", e.getMessage());
+                    return 0;
+
+                }
+            }
+
+            else
+            {
+                return  0;
+            }
+        }
+            /*if(method.equals("GET"))
             {
                 IndiceVecBotonesAPasar =Integer.parseInt(parametros[2]);
                 BuscaIdSala= Boolean.parseBoolean(parametros[3]);
@@ -652,7 +687,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
             }
 
-        }
+        }*/
 
     }
 

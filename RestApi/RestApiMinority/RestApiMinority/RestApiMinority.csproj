@@ -138,6 +138,7 @@
     <Compile Include="Models\Respuesta.cs" />
     <Compile Include="Models\SalasDeJuego.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\Usuariosxsala.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

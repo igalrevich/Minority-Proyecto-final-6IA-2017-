@@ -16,7 +16,7 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(delete);
         }
 
-        public static void IngresarUserSala(int IdUsuario, string NombreSala)
+        public static bool IngresarUserSala(int IdUsuario, string NombreSala)
         {
             MySqlCommand cmd;
             cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
@@ -74,6 +74,11 @@ namespace RestApiMinority.Data
             {
                 string query = "INSERT INTO `usuariosxsala`(`Usuario`, `SalaDeJuego`) VALUES (" + IdUsuario.ToString() + "," + IdSala.ToString() + ")";
                 DBHelper.EjecutarIUD(query);
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
         }

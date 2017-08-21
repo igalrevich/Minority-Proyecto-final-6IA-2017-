@@ -69,8 +69,9 @@ namespace RestApiMinority.Controllers
         [ResponseType(typeof(Usuario))]
         public IHttpActionResult IngresarUserSala(int idUsuario, string nombreSala)
         {
-            UsuarioData.IngresarUserSala(idUsuario, nombreSala);
-            return Ok();
+            bool EntroSalaSiONo=UsuarioData.IngresarUserSala(idUsuario, nombreSala);
+            return Ok(EntroSalaSiONo);
+            
         }
 
 

@@ -94,6 +94,7 @@ public class Activity_Login extends AppCompatActivity {
             }
             else
             {
+                DatosImportantesApp.SetIdUsuario(IdUsuario);
                 DatosImportantesApp.SetNombreUsuario(MiUsuario.Nombre);
                 DatosImportantesApp.SetMonedasUsuario(MiUsuario.Monedas);
                 IniciarActivitySeleccionarSalas();
