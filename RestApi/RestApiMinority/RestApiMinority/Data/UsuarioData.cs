@@ -16,7 +16,7 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(delete);
         }
 
-        public static bool IngresarUserSala(int IdUsuario, string NombreSala)
+        public static string IngresarUserSala(int IdUsuario, string NombreSala)
         {
             MySqlCommand cmd;
             cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
@@ -74,11 +74,25 @@ namespace RestApiMinority.Data
             {
                 string query = "INSERT INTO `usuariosxsala`(`Usuario`, `SalaDeJuego`) VALUES (" + IdUsuario.ToString() + "," + IdSala.ToString() + ")";
                 DBHelper.EjecutarIUD(query);
-                return true;
+                return "Ingreso a sala";
             }
             else
             {
-                return false;
+                if(MonedasUsuario<=0)
+                {
+                    return "No tiene suficientes monedas para entrar a la sala";
+                }
+                else
+                {
+                    if (CantJugadoresSala >= 50)
+                    {
+                        return "La cantidad de jugadores esta al maximo en la sala";
+                    }
+                    else
+                    {
+                        return "Ingreso a sala";
+                    }
+                }
             }
 
         }

@@ -553,14 +553,17 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     private class IngresarUserSala extends AsyncTask<String, Void, Integer> {
         private  OkHttpClient client= new OkHttpClient();
-
+        boolean EntraONoEntraSala;
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
         @Override
         protected void onPostExecute(Integer Id)
         {
             if(Id!=0)
-            {}
+            {
+              if(EntraONoEntraSala)
+              {}
+            }
             /*if(Id!=0 && Id!=-1)
             {
                 if(BuscaIdSala)
@@ -627,6 +630,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 try
                 {
                     Response response = client.newCall(request).execute();
+                    EntraONoEntraSala=Boolean.parseBoolean(response.body().string());
                     return  1;
 
                 }

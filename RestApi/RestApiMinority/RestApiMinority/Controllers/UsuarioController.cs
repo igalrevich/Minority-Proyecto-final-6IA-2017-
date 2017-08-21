@@ -66,11 +66,11 @@ namespace RestApiMinority.Controllers
 
 
         // POST: api/usuario/IngresarUserSala
-        [ResponseType(typeof(Usuario))]
-        public IHttpActionResult IngresarUserSala(int idUsuario, string nombreSala)
+        [ResponseType(typeof(Usuariosxsala))]
+        public IHttpActionResult IngresarUserSala(Usuariosxsala MiUsuariosxsala)
         {
-            bool EntroSalaSiONo=UsuarioData.IngresarUserSala(idUsuario, nombreSala);
-            return Ok(EntroSalaSiONo);
+            string MensajeEntrarASala=UsuarioData.IngresarUserSala(MiUsuariosxsala.Usuario, MiUsuariosxsala.NombreSalaDeJuego);
+            return Ok(MensajeEntrarASala);
             
         }
 
