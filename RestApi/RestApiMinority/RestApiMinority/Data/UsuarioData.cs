@@ -43,7 +43,7 @@ namespace RestApiMinority.Data
             cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
             cmd.Connection.Open();
             MySqlDataReader datareader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            while (dr.Read())
+            while (datareader.Read())
             {
                 MonedasUsuario = Convert.ToInt32(dr["Monedas"]);
                 CantJugadoresSala = Convert.ToInt32(dr["CantJugadores"]);
@@ -57,6 +57,7 @@ namespace RestApiMinority.Data
                     ExisteUsuarioEnSala = false;
                 } 
             }
+            datareader.Close();
             cmd.Connection.Close();
 
             
