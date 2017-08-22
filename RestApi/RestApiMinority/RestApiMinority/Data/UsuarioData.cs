@@ -45,11 +45,11 @@ namespace RestApiMinority.Data
             MySqlDataReader datareader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
             while (datareader.Read())
             {
-                MonedasUsuario = Convert.ToInt32(dr["Monedas"]);
-                CantJugadoresSala = Convert.ToInt32(dr["CantJugadores"]);
+                MonedasUsuario = Convert.ToInt32(datareader["Monedas"]);
+                CantJugadoresSala = Convert.ToInt32(datareader["CantJugadores"]);
                 try
                 {
-                    UsuarioUXS = Convert.ToInt32(dr["Usuario"]);
+                    UsuarioUXS = Convert.ToInt32(datareader["Usuario"]);
                     ExisteUsuarioEnSala = true;
                 }
                 catch
