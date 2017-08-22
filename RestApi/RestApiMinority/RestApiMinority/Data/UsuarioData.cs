@@ -27,7 +27,8 @@ namespace RestApiMinority.Data
             int IdSala = 0;
             int CantJugadoresSala = 0;
             int MonedasUsuario = 0;
-            bool ExisteUsuarioEnSala;
+            bool ExisteUsuarioEnSala=false;
+            int UsuarioUXS = 0;
             while (dr.Read())
             {
               IdSala = Convert.ToInt32(dr["Id"]);
@@ -41,10 +42,24 @@ namespace RestApiMinority.Data
             cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
             cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
             cmd.Connection.Open();
-            MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            cmd.ExecuteNonQuery();
+            MySqlDataReader datareader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dr.Read())
+            {
+                MonedasUsuario = Convert.ToInt32(dr["Monedas"]);
+                CantJugadoresSala = Convert.ToInt32(dr["CantJugadores"]);
+                try
+                {
+                    UsuarioUXS = Convert.ToInt32(dr["Usuario"]);
+                    ExisteUsuarioEnSala = true;
+                }
+                catch
+                {
+                    ExisteUsuarioEnSala = false;
+                } 
+            }
             cmd.Connection.Close();
 
+            
             cmd = new MySqlCommand("IngresarUserSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
@@ -52,9 +67,6 @@ namespace RestApiMinority.Data
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
-
-            string select;
-            DataTable dt;
 
             /*select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
@@ -82,9 +94,14 @@ namespace RestApiMinority.Data
 
             if (MonedasUsuario > 0 && CantJugadoresSala < 50 && ExisteUsuarioEnSala == false)
             {
-                string query = "INSERT INTO `usuariosxsala`(`Usuario`, `SalaDeJuego`) VALUES (" + IdUsuario.ToString() + "," + IdSala.ToString() + ")";
-                DBHelper.EjecutarIUD(query);
-                return "Ingreso a sala";
+                cmd = new MySqlCommand("IngresarUserSala", new MySqlConnection(DBHelper.ConnectionString));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
+                cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
+                cmd.Connection.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+               return "Ingreso a sala";
             }
             else
             {
