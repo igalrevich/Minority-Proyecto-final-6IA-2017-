@@ -294,20 +294,28 @@ public class Activity_Resultados extends AppCompatActivity {
 
     private void GenerarResultadoUsuarioParte2() {
         tvIndicacion2.setText("2/3");
-        if (VotoJugador.equals("") == false) {
-            if (VotoJugador.equals(Opcion1)) {
+        if (VotoJugador.equals("") == false)
+        {
+            if (VotoJugador.equals(Opcion1))
+            {
                 VotoOpcion1 = true;
             }
-            if (CantVotosOpcion1 != CantVotosOpcion2) {
-                if (CantVotosOpcion1 > CantVotosOpcion2) {
+            if (CantVotosOpcion1 != CantVotosOpcion2)
+            {
+                if (CantVotosOpcion1 > CantVotosOpcion2)
+                {
                     MayoriaOpcion1 = true;
                 }
                 ResultadoUsuario = CheckearResultados(MayoriaOpcion1, VotoJugador);
 
-            } else {
+            }
+            else
+            {
                 ResultadoUsuario = "Empato";
             }
-        } else {
+        }
+        else
+        {
             ResultadoUsuario = "Perdio";
         }
         ImprimirResultadosPantalla(ResultadoUsuario);
@@ -315,16 +323,25 @@ public class Activity_Resultados extends AppCompatActivity {
 
     private String CheckearResultados(boolean MayoriaOpcion1, String VotoJugador) {
         String Resultado = "";
-        if (MayoriaOpcion1) {
-            if (VotoOpcion1) {
+        if (MayoriaOpcion1)
+        {
+            if (VotoOpcion1)
+            {
                 Resultado = "Perdio";
-            } else {
+            }
+            else
+            {
                 Resultado = "Gano";
             }
-        } else {
-            if (VotoOpcion1) {
+        }
+        else
+        {
+            if (VotoOpcion1)
+            {
                 Resultado = "Gano";
-            } else {
+            }
+            else
+            {
                 Resultado = "Perdio";
             }
         }
@@ -337,14 +354,18 @@ public class Activity_Resultados extends AppCompatActivity {
         tvOpcion2.setText(Opcion2);
         tvVotosOpcion1.setText(String.valueOf(CantVotosOpcion1));
         tvVotosOpcion2.setText(String.valueOf(CantVotosOpcion2));
-        if (MayoriaOpcion1) {
+        if (MayoriaOpcion1)
+        {
             tvOpcion2.setTextColor(Color.parseColor("#8ef686"));
             tvVotosOpcion2.setTextColor(Color.parseColor("#8ef686"));
             tvOpcion1.setTextColor(Color.parseColor("#f61525"));
             tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
             GanoOPerdio(Resultado);
-        } else {
-            if (Resultado == "Empato") {
+        }
+        else
+        {
+            if (Resultado == "Empato")
+            {
                 tvGanastePerdiste.setTextColor(Color.parseColor("#f61525"));
                 tvIndicacion1.setTextColor(Color.parseColor("#f61525"));
                 tvIndicacion2.setTextColor(Color.parseColor("#f61525"));
@@ -358,7 +379,9 @@ public class Activity_Resultados extends AppCompatActivity {
                 url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
                 new TraerIdsInsertarResultados().execute("DELETE", url);
 
-            } else {
+            }
+            else
+            {
                 tvOpcion2.setTextColor(Color.parseColor("#f61525"));
                 tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
                 tvOpcion1.setTextColor(Color.parseColor("#8ef686"));

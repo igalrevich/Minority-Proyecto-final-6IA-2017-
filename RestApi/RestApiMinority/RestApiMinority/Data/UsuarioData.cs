@@ -61,14 +61,7 @@ namespace RestApiMinority.Data
             cmd.Connection.Close();
 
             
-            cmd = new MySqlCommand("IngresarUserSala", new MySqlConnection(DBHelper.ConnectionString));
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
-            cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
-            cmd.Connection.Open();
-            cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
-
+           
             /*select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
             if (dt.Rows.Count > 0)

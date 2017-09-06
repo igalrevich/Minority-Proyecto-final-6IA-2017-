@@ -553,7 +553,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
 
     private class IngresarUserSala extends AsyncTask<String, Void, Integer> {
         private  OkHttpClient client= new OkHttpClient();
-        boolean EntraONoEntraSala;
+        String MensajeEntraSala;
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
         @Override
@@ -561,8 +561,16 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         {
             if(Id!=0)
             {
-              if(EntraONoEntraSala)
-              {}
+              if(MensajeEntraSala.equals("Ingreso a sala"))
+              {
+                  IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+              }
+
+              else
+              {
+                  Toast msg= Toast.makeText(getApplicationContext(),MensajeEntraSala,Toast.LENGTH_SHORT) ;
+                  msg.show();
+              }
             }
             /*if(Id!=0 && Id!=-1)
             {
@@ -630,7 +638,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 try
                 {
                     Response response = client.newCall(request).execute();
-                    EntraONoEntraSala=Boolean.parseBoolean(response.body().string());
+                    MensajeEntraSala=response.body().string();
                     return  1;
 
                 }
