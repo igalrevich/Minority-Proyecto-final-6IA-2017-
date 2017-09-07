@@ -167,8 +167,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     {
                         tvTimer.setText("Haciendo ultimos ajustes 2/3");
                         tvNRonda.setText("1");
+                        CambiarBotones(true);
+                        BotonesVisibles=true;
                         SalaDeJuegoTraida.NRonda=1;
-                        BuscarPreguntaConVec(PrimeraVezQueJuega);
+                        BuscarPreguntaConVec();
                     }
                     else
                     {
@@ -461,7 +463,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
 
-    private void BuscarPreguntaConVec(boolean PrimeraVezQueJuega)
+    private void BuscarPreguntaConVec()
     {
         Random r = new Random();
         tvTimer.setText("Haciendo ultimos ajustes 3/3");
@@ -557,6 +559,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(Pregunta MiPregunta) {
             btnOpcion1.setText(MiPregunta.OpcionA);
             btnOpcion2.setText(MiPregunta.OpcionB);
+            DatosImportantesApp.SetIdPreguntaSala(IdSala,MiPregunta.Id);
             tvTimer.setText("");
             SetearTimer();
         }
@@ -673,7 +676,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
            }
            else
            {
-               BuscarPreguntaConVec(PrimeraVezQueJuega);
+               BuscarPreguntaConVec();
            }
 
        }
@@ -714,7 +717,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    } catch (ParseException e) {
                        e.printStackTrace();
                    }
-                   if(SalaDeJuegoTraida.CantJugadores==3 && InsertoPreguntas==false)
+
+
+                   /*if(SalaDeJuegoTraida.CantJugadores==3 && InsertoPreguntas==false)
                    {
                        InsertoPreguntas=true;
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/InsertarPreguntas/";
@@ -724,11 +729,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        new InsertarPreguntas().execute("POST",url,gson.toJson(MiPreguntasxJuego));
                    }
                    else
-                   {
+                   {*/
                        url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
                        new BuscarDatosTask().execute(url);
-                   }
-                   /*url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
+
+                   /*}url ="http://apiminorityproyecto.azurewebsites.net/api/sala/GetSala/"+IdSala;
                    new BuscarDatosTask().execute(url);
                    /*Random rand= new Random();
                    int Num0o1= rand.nextInt(2);
@@ -765,20 +770,27 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                    SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                    if(CantJugadoresSala<3==false)
                    {
-                       tvTimer.setText("Buscando preguntas 1/6");
+                       /*tvTimer.setText("Buscando preguntas 1/6");
                        MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala-1,MontoAGanar-1,-1);
                        SalaDeJuegoTraida.MontoAGanar=SalaDeJuegoTraida.MontoAGanar+1;
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
-                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
+                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");*/
+                       tvTimer.setText("Haciendo ultimos ajustes 2/3");
+                       tvNRonda.setText("1");
+                       CambiarBotones(true);
+                       BotonesVisibles=true;
+                       SalaDeJuegoTraida.NRonda=1;
+                       BuscarPreguntaConVec();
                    }
                    else
                    {
-                       tvTimer.setText("CantJugadores menor a 3");
+                       /*tvTimer.setText("CantJugadores menor a 3");
                        MiSalaDeJuego.LlenarCantJugadoresMas1(CantJugadoresSala,MontoAGanar,-1);
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ActualizarSalaDeJuegoMenosDe3Jugadores/"+IdSala;
                        gson=new Gson();
-                       new ActualizarSalaMenosDe3Jugadores().execute("PUT",url,gson.toJson(MiSalaDeJuego));
+                       new ActualizarSalaMenosDe3Jugadores().execute("PUT",url,gson.toJson(MiSalaDeJuego));*/
+                       IniciarActivitySeleccionarSalas();
                    }
 
 
@@ -908,8 +920,12 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiRespuesta.RespuestaParcial=VotoFinal;
         MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
         MiRespuesta.Sala=IdSala;
-        url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
-        new TraerIdsInsertarResultados().execute("GET",url,"Usuario");
+        MiRespuesta.Usuario=DatosImportantesApp.GetIdUsuario();
+        MiRespuesta.Pregunta=DatosImportantesApp.GetIdPreguntaSala(MiRespuesta.Sala);
+        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
+        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
+        /*url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
+        new TraerIdsInsertarResultados().execute("GET",url,"Usuario");*/
     }
     private void IniciarActivityResultados()
     {

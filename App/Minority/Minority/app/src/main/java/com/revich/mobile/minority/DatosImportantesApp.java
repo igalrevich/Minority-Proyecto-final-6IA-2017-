@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -29,6 +30,7 @@ public class DatosImportantesApp {
     public static String NombreUsuario;
     public static int MonedasUsuario;
     public static int IdUsuario;
+    public static int [] IdPreguntasSalas= new int [6];
 
     public static boolean [] VecEntroSalas= new boolean[] {EntroSalaA,EntroSalaB,EntroSalaC,EntroSalaD,EntroSalaE,EntroSalaF};
 
@@ -70,6 +72,60 @@ public class DatosImportantesApp {
     public static void SetIdUsuario(int idUsuario)
     {
         IdUsuario = idUsuario;
+    }
+
+    public static void SetIdPreguntaSala( int IdSala,int IdPregunta)
+    {
+        switch (IdSala)
+        {
+            case 3:
+               IdPreguntasSalas[0]=IdPregunta;
+                break;
+            case 5:
+                IdPreguntasSalas[1]=IdPregunta;
+                break;
+            case 6:
+                IdPreguntasSalas[2]=IdPregunta;
+                break;
+            case 1:
+                IdPreguntasSalas[3]=IdPregunta;
+                break;
+            case 7:
+                IdPreguntasSalas[4]=IdPregunta;
+                break;
+            case 8:
+                IdPreguntasSalas[5]=IdPregunta;
+                break;
+
+        }
+    }
+
+    public static int GetIdPreguntaSala(int IdSala)
+    {
+        int IdPreguntaADevolver=0;
+        switch (IdSala)
+        {
+            case 3:
+                IdPreguntaADevolver=IdPreguntasSalas[0];
+                break;
+            case 5:
+                IdPreguntaADevolver=IdPreguntasSalas[1];
+                break;
+            case 6:
+                IdPreguntaADevolver=IdPreguntasSalas[2];
+                break;
+            case 1:
+                IdPreguntaADevolver=IdPreguntasSalas[3];
+                break;
+            case 7:
+                IdPreguntaADevolver=IdPreguntasSalas[4];
+                break;
+            case 8:
+                IdPreguntaADevolver=IdPreguntasSalas[5];
+                break;
+
+        }
+        return IdPreguntaADevolver;
     }
 
 
