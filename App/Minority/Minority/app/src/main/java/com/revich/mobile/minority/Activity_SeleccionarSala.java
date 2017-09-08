@@ -572,54 +572,6 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                   msg.show();
               }
             }
-            /*if(Id!=0 && Id!=-1)
-            {
-                if(BuscaIdSala)
-                {
-                    IdsSalas[IndiceVecBotonesAPasar]= Id;
-                    Usuario= tvUsuario.getText().toString();
-                    Usuario=Usuario.trim();
-                    String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
-                    Log.d("url", url);
-                    new BuscarIdAPasarTaskOActualizarUsuario().execute("GET",url,String.valueOf(IndiceVecBotonesAPasar),"false");
-                }
-                else
-                {
-
-                    if (DatosImportantesApp.GetEntroSala(IndiceVecBotonesAPasar)==false && DatosImportantesApp.GetMonedasUsuario()>0)
-                    {
-                        DatosImportantesApp.SetEntroSala(IndiceVecBotonesAPasar,true);
-                        DatosImportantesApp.SetMonedasUsuario(DatosImportantesApp.GetMonedasUsuario()-1);
-                        gson= new Gson();
-                        Usuario MiUsuario= new Usuario();
-                        String MonedasUsuarioString= tvMonedas.getText().toString();
-                        MonedasUsuario= Integer.parseInt(MonedasUsuarioString);
-                        MiUsuario.LlenarDatos(Id,MonedasUsuario,IdsSalas[IndiceVecBotonesAPasar]);
-                        String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/ModificarUsuario/"+Id;
-                        new BuscarIdAPasarTaskOActualizarUsuario().execute("PUT",url,gson.toJson(MiUsuario));
-                    }
-                    else
-                    {
-                        if(DatosImportantesApp.GetMonedasUsuario()<=0)
-                        {
-                          Toast msg= Toast.makeText(getApplicationContext(),"Necesita una moneda para entrar a la sala",Toast.LENGTH_SHORT) ;
-                          msg.show();
-                        }
-                        else
-                        {
-                            IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if(Id==-1)
-                {
-                    String url="http://apiminorityproyecto.azurewebsites.net/api/sala/GetCantJugadoresSala/"+IdsSalas[IndiceVecBotonesAPasar];
-                    new AnadirJugadorSalaDeJuegoUObtenerCantJugadores().execute("GET",url);
-                }
-            }*/
 
         }
 
