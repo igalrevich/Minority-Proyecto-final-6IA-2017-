@@ -9,6 +9,8 @@ namespace RestApiMinority.Models
     {
         public int Usuario { get; set; }
         public int Pregunta { get; set; }
+        public int Id { get; set; }
+        public int NRonda { get; set; }
         public string RespuestaParcial { get; set; }
         public string RespuestaFinal { get; set; }
         public int Sala { get; set; }
