@@ -1,0 +1,26 @@
+Z:\>mkdir repo
+
+Z:\>cd reoi
+El sistema no puede encontrar la ruta especificada.
+
+Z:\>cd repo
+
+Z:\repo>git init
+Initialized empty Git repository in Z:/repo/.git/
+
+Z:\repo>git remote add origin https://github.com/igalrevich/Minority-Proyecto-final-6IA-2017-
+
+Z:\repo>git remote -v
+origin  https://github.com/igalrevich/Minority-Proyecto-final-6IA-2017- (fetch)
+origin  https://github.com/igalrevich/Minority-Proyecto-final-6IA-2017- (push)
+
+Z:\repo>git pull origin master
+remote: Counting objects: 4097, done.
+remote: Compressing objects: 100% (38/38), done.
+Receiving objects: 100% (4097/4097), 51.46 MiB | 996.00 KiB/s, done.ng objects:  78% (3213/4097), 23.04 MiB | 375.00 KiB/s
+emote: Total 4097 (delta 16), reused 49 (delta 14), pack-reused 4032
+Resolving deltas: 100% (1959/1959), done.
+From https://github.com/igalrevich/Minority-Proyecto-final-6IA-2017-
+ * branch            master     -> FETCH_HEAD
+ * [new branch]      master     -> origin/master
+Checking out files: 100% (364/364), done.
