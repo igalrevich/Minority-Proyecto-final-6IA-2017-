@@ -18,6 +18,7 @@ namespace RestApiMinority.Data
 
         public static string IngresarUserSala(int IdUsuario, string NombreSala)
         {
+            string MensajeARetornar = "";
             MySqlCommand cmd;
             cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
@@ -95,26 +96,28 @@ namespace RestApiMinority.Data
                 cmd.Connection.Open();
                 cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
-               return "Ingreso a sala";
+                MensajeARetornar="Ingreso a sala";
             }
             else
             {
                 if(MonedasUsuario<=0)
                 {
-                    return "No tiene suficientes monedas para entrar a la sala";
+                    MensajeARetornar = "No tiene suficientes monedas para entrar a la sala";
                 }
                 else
                 {
                     if (CantJugadoresSala >= 50)
                     {
-                        return "La cantidad de jugadores esta al maximo en la sala";
+                        MensajeARetornar = "La cantidad de jugadores esta al maximo en la sala";
                     }
                     else
                     {
-                        return "Ingreso a sala";
+                        MensajeARetornar = "Ingreso a sala";
                     }
                 }
             }
+
+            return MensajeARetornar;
 
         }
 
