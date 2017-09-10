@@ -152,7 +152,7 @@ namespace RestApiMinority.Data
                 select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
                 dt = DBHelper.EjecutarSelect(select);
                 row = dt.Rows[0];
-                select = "SELECT * FROM usuariosxsala WHERE Sigue=false AND VotoEnBlanco=false AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + IdUsuario.ToString();
+                select = "SELECT * FROM usuariosxsala WHERE Sigue=false AND VotoEnBlanco=false AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
                 DataTable dtSigueFalse = DBHelper.EjecutarSelect(select);
                 select = "SELECT * FROM usuariosxsala WHERE Sigue=true AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
                 DataTable dtSigueTrue = DBHelper.EjecutarSelect(select);
