@@ -28,6 +28,13 @@ namespace RestApiMinority.Data
             string select = "SELECT * FROM `preguntas` WHERE Id=(SELECT IdPregunta FROM preguntasxjuego WHERE IdSala=" + id.ToString() + " AND IdRonda="+NRondaCategoria.ToString()+")";
             DataTable dt = DBHelper.EjecutarSelect(select);
             Pregunta MiPregunta;
+            if(NRondaCategoria!=1)
+            {
+                string delete = "DELETE FROM usuariosxsala WHERE Sigue=false AND SalaDeJuego=" + id.ToString();
+                DBHelper.EjecutarIUD(delete);
+                string update = "UPDATE salasdejuegos SET TerminoRonda=false WHERE Id=" + id.ToString();
+                DBHelper.EjecutarIUD(update);
+            }
             if (dt.Rows.Count > 0)
             {
                 MiPregunta = ObtenerPorRow(dt.Rows[0]);

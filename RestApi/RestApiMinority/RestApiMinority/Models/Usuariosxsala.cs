@@ -11,5 +11,7 @@ namespace RestApiMinority.Models
         public int Usuario { get; set; }
         public int SalaDeJuego { get; set; }
         public string NombreSalaDeJuego { get; set; }
+        public bool Sigue { get; set; }
+        public bool VotoEnBlanco { get; set; }
     }
 }

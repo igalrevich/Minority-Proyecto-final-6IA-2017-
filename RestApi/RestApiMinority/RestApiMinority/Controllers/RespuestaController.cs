@@ -35,6 +35,15 @@ namespace RestApiMinority.Controllers
             }
         }
 
+        // POST: api/respuesta/CalcularResultados
+        [ResponseType(typeof(VotoACalcular))]
+        public IHttpActionResult IngresarUserSala(VotoACalcular MiVotoACalcular)
+        {
+            Resultado MiResultado = RespuestaData.CalcularVotos(MiVotoACalcular);
+            return Ok(MiResultado);
+
+        }
+
         // DELETE: api/respuesta/DeleteRespuestasSala/1
         public IHttpActionResult DeleteRespuestasSala(int id)
         {

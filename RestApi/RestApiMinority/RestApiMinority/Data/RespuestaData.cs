@@ -22,47 +22,188 @@ namespace RestApiMinority.Data
             return CantVotos;
         }
 
-        public static void CalcularVotos(int IdSala, int NRonda)
+        public static Resultado CalcularVotos(VotoACalcular MiVotoACalcular)
         {
             Respuesta MiRespuesta;
-            string OpcionA = "";
-            string OpcionB = "";
+            Resultado MiResultado = new Resultado();
+            string OpcionA = MiVotoACalcular.OpcionA;
+            string OpcionB = MiVotoACalcular.OpcionB;
+            int NuevoNRonda = MiVotoACalcular.NRonda + 1;
+            bool MayoriaOpcionA = false;
+            bool ActualizoCantJugadores = false;
             bool PidioOpcionesPregunta = false;
-            int CantVotosOpcionA=0, CantVotosOpcionB = 0;
-            string select = "SELECT TerminoRonda FROM salasdejuegos WHERE Id="+IdSala.ToString();
+            int CantVotosOpcionA=0;
+            string select = "SELECT TerminoRonda FROM salasdejuegos WHERE Id="+MiVotoACalcular.IdSala.ToString();
             DataTable dt = DBHelper.EjecutarSelect(select);
             DataRow row = dt.Rows[0];
             bool TerminoRonda= row.Field<bool>("TerminoRonda");
-            if(TerminoRonda==false)
+            if (TerminoRonda == false)
             {
-                string update= "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id="+ IdSala.ToString();
+                string update = "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                 DBHelper.EjecutarIUD(update);
-                select = "SELECT * FROM respuestas WHERE Sala=" + IdSala.ToString() + " AND NRonda=" + NRonda.ToString();
+                select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
                 dt = DBHelper.EjecutarSelect(select);
                 foreach (DataRow Registro in dt.Rows)
                 {
                     MiRespuesta = ObtenerPorRowRespuesta(Registro);
-                    if(PidioOpcionesPregunta==false)
+                    if (PidioOpcionesPregunta == false)
                     {
-                        select = "SELECT OpcionA,OpcionB FROM preguntas WHERE Id=" + MiRespuesta.Pregunta.ToString();
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionA;
                         dt = DBHelper.EjecutarSelect(select);
-                        row = dt.Rows[0];
-                        OpcionA = row.Field<string>("OpcionA");
-                        OpcionB = row.Field<string>("OpcionB");
-                        select = "SELECT * FROM respuestas WHERE Sala=" + IdSala.ToString() + " AND NRonda=" + NRonda.ToString()+ " AND RespuestaFinal="+OpcionA ;
+                        MiResultado.CantVotosOpcionA = dt.Rows.Count;
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionB;
                         dt = DBHelper.EjecutarSelect(select);
-                        CantVotosOpcionA = dt.Rows.Count;
-                        select = "SELECT * FROM respuestas WHERE Sala=" + IdSala.ToString() + " AND NRonda=" + NRonda.ToString() + " AND RespuestaFinal=" + OpcionB;
-                        dt = DBHelper.EjecutarSelect(select);
-                        CantVotosOpcionB = dt.Rows.Count;
-                        if(CantVotosOpcionA!=CantVotosOpcionB)
+                        MiResultado.CantVotosOpcionB = dt.Rows.Count;
+                        PidioOpcionesPregunta = true;
+                        if (MiResultado.CantVotosOpcionA != MiResultado.CantVotosOpcionB)
+                        {
+                            MiResultado.Empate = false;
+                            if (MiResultado.CantVotosOpcionA > MiResultado.CantVotosOpcionB)
+                            {
+                                MayoriaOpcionA = true;
+                            }
+                            else
+                            {
+                                MayoriaOpcionA = false;
+                            }
+                        }
+                        else
                         {
 
+                            MiResultado.Empate = true;
+                            if (ActualizoCantJugadores == false)
+                            {
+                                update = "UPDATE salasdejuegos SET CantJugadores=0  WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                                DBHelper.EjecutarIUD(update);
+                                update = "UPDATE usuariosxsala SET Sigue=false WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                                DBHelper.EjecutarIUD(update);
+                                ActualizoCantJugadores = true;
+                            }
+                        }
+                    }
+                    if (MayoriaOpcionA)
+                    {
+
+                        if (ActualizoCantJugadores == false)
+                        {
+                            update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionB + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                            ActualizoCantJugadores = true;
+                        }
+                        if (MiRespuesta.RespuestaFinal == OpcionB)
+                        {
+                            update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                        }
+                        else
+                        {
+                            update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                            if(MiRespuesta.RespuestaFinal=="")
+                            {
+                                update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                                DBHelper.EjecutarIUD(update);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (ActualizoCantJugadores == false)
+                        {
+                            update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionA + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                            ActualizoCantJugadores = true;
+                        }
+                        if (MiRespuesta.RespuestaFinal == OpcionA)
+                        {
+                            update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                        }
+                        else
+                        {
+                            update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                            DBHelper.EjecutarIUD(update);
+                            if (MiRespuesta.RespuestaFinal == "")
+                            {
+                                update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                                DBHelper.EjecutarIUD(update);
+                            }
+                        }
+                    }
+                }
+
+                select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                dt = DBHelper.EjecutarSelect(select);
+                row = dt.Rows[0];
+                bool Sigue = row.Field<bool>("Sigue");
+                if (Sigue)
+                {
+                    MiResultado.Gano = true;
+                }
+                else
+                {
+                    MiResultado.Gano = false;
+                }
+
+            }
+
+            else
+            {
+                select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                dt = DBHelper.EjecutarSelect(select);
+                row = dt.Rows[0];
+                select = "SELECT * FROM usuariosxsala WHERE Sigue=false AND VotoEnBlanco=false AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + IdUsuario.ToString();
+                DataTable dtSigueFalse = DBHelper.EjecutarSelect(select);
+                select = "SELECT * FROM usuariosxsala WHERE Sigue=true AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                DataTable dtSigueTrue = DBHelper.EjecutarSelect(select);
+                bool Sigue = row.Field<bool>("Sigue");
+                if (Sigue)
+                {
+                    MiResultado.Gano = true;
+                    if (MiVotoACalcular.VotoJugador == OpcionA)
+                    {
+                        MiResultado.CantVotosOpcionA = dtSigueTrue.Rows.Count;
+                        MiResultado.CantVotosOpcionB = dtSigueFalse.Rows.Count;
+                    }
+                    else
+                    {
+                        MiResultado.CantVotosOpcionB = dtSigueTrue.Rows.Count;
+                        MiResultado.CantVotosOpcionA = dtSigueFalse.Rows.Count;
+                    }
+                }
+                else
+                {
+                    MiResultado.Gano = false;
+                    select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString() ;
+                    dt = DBHelper.EjecutarSelect(select);
+                    row = dt.Rows[0];
+                    int CantJugadores = row.Field<int>("CantJugadores");
+                    if(CantJugadores==0)
+                    {
+                        MiResultado.Empate = true;
+                        MiResultado.CantVotosOpcionA = dtSigueFalse.Rows.Count;
+                        MiResultado.CantVotosOpcionB = dtSigueFalse.Rows.Count;
+                    }
+                    else
+                    {
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionA;
+                        dt = DBHelper.EjecutarSelect(select);
+                        CantVotosOpcionA = dt.Rows.Count;
+                        if(dt.Rows.Count==dtSigueTrue.Rows.Count)
+                        {
+                            MiResultado.CantVotosOpcionA = dtSigueTrue.Rows.Count;
+                            MiResultado.CantVotosOpcionB = dtSigueFalse.Rows.Count;
+                        }
+                        else
+                        {
+                            MiResultado.CantVotosOpcionB = dtSigueTrue.Rows.Count;
+                            MiResultado.CantVotosOpcionA = dtSigueFalse.Rows.Count;
                         }
                     }
                 }
 
             }
+            return MiResultado;
         }
         public static void DeleteRespuestasSala(int IdSala)
         {
