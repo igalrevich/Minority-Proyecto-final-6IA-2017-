@@ -90,7 +90,7 @@ public class Activity_Resultados extends AppCompatActivity {
             MiRespuesta.RespuestaFinal = MiRespuesta.RespuestaParcial;
             url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
             gson = new Gson();
-            new TraerIdsInsertarResultados().execute("POST", url, gson.toJson(MiRespuesta), String.valueOf(i));
+            new TraerResultados().execute("POST", url, gson.toJson(MiRespuesta), String.valueOf(i));
 
         }
         /*CantVotosEnBlanco= rand.nextInt(50);
@@ -148,14 +148,52 @@ public class Activity_Resultados extends AppCompatActivity {
 
 
 
-    private class TraerIdsInsertarResultados extends AsyncTask<String, Void, Integer> {
+    private class TraerResultados extends AsyncTask<String, Void, Resultado> {
         private OkHttpClient client = new OkHttpClient();
         public final MediaType JSON
                 = MediaType.parse("application/json; charset=utf-8");
 
         @Override
-        protected void onPostExecute(Integer CantVotos) {
-            if (CantVotos != -1 && CantVotos != -3) {
+        protected void onPostExecute(Resultado MiResultado) {
+
+            //tvIndicacion2.setText("3/3");
+            tvOpcion1.setText(Opcion1);
+            tvOpcion2.setText(Opcion2);
+            tvVotosOpcion1.setText(String.valueOf(MiResultado.CantVotosOpcionA));
+            tvVotosOpcion2.setText(String.valueOf(MiResultado.CantVotosOpcionB));
+            if(MiResultado.Empate)
+            {
+                tvGanastePerdiste.setTextColor(Color.parseColor("#f61525"));
+                tvIndicacion1.setTextColor(Color.parseColor("#f61525"));
+                tvIndicacion2.setTextColor(Color.parseColor("#f61525"));
+                tvGanastePerdiste.setText("Empate!!");
+                tvIndicacion1.setText("No hay minoria");
+                tvIndicacion2.setText("Quedaste eliminado!!!");
+                tvOpcion2.setTextColor(Color.parseColor("#f61525"));
+                tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
+                tvOpcion1.setTextColor(Color.parseColor("#f61525"));
+                tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
+            }
+            else
+            {
+                if(MiResultado.MayoriaOpcionA)
+                {
+                    tvOpcion2.setTextColor(Color.parseColor("#8ef686"));
+                    tvVotosOpcion2.setTextColor(Color.parseColor("#8ef686"));
+                    tvOpcion1.setTextColor(Color.parseColor("#f61525"));
+                    tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
+                }
+                else
+                {
+                    tvOpcion2.setTextColor(Color.parseColor("#f61525"));
+                    tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
+                    tvOpcion1.setTextColor(Color.parseColor("#8ef686"));
+                    tvVotosOpcion1.setTextColor(Color.parseColor("#8ef686"));
+                }
+                GanoOPerdio(MiResultado.Gano);
+             }
+             Esperar5SegundosAntesDeActualizar(MiResultado.Gano);
+            /*if (CantVotos != -1 && CantVotos != -3) {
                 if (CantVotos != -2) {
                     switch (Opcion) {
                         case "Opcion1":
@@ -179,16 +217,34 @@ public class Activity_Resultados extends AppCompatActivity {
                         //if(ResultadoDerrota.equals("Empato"))
                         Esperar3SegundosAntesDeActualizar(false);
                 }
-            }
+            }*/
 
 
         }
 
         @Override
-        protected Integer doInBackground(String... parametros) {
+        protected Resultado doInBackground(String... parametros) {
             String method = parametros[0];
             String url = parametros[1];
-            if (method.equals("GET")) {
+            String json = parametros[2];
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+            try
+            {
+                Response response = client.newCall(request).execute();
+                String jsonStr = response.body().string();
+                gson= new Gson();
+                Resultado MiResultado= gson.fromJson(jsonStr,Resultado.class);
+                return MiResultado;
+
+            } catch (IOException e) {
+                Log.d("Error :", e.getMessage());
+                return new Resultado();
+            }
+            /*if (method.equals("GET")) {
                 Request request = new Request.Builder()
                         .url(url)
                         .build();
@@ -235,7 +291,7 @@ public class Activity_Resultados extends AppCompatActivity {
                     }
 
                 }
-            }
+            }*/
         }
     }
 
@@ -245,16 +301,18 @@ public class Activity_Resultados extends AppCompatActivity {
         Opcion1 = ElBundle.getString("Opcion1");
         Opcion2 = ElBundle.getString("Opcion2");
         VotoJugador = ElBundle.getString("Voto");
-        CantJugadores = ElBundle.getInt("CantJugadores");
-        //MonedasUsuario= ElBundle.getInt("Monedas");
         Sala = ElBundle.getInt("IdSala");
         NRonda = ElBundle.getInt("NRonda");
-        Usuario = ElBundle.getInt("IdUsuario");
+        VotoACalcular MiVotoACalcular= new VotoACalcular();
+        MiVotoACalcular.LlenarDatos(DatosImportantesApp.GetIdUsuario(),Opcion1,Opcion2,VotoJugador,Sala,NRonda);
+        gson=new Gson();
+        /*CantJugadores = ElBundle.getInt("CantJugadores");
+        MonedasUsuario= ElBundle.getInt("Monedas");
         UsuarioString = ElBundle.getString("Usuario");
         Pregunta = ElBundle.getInt("IdPregunta");
-        tvIndicacion2.setText("1/3");
-        url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/GetCantVotos/" + Opcion1 + "/" + Sala;
-        new TraerIdsInsertarResultados().execute("GET", url, "Opcion1");
+        tvIndicacion2.setText("1/3");*/
+        url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/CalcularResultados";
+        new TraerResultados().execute("POST", url, gson.toJson(MiVotoACalcular));
     }
 
     private void IniciarActivityJugabilidad() {
@@ -360,7 +418,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvVotosOpcion2.setTextColor(Color.parseColor("#8ef686"));
             tvOpcion1.setTextColor(Color.parseColor("#f61525"));
             tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
-            GanoOPerdio(Resultado);
+            GanoOPerdio(true);
         }
         else
         {
@@ -377,7 +435,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 tvOpcion1.setTextColor(Color.parseColor("#f61525"));
                 tvVotosOpcion1.setTextColor(Color.parseColor("#f61525"));
                 url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
-                new TraerIdsInsertarResultados().execute("DELETE", url);
+                new TraerResultados().execute("DELETE", url);
 
             }
             else
@@ -386,44 +444,48 @@ public class Activity_Resultados extends AppCompatActivity {
                 tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
                 tvOpcion1.setTextColor(Color.parseColor("#8ef686"));
                 tvVotosOpcion1.setTextColor(Color.parseColor("#8ef686"));
-                GanoOPerdio(Resultado);
+                GanoOPerdio(false);
             }
         }
     }
 
-    private void GanoOPerdio(String Resultado) {
-        if (Resultado == "Gano") {
+    private void GanoOPerdio(boolean Gano) {
+        if (Gano)
+        {
             tvGanastePerdiste.setTextColor(Color.parseColor("#8ef686"));
             tvIndicacion1.setTextColor(Color.parseColor("#8ef686"));
             tvIndicacion2.setTextColor(Color.parseColor("#8ef686"));
             tvGanastePerdiste.setText("Ganaste!!");
             tvIndicacion1.setText("Sos parte de la minoria");
             tvIndicacion2.setText("Pasaste de ronda!!!");
-            Esperar3SegundosAntesDeActualizar(true);
         }
-        if (Resultado == "Perdio") {
+        else
+        {
             tvGanastePerdiste.setTextColor(Color.parseColor("#f61525"));
             tvIndicacion1.setTextColor(Color.parseColor("#f61525"));
             tvIndicacion2.setTextColor(Color.parseColor("#f61525"));
             tvGanastePerdiste.setText("Perdiste!!");
             tvIndicacion1.setText("Sos parte de la mayoria");
             tvIndicacion2.setText("Quedaste eliminado!!!");
-            url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
-            new TraerIdsInsertarResultados().execute("DELETE", url);
-
+            /*url = "http://apiminorityproyecto.azurewebsites.net/api/sala/DeleteUsuarioxSala/" + Usuario;
+            new TraerIdsInsertarResultados().execute("DELETE", url);*/
         }
     }
 
-    private void Esperar3SegundosAntesDeActualizar(final boolean Gano)
+    private void Esperar5SegundosAntesDeActualizar(final boolean GanoRonda)
     {
-        CountDownTimer Timer=new CountDownTimer(3000, 1000) {
+        CountDownTimer Timer=new CountDownTimer(5000, 1000) {
             public void onTick(long millisUntilFinished) {
 
             }
 
             public void onFinish()
             {
-                ActualizarSalas(Gano);
+                if (GanoRonda) {
+                    IniciarActivityJugabilidad();
+                } else {
+                    IniciarActivitySeleccionarSalas();
+                }
             }
         }.start();
     }

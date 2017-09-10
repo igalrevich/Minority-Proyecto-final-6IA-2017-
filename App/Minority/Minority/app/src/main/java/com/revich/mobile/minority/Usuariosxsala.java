@@ -10,6 +10,8 @@ public class Usuariosxsala {
     public int Usuario;
     public int SalaDeJuego;
     public String NombreSalaDeJuego;
+    public boolean Sigue;
+    public boolean VotoEnBlanco;
 
     public void LlenarDatos(int usuario, String nombreSalaDeJuego)
     {
@@ -17,5 +19,7 @@ public class Usuariosxsala {
         this.Usuario=usuario;
         this.NombreSalaDeJuego=nombreSalaDeJuego;
         this.SalaDeJuego=0;
+        this.Sigue=false;
+        this.VotoEnBlanco=false;
     }
 }

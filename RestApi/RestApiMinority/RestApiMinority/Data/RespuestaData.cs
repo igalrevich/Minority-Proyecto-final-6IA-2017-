@@ -77,6 +77,8 @@ namespace RestApiMinority.Data
                                 DBHelper.EjecutarIUD(update);
                                 update = "UPDATE usuariosxsala SET Sigue=false WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                                 DBHelper.EjecutarIUD(update);
+                                string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                                DBHelper.EjecutarIUD(update);
                                 ActualizoCantJugadores = true;
                             }
                         }
@@ -88,6 +90,7 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionB + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
+                            MiResultado.MayoriaOpcionA = true;
                             ActualizoCantJugadores = true;
                         }
                         if (MiRespuesta.RespuestaFinal == OpcionB)
@@ -112,6 +115,7 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionA + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
+                            MiResultado.MayoriaOpcionA = false;
                             ActualizoCantJugadores = true;
                         }
                         if (MiRespuesta.RespuestaFinal == OpcionA)
@@ -189,15 +193,17 @@ namespace RestApiMinority.Data
                         select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionA;
                         dt = DBHelper.EjecutarSelect(select);
                         CantVotosOpcionA = dt.Rows.Count;
-                        if(dt.Rows.Count==dtSigueTrue.Rows.Count)
+                        if(CantVotosOpcionA==dtSigueTrue.Rows.Count)
                         {
                             MiResultado.CantVotosOpcionA = dtSigueTrue.Rows.Count;
                             MiResultado.CantVotosOpcionB = dtSigueFalse.Rows.Count;
+                            MiResultado.MayoriaOpcionA = false;
                         }
                         else
                         {
                             MiResultado.CantVotosOpcionB = dtSigueTrue.Rows.Count;
                             MiResultado.CantVotosOpcionA = dtSigueFalse.Rows.Count;
+                            MiResultado.MayoriaOpcionA = true;
                         }
                     }
                 }

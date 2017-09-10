@@ -886,7 +886,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         @Override
         public void onClick(View view)
         {
-            Timer.cancel();
+            //Timer.cancel();
             Toast msg= Toast.makeText(getApplicationContext(),"Voto Enviado",Toast.LENGTH_SHORT);
             msg.show();
             btnVotar.setEnabled(false);
@@ -938,7 +938,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ElBundle.putInt("IdSala",MiRespuesta.Sala);
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
         ElBundle.putInt("NRonda",NRonda);
-        ElBundle.putInt("IdUsuario",MiRespuesta.Usuario);
         ElBundle.putString("Usuario",Usuario);
         ElBundle.putString("Opcion1",Opcion1);
         ElBundle.putString("Opcion2",Opcion2);

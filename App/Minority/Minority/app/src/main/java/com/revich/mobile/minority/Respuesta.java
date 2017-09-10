@@ -10,4 +10,7 @@ public class Respuesta {
     public String RespuestaParcial;
     public String RespuestaFinal;
     public int Sala;
+    public int NRonda;
+
+
 }
