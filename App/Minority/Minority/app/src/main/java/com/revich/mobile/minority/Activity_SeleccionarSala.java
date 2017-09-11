@@ -416,6 +416,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         for(int i=0; i<ListaSalas.size();i++)
         {
             SalasDeJuego MiSalaDeJuego=ListaSalas.get(i);
+            IdsSalas[i]=MiSalaDeJuego.Id;
             try
             {
                 HoraComienzoSalaDateTime= dateFormat.parse(MiSalaDeJuego.HoraComienzo);
@@ -561,7 +562,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         {
             if(Id!=0)
             {
-              if(MensajeEntraSala.equals("Ingreso a sala"))
+              if(MensajeEntraSala.equals("\"Ingreso a sala\""))
               {
                   IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
               }
