@@ -461,9 +461,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 TiempoALlegar[i]= HoraComienzoMas15Seg.getTime();
             }
             //CambiarMHCSalaDeJuego(MiSalaDeJuego,false);
-            TrajoEstados=true;
-            TraerEstadosSalas();
         }
+        TrajoEstados=true;
+        TraerEstadosSalas();
     }
 
     private void SetearListeners()
@@ -541,6 +541,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                  IndiceVecBotones++;
              }
            }
+            IndiceVecBotonesAPasar=IndiceVecBotones;
             Usuariosxsala MiUsuariosxsala= new Usuariosxsala();
             MiUsuariosxsala.LlenarDatos(DatosImportantesApp.GetIdUsuario(),NombresSalas[IndiceVecBotones]);
             gson=new Gson();

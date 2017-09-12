@@ -96,7 +96,7 @@ namespace RestApiMinority.Data
                 cmd.Connection.Open();
                 cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
-                MensajeARetornar="Ingreso a sala";
+                MensajeARetornar="Ingreso a sala restando moneda";
             }
             else
             {
