@@ -563,15 +563,24 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         {
             if(Id!=0)
             {
-              if(MensajeEntraSala.equals("\"Ingreso a sala\""))
+              if(MensajeEntraSala.equals("\"Ingreso a sala restando moneda\""))
               {
+                  DatosImportantesApp.SetMonedasUsuario(DatosImportantesApp.GetMonedasUsuario()-1);
                   IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
               }
 
               else
               {
-                  Toast msg= Toast.makeText(getApplicationContext(),MensajeEntraSala,Toast.LENGTH_SHORT) ;
-                  msg.show();
+                  if(MensajeEntraSala.equals("\"Ingreso a sala\"")==false)
+                  {
+                      Toast msg= Toast.makeText(getApplicationContext(),MensajeEntraSala,Toast.LENGTH_SHORT) ;
+                      msg.show();
+                  }
+                  else
+                  {
+                      IrAActivityJugabilidad(IdsSalas[IndiceVecBotonesAPasar],TiempoALlegar[IndiceVecBotonesAPasar]);
+                  }
+
               }
             }
 
