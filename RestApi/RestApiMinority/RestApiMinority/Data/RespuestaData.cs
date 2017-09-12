@@ -77,8 +77,6 @@ namespace RestApiMinority.Data
                                 DBHelper.EjecutarIUD(update);
                                 update = "UPDATE usuariosxsala SET Sigue=false WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                                 DBHelper.EjecutarIUD(update);
-                                string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
-                                DBHelper.EjecutarIUD(update);
                                 ActualizoCantJugadores = true;
                             }
                         }
@@ -209,6 +207,17 @@ namespace RestApiMinority.Data
                 }
 
             }
+            select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+MiVotoACalcular.IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            row = dt.Rows[0];
+            int CantJugadoresSala= row.Field<int>("CantJugadores");
+            if (CantJugadoresSala < 3)
+            {
+                string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                DBHelper.EjecutarIUD(delete);
+                delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
+                DBHelper.EjecutarIUD(delete);
+            } 
             return MiResultado;
         }
         public static void DeleteRespuestasSala(int IdSala)
