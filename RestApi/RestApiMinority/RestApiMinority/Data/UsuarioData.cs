@@ -48,9 +48,9 @@ namespace RestApiMinority.Data
             CantJugadoresSala = row.Field<int>("CantJugadores");
             select = "SELECT Usuario FROM usuariosxsala WHERE Usuario=" + IdUsuario.ToString()+" AND SalaDeJuego="+IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
-            row = dt.Rows[0];
             try
             {
+                row = dt.Rows[0];
                 UsuarioUXS = row.Field<int>("Usuario");
                 ExisteUsuarioEnSala = true;
             }
