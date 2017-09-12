@@ -13,8 +13,8 @@ using System.Web.Http.Description;
     {
         // GET: api/Sala/Get
         [ResponseType(typeof(SalasDeJuego))]
-        [Route("api/sala/Get")]
-    public IEnumerable<SalasDeJuego> Get()
+
+        public IEnumerable<SalasDeJuego> Get()
         {
 
             return SalaDeJuegoData.ObtenerSalasDeJuegoConHoraComienzo();
