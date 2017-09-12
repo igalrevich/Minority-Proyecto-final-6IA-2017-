@@ -38,7 +38,27 @@ namespace RestApiMinority.Data
             cmd.Connection.Close();
 
 
-            cmd = new MySqlCommand("ObtenerDatosEntradaUserSala", new MySqlConnection(DBHelper.ConnectionString));
+            string select = "SELECT Monedas FROM usuarios WHERE Id=" + IdUsuario.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            DataRow row = dt.Rows[0];
+            MonedasUsuario = row.Field<int>("Monedas");
+            select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            row = dt.Rows[0];
+            CantJugadoresSala = row.Field<int>("CantJugadores");
+            select = "SELECT Usuario FROM usuariosxsala WHERE Usuario=" + IdUsuario.ToString()+" AND SalaDeJuego="+IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            row = dt.Rows[0];
+            try
+            {
+                UsuarioUXS = row.Field<int>("Usuario");
+                ExisteUsuarioEnSala = true;
+            }
+            catch
+            {
+                ExisteUsuarioEnSala = false;
+            }
+            /*cmd = new MySqlCommand("ObtenerDatosEntradaUserSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("IdUsuario", IdUsuario));
             cmd.Parameters.Add(new MySqlParameter("IdSala", IdSala));
@@ -59,10 +79,10 @@ namespace RestApiMinority.Data
                 } 
             }
             datareader.Close();
-            cmd.Connection.Close();
+            cmd.Connection.Close();*/
 
-            
-           
+
+
             /*select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
             if (dt.Rows.Count > 0)
