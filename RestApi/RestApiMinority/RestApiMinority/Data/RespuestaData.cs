@@ -11,7 +11,7 @@ namespace RestApiMinority.Data
     {
         public static void Insert(Respuesta MiRespuesta)
         {
-            string sInsert = "Insert into respuestas (Pregunta,Usuario,RespuestaFinal,RespuestaTemporal,Sala) values ('" + MiRespuesta.Pregunta + "','" + MiRespuesta.Usuario + "','" + MiRespuesta.RespuestaFinal + "','" + MiRespuesta.RespuestaParcial + "','" + MiRespuesta.Sala + "')";
+            string sInsert = "Insert into respuestas (Pregunta,Usuario,RespuestaFinal,RespuestaTemporal,Sala,NRonda) values ("+MiRespuesta.Pregunta.ToString()+","+MiRespuesta.Usuario.ToString()+",'"+MiRespuesta.RespuestaFinal.ToString()+"','"+MiRespuesta.RespuestaParcial.ToString()+"',"+MiRespuesta.Sala.ToString()+","+MiRespuesta.NRonda.ToString()+")";
             DBHelper.EjecutarIUD(sInsert);
         }
         public static int ObtenerCantVotos(string Opcion, int Sala)

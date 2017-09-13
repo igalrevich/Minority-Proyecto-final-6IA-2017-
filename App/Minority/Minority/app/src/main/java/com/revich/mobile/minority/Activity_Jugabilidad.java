@@ -922,6 +922,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiRespuesta.Sala=IdSala;
         MiRespuesta.Usuario=DatosImportantesApp.GetIdUsuario();
         MiRespuesta.Pregunta=DatosImportantesApp.GetIdPreguntaSala(MiRespuesta.Sala);
+        MiRespuesta.NRonda=SalaDeJuegoTraida.NRonda;
         url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
         new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
         /*url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
