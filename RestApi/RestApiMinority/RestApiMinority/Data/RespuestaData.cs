@@ -188,7 +188,8 @@ namespace RestApiMinority.Data
                     }
                     else
                     {
-                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionA;
+                        MiResultado.Empate = false;
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal='" + OpcionA +"'";
                         dt = DBHelper.EjecutarSelect(select);
                         CantVotosOpcionA = dt.Rows.Count;
                         if(CantVotosOpcionA==dtSigueTrue.Rows.Count)
