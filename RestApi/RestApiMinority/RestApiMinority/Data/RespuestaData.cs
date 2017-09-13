@@ -26,6 +26,7 @@ namespace RestApiMinority.Data
         {
             Respuesta MiRespuesta;
             Resultado MiResultado = new Resultado();
+            MiResultado.PasoSigueEnTrue = false;
             string OpcionA = MiVotoACalcular.OpcionA;
             string OpcionB = MiVotoACalcular.OpcionB;
             int NuevoNRonda = MiVotoACalcular.NRonda + 1;
@@ -97,6 +98,7 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
+                            MiResultado.PasoSigueEnTrue = true;
                         }
                         else
                         {
@@ -122,6 +124,7 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
+                            MiResultado.PasoSigueEnTrue = true;
                         }
                         else
                         {

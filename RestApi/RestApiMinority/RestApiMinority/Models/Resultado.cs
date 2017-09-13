@@ -12,5 +12,7 @@ namespace RestApiMinority.Models
         public bool Gano { get; set; }
         public int CantVotosOpcionA { get; set; }
         public int CantVotosOpcionB { get; set; }
+
+        public bool PasoSigueEnTrue { get; set; }
     }
 }
