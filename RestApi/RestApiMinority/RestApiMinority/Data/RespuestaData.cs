@@ -229,6 +229,8 @@ namespace RestApiMinority.Data
                     DBHelper.EjecutarIUD(delete);
                     delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
                     DBHelper.EjecutarIUD(delete);
+                    update = "UPDATE salasdejuegos SET CantCheckeoResultados=0 WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                    DBHelper.EjecutarIUD(update);
                 }
             }
             return MiResultado;
