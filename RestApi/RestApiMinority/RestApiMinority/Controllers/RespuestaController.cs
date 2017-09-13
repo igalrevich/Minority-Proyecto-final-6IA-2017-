@@ -37,7 +37,7 @@ namespace RestApiMinority.Controllers
 
         // POST: api/respuesta/CalcularResultados
         [ResponseType(typeof(VotoACalcular))]
-        public IHttpActionResult IngresarUserSala(VotoACalcular MiVotoACalcular)
+        public IHttpActionResult CalcularResultados(VotoACalcular MiVotoACalcular)
         {
             Resultado MiResultado = RespuestaData.CalcularVotos(MiVotoACalcular);
             return Ok(MiResultado);
