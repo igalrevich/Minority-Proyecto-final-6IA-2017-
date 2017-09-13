@@ -48,10 +48,10 @@ namespace RestApiMinority.Data
                     MiRespuesta = ObtenerPorRowRespuesta(Registro);
                     if (PidioOpcionesPregunta == false)
                     {
-                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionA;
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal='" + OpcionA +"'";
                         dt = DBHelper.EjecutarSelect(select);
                         MiResultado.CantVotosOpcionA = dt.Rows.Count;
-                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal=" + OpcionB;
+                        select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString() + " AND RespuestaFinal='" + OpcionB + "'";
                         dt = DBHelper.EjecutarSelect(select);
                         MiResultado.CantVotosOpcionB = dt.Rows.Count;
                         PidioOpcionesPregunta = true;
