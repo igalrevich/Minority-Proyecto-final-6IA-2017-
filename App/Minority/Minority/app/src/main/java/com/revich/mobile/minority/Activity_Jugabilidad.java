@@ -465,9 +465,9 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
     private void BuscarPreguntaConVec()
     {
-        Random r = new Random();
+        /*Random r = new Random();
         tvTimer.setText("Haciendo ultimos ajustes 3/3");
-        /*if(PrimeraVezQueJuega)
+        if(PrimeraVezQueJuega)
         {
             int IdPreguntaABuscar = r.nextInt(MinMaxIds[1] +1 - MinMaxIds[0]) + MinMaxIds[0];
             url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdPreguntaABuscar;
@@ -560,7 +560,6 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             btnOpcion1.setText(MiPregunta.OpcionA);
             btnOpcion2.setText(MiPregunta.OpcionB);
             DatosImportantesApp.SetIdPreguntaSala(IdSala,MiPregunta.Id);
-            tvTimer.setText("");
             SetearTimer();
         }
 
@@ -760,14 +759,13 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
                public void onFinish()
                {
-                   tvTimer.setText("Verificando CantJugadores 100%");
+                   //tvTimer.setText("Verificando CantJugadores 100%");
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
                    int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
                    String MontoAGanarString= tvMontoGanador.getText().toString();
                    int MontoAGanar= Integer.parseInt(MontoAGanarString);
                    SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
                    SalaDeJuegoTraida.MontoAGanar=MontoAGanar;
-                   SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                    if(CantJugadoresSala<3==false)
                    {
                        /*tvTimer.setText("Buscando preguntas 1/6");
@@ -775,8 +773,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        SalaDeJuegoTraida.MontoAGanar=SalaDeJuegoTraida.MontoAGanar+1;
                        String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                        gson=new Gson();
-                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");*/
-                       tvTimer.setText("Haciendo ultimos ajustes 2/3");
+                       new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
+                       tvTimer.setText("Haciendo ultimos ajustes 2/3");*/
                        tvNRonda.setText("1");
                        CambiarBotones(true);
                        BotonesVisibles=true;

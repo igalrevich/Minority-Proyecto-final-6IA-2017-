@@ -33,13 +33,15 @@ namespace RestApiMinority.Data
             bool ActualizoCantJugadores = false;
             bool PidioOpcionesPregunta = false;
             int CantVotosOpcionA=0;
+            string update = "UPDATE salasdejuegos SET CantCheckeoResultados=CantCheckeoResultados+1 WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+            DBHelper.EjecutarIUD(update);
             string select = "SELECT TerminoRonda FROM salasdejuegos WHERE Id="+MiVotoACalcular.IdSala.ToString();
             DataTable dt = DBHelper.EjecutarSelect(select);
             DataRow row = dt.Rows[0];
             bool TerminoRonda= row.Field<bool>("TerminoRonda");
             if (TerminoRonda == false)
             {
-                string update = "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                update = "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                 DBHelper.EjecutarIUD(update);
                 select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
                 dt = DBHelper.EjecutarSelect(select);
@@ -208,17 +210,27 @@ namespace RestApiMinority.Data
                 }
 
             }
-            select = "SELECT CantJugadores FROM salasdejuegos WHERE Id="+MiVotoACalcular.IdSala.ToString();
+            select = "SELECT * FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+            dt = DBHelper.EjecutarSelect(select);
+            int CantJugadoresQueVotaron = dt.Rows.Count;
+            select = "SELECT CantCheckeoResultados FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
             dt = DBHelper.EjecutarSelect(select);
             row = dt.Rows[0];
-            int CantJugadoresSala= row.Field<int>("CantJugadores");
-            if (CantJugadoresSala < 3)
+            int CantJugadoresQueCheckearonSuVoto = row.Field<int>("CantCheckeoResultados");
+            if (CantJugadoresQueVotaron == CantJugadoresQueCheckearonSuVoto)
             {
-                string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
-                DBHelper.EjecutarIUD(delete);
-                delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
-                DBHelper.EjecutarIUD(delete);
-            } 
+                select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                dt = DBHelper.EjecutarSelect(select);
+                row = dt.Rows[0];
+                int CantJugadoresQueQuedanEnSala = row.Field<int>("CantJugadores");
+                if (CantJugadoresQueQuedanEnSala < 3)
+                {
+                    string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                    DBHelper.EjecutarIUD(delete);
+                    delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
+                    DBHelper.EjecutarIUD(delete);
+                }
+            }
             return MiResultado;
         }
         public static void DeleteRespuestasSala(int IdSala)
