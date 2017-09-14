@@ -26,7 +26,6 @@ namespace RestApiMinority.Data
         {
             Respuesta MiRespuesta;
             Resultado MiResultado = new Resultado();
-            MiResultado.PasoSigueEnTrue = false;
             string OpcionA = MiVotoACalcular.OpcionA;
             string OpcionB = MiVotoACalcular.OpcionB;
             int NuevoNRonda = MiVotoACalcular.NRonda + 1;
@@ -98,7 +97,6 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
-                            MiResultado.PasoSigueEnTrue = true;
                         }
                         else
                         {
@@ -124,7 +122,6 @@ namespace RestApiMinority.Data
                         {
                             update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                             DBHelper.EjecutarIUD(update);
-                            MiResultado.PasoSigueEnTrue = true;
                         }
                         else
                         {
@@ -156,12 +153,12 @@ namespace RestApiMinority.Data
 
             else
             {
-                select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                 dt = DBHelper.EjecutarSelect(select);
                 row = dt.Rows[0];
-                select = "SELECT * FROM usuariosxsala WHERE Sigue=false AND VotoEnBlanco=false AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                select = "SELECT * FROM usuariosxsala WHERE Sigue=false AND VotoEnBlanco=false AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                 DataTable dtSigueFalse = DBHelper.EjecutarSelect(select);
-                select = "SELECT * FROM usuariosxsala WHERE Sigue=true AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
+                select = "SELECT * FROM usuariosxsala WHERE Sigue=true AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                 DataTable dtSigueTrue = DBHelper.EjecutarSelect(select);
                 bool Sigue = row.Field<bool>("Sigue");
                 if (Sigue)
