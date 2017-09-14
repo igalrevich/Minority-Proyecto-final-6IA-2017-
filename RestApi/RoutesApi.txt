@@ -16,6 +16,7 @@ UPDATE salasdejuegos SET Disponible=true WHERE Id=1 OR Id=3;
 UPDATE salasdejuegos SET Disponible=false;
 UPDATE salasdejuegos SET CantJugadores=1, MontoAGanar=1 WHERE Id=1 OR Id=3;
 DELETE FROM preguntasxjuego WHERE IdSala=8;
+[Route("api/sala/Get")]
 [Route("api/usuario/GetExisteUsuario/{Mail}/{Password}")]
 
 BEGIN
