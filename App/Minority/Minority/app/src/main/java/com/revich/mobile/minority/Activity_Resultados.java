@@ -192,7 +192,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 }
                 GanoOPerdio(MiResultado.Gano);
              }
-             Esperar5SegundosAntesDeActualizar(MiResultado.Gano);
+             //Esperar5SegundosAntesDeActualizar(MiResultado.Gano);
             /*if (CantVotos != -1 && CantVotos != -3) {
                 if (CantVotos != -2) {
                     switch (Opcion) {
@@ -238,6 +238,11 @@ public class Activity_Resultados extends AppCompatActivity {
                 String jsonStr = response.body().string();
                 gson= new Gson();
                 Resultado MiResultado= gson.fromJson(jsonStr,Resultado.class);
+                Log.d("ResultadoEmpate", String.valueOf(MiResultado.Empate));
+                Log.d("CantVotosOpcionA", String.valueOf(MiResultado.CantVotosOpcionA));
+                Log.d("CantVotosOpcionB", String.valueOf(MiResultado.CantVotosOpcionB));
+                Log.d("Gano", String.valueOf(MiResultado.Gano));
+                Log.d("MayoriaOpcionA", String.valueOf(MiResultado.MayoriaOpcionA));
                 return MiResultado;
 
             } catch (IOException e) {

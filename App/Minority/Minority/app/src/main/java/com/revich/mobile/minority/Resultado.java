@@ -11,3 +11,5 @@ public class Resultado {
     public int CantVotosOpcionA ;
     public int CantVotosOpcionB ;
 }
+
+
