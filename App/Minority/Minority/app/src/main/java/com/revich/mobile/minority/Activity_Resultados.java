@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -156,6 +158,7 @@ public class Activity_Resultados extends AppCompatActivity {
         @Override
         protected void onPostExecute(Resultado MiResultado) {
 
+            Log.d("Llama traer result","on post");
             //tvIndicacion2.setText("3/3");
             tvOpcion1.setText(Opcion1);
             tvOpcion2.setText(Opcion2);
@@ -163,6 +166,7 @@ public class Activity_Resultados extends AppCompatActivity {
             tvVotosOpcion2.setText(String.valueOf(MiResultado.CantVotosOpcionB));
             if(MiResultado.Empate)
             {
+                Log.d("Llama traer result","empate");
                 tvGanastePerdiste.setTextColor(Color.parseColor("#f61525"));
                 tvIndicacion1.setTextColor(Color.parseColor("#f61525"));
                 tvIndicacion2.setTextColor(Color.parseColor("#f61525"));
@@ -178,6 +182,7 @@ public class Activity_Resultados extends AppCompatActivity {
             {
                 if(MiResultado.MayoriaOpcionA)
                 {
+                    Log.d("Llama traer result","a");
                     tvOpcion2.setTextColor(Color.parseColor("#8ef686"));
                     tvVotosOpcion2.setTextColor(Color.parseColor("#8ef686"));
                     tvOpcion1.setTextColor(Color.parseColor("#f61525"));
@@ -185,6 +190,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 }
                 else
                 {
+                    Log.d("Llama traer result","b");
                     tvOpcion2.setTextColor(Color.parseColor("#f61525"));
                     tvVotosOpcion2.setTextColor(Color.parseColor("#f61525"));
                     tvOpcion1.setTextColor(Color.parseColor("#8ef686"));
@@ -236,19 +242,13 @@ public class Activity_Resultados extends AppCompatActivity {
             {
                 Response response = client.newCall(request).execute();
                 String jsonStr = response.body().string();
-                gson= new Gson();
-                Resultado MiResultado= gson.fromJson(jsonStr,Resultado.class);
-                Log.d("ResultadoEmpate", String.valueOf(MiResultado.Empate));
-                Log.d("CantVotosOpcionA", String.valueOf(MiResultado.CantVotosOpcionA));
-                Log.d("CantVotosOpcionB", String.valueOf(MiResultado.CantVotosOpcionB));
-                Log.d("Gano", String.valueOf(MiResultado.Gano));
-                Log.d("MayoriaOpcionA", String.valueOf(MiResultado.MayoriaOpcionA));
-                return MiResultado;
+                return parsearResultado(jsonStr);
 
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 Log.d("Error :", e.getMessage());
                 return new Resultado();
             }
+
             /*if (method.equals("GET")) {
                 Request request = new Request.Builder()
                         .url(url)
@@ -298,6 +298,16 @@ public class Activity_Resultados extends AppCompatActivity {
                 }
             }*/
         }
+        Resultado parsearResultado(String JSONstr) throws JSONException {
+            gson= new Gson();
+            Resultado MiResultado= gson.fromJson(JSONstr,Resultado.class);
+            Log.d("ResultadoEmpate", String.valueOf(MiResultado.Empate));
+            Log.d("CantVotosOpcionA", String.valueOf(MiResultado.CantVotosOpcionA));
+            Log.d("CantVotosOpcionB", String.valueOf(MiResultado.CantVotosOpcionB));
+            Log.d("Gano", String.valueOf(MiResultado.Gano));
+            Log.d("MayoriaOpcionA", String.valueOf(MiResultado.MayoriaOpcionA));
+            return MiResultado;
+        }
     }
 
     private void GenerarResultadoUsuarioParte1() {
@@ -309,7 +319,13 @@ public class Activity_Resultados extends AppCompatActivity {
         Sala = ElBundle.getInt("IdSala");
         NRonda = ElBundle.getInt("NRonda");
         VotoACalcular MiVotoACalcular= new VotoACalcular();
-        MiVotoACalcular.LlenarDatos(DatosImportantesApp.GetIdUsuario(),Opcion1,Opcion2,VotoJugador,Sala,NRonda);
+        MiVotoACalcular.LlenarDatos(DatosImportantesApp.GetIdUsuario(),Opcion1,Opcion1,VotoJugador,Sala,NRonda);
+        Log.d("OpcionA", MiVotoACalcular.OpcionA);
+        Log.d("OpcionB", MiVotoACalcular.OpcionB);
+        Log.d("VotoJugador", MiVotoACalcular.VotoJugador);
+        Log.d("IdUsuario", String.valueOf(MiVotoACalcular.IdUsuario));
+        Log.d("IdSala", String.valueOf(MiVotoACalcular.IdSala));
+        Log.d("NRonda", String.valueOf(MiVotoACalcular.NRonda));
         gson=new Gson();
         /*CantJugadores = ElBundle.getInt("CantJugadores");
         MonedasUsuario= ElBundle.getInt("Monedas");
@@ -317,6 +333,7 @@ public class Activity_Resultados extends AppCompatActivity {
         Pregunta = ElBundle.getInt("IdPregunta");
         tvIndicacion2.setText("1/3");*/
         url = "http://apiminorityproyecto.azurewebsites.net/api/respuesta/CalcularResultados";
+        Log.d("Llama traer result","1");
         new TraerResultados().execute("POST", url, gson.toJson(MiVotoACalcular));
     }
 

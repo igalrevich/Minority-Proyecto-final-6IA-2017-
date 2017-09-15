@@ -61,6 +61,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     Date HoraActual,TiempoDiferencia;
     Calendar cal;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -488,6 +489,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
                     break;
             }*/
+            Timer.cancel();
             url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdSala+"/"+SalaDeJuegoTraida.NRonda;
             /*url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdSala;*/
             new BuscarPregunta().execute("GET",url);
@@ -638,15 +640,19 @@ public class Activity_Jugabilidad extends AppCompatActivity {
     }
     private void SetearTimer()
     {
+        SetearListeners();
+        Log.d("SetearTimer","start");
         Timer=new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvSegundosTimer.setText(String.valueOf(millisUntilFinished/1000));
-                SegundosTimer=tvSegundosTimer.getText().toString();
-                SetearListeners();
+                Log.d("SetearTimer",String.valueOf(millisUntilFinished/1000));
+                //SegundosTimer=tvSegundosTimer.getText().toString();
+
             }
 
             public void onFinish() {
+                Log.d("SetearTimer","finish");
                 IniciarActivityResultados();
             }
         }.start();
@@ -657,7 +663,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
        {
            if(PrimeraVezQueJuega)
            {
-               Random rand= new Random();
+               /*Random rand= new Random();
                NumRandJugadoresMontoAGanar= rand.nextInt(49-3)+3;
                tvCantJugadores.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
                tvMontoGanador.setText(String.valueOf(NumRandJugadoresMontoAGanar+1));
@@ -667,7 +673,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                PreguntasxJuego MiPreguntasxJuego= new PreguntasxJuego();
                MiPreguntasxJuego.LlenarDatosPreguntasxJuego(IdSala);
                new InsertarPreguntas().execute("POST",url,gson.toJson(MiPreguntasxJuego));
-               /*SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
+               SalasDeJuego MiSalaDeJuego= new SalasDeJuego();
                MiSalaDeJuego.LlenarCantJugadoresMas1(NumRandJugadoresMontoAGanar,NumRandJugadoresMontoAGanar,-1);
                String url ="http://apiminorityproyecto.azurewebsites.net/api/sala/ModificarCantJugadoresONRondaSala/"+IdSala;
                gson=new Gson();
@@ -681,6 +687,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
        }
        else
        {
+           Log.d("TimerSD", "Arranca");
            int SegundosDisponiblesSalaTimer= 1000*(SegundosDisponiblesSala+1);
            String SegundosTimer;
            if(SegundosDisponiblesSala%60<10)
@@ -708,6 +715,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        TimerString=dateFormatSoloHora.format(TiempoDiferencia);
                        tvTimer.setText(TimerString);
                        String TextoTimer=tvTimer.getText().toString();
+                       Log.d("TimerSD", TextoTimer);
                        if(TextoTimer.equals("00:00:00"))
                        {
                            tvTimer.setText("Verificando CantJugadores 50%");

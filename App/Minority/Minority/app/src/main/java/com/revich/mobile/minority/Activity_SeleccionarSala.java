@@ -59,6 +59,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
     Date HoraActual,HoraComienzoSalaDateTime=null, HoraComienzo;
     Calendar cal;
     String Usuario;
+    MiContador mc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
         if(TrajoEstados)
         {
             SetearListeners();
-            MiContador mc = new MiContador(15000,1000);
+            mc = new MiContador(15000,1000);
             mc.start();
 
         }
