@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -76,7 +77,22 @@ public class Activity_Login extends AppCompatActivity {
     private View.OnClickListener btnOlvideMiContrasena_Click= new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            switch (txtMail.getText().toString())
+            {
+                case "afrevich@gmail.com":
+                    txtMail.setText("keilarevich@hotmail.com");
+                    txtContrasena.setText("atlantavc");
+                    break;
+                case "keilarevich@hotmail.com":
+                    txtMail.setText("igalrevich@hotmail.com");
+                    txtContrasena.setText("atlantacampeon");
+                    break;
+                case "igalrevich@hotmail.com":
+                    txtMail.setText("afrevich@gmail.com");
+                    txtContrasena.setText("igalkeila");
+                    break;
 
+            }
         }
     };
 

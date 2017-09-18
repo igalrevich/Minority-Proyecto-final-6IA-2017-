@@ -44,7 +44,7 @@ import okhttp3.Response;
 public class Activity_Jugabilidad extends AppCompatActivity {
     Button btnOpcion1,btnOpcion2, btnVotar;
     TextView tvSegundosTimer,tvVotoFinal,tvMontoGanador,tvCantJugadores,tvNRonda,tvSala,tvTimer;
-    boolean VotoOpcion1=false,PublicarProgresoPut=true;
+    boolean VotoOpcion1=false,PublicarProgresoPut=true,PusoNRonda=false;
     boolean VotoOpcion2=false;
     boolean VotoFinalmente=false, BotonesVisibles=false, TrajoSalaPrimeraVez=false, InsertoPreguntas=false;
     boolean PrimeraVezQueJuega;
@@ -489,8 +489,11 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     IdPreguntaABuscar = r.nextInt(MinMaxIds[7] +1 - MinMaxIds[6]) + MinMaxIds[6];
                     break;
             }*/
+            Log.d("NRondaDespuesDeSetText5", tvNRonda.getText().toString());
             Timer.cancel();
+            Log.d("NRondaDespuesDeSetText6", tvNRonda.getText().toString());
             url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdSala+"/"+SalaDeJuegoTraida.NRonda;
+            Log.d("NRondaDespuesDeSetText7", tvNRonda.getText().toString());
             /*url ="http://apiminorityproyecto.azurewebsites.net/api/pregunta/GetPregunta/"+IdSala;*/
             new BuscarPregunta().execute("GET",url);
     }
@@ -559,9 +562,13 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Pregunta MiPregunta) {
+            Log.d("NRondaDespuesDeSetText8", tvNRonda.getText().toString());
             btnOpcion1.setText(MiPregunta.OpcionA);
+            Log.d("NRondaDespuesDeSetText9", tvNRonda.getText().toString());
             btnOpcion2.setText(MiPregunta.OpcionB);
+            Log.d("NRondaDDeSetText10", tvNRonda.getText().toString());
             DatosImportantesApp.SetIdPreguntaSala(IdSala,MiPregunta.Id);
+            Log.d("NRondaDDeSetText11", tvNRonda.getText().toString());
             SetearTimer();
         }
 
@@ -639,13 +646,22 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         }
     }
     private void SetearTimer()
-    {
+    {   Log.d("NRondaDDeSetText12", tvNRonda.getText().toString());
         SetearListeners();
+        Log.d("NRondaDDeSetText13", tvNRonda.getText().toString());
         Log.d("SetearTimer","start");
+        Log.d("NRondaDDeSetText14", tvNRonda.getText().toString());
         Timer=new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 tvSegundosTimer.setText(String.valueOf(millisUntilFinished/1000));
+                Log.d("NRondaDDeSetText15", tvNRonda.getText().toString());
+                if(PusoNRonda==false && PrimeraVezQueJuega)
+                {
+                    SalaDeJuegoTraida.NRonda=1;
+                    tvNRonda.setText("1");
+                    PusoNRonda=true;
+                }
                 Log.d("SetearTimer",String.valueOf(millisUntilFinished/1000));
                 //SegundosTimer=tvSegundosTimer.getText().toString();
 
@@ -783,10 +799,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        gson=new Gson();
                        new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
                        tvTimer.setText("Haciendo ultimos ajustes 2/3");*/
+                       Log.d("NRondaAntesDeSetText", tvNRonda.getText().toString());
                        tvNRonda.setText("1");
+                       Log.d("NRondaDespuesDeSetText1", tvNRonda.getText().toString());
                        CambiarBotones(true);
+                       Log.d("NRondaDespuesDeSetText2", tvNRonda.getText().toString());
                        BotonesVisibles=true;
+                       Log.d("NRondaDespuesDeSetText3", tvNRonda.getText().toString());
                        SalaDeJuegoTraida.NRonda=1;
+                       Log.d("NRondaDespuesDeSetText4", tvNRonda.getText().toString());
                        BuscarPreguntaConVec();
                    }
                    else
@@ -940,7 +961,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundle= new Bundle();
         ElBundle.putString("Voto",VotoFinal);
         int CantJugadores= Integer.parseInt(tvCantJugadores.getText().toString());
-        int NRonda= Integer.parseInt(tvNRonda.getText().toString());
+        int NRonda= SalaDeJuegoTraida.NRonda;
         ElBundle.putInt("CantJugadores",CantJugadores);
         ElBundle.putInt("IdSala",MiRespuesta.Sala);
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
