@@ -75,7 +75,7 @@ namespace RestApiMinority.Data
                             MiResultado.Empate = true;
                             if (ActualizoCantJugadores == false)
                             {
-                                update = "UPDATE salasdejuegos SET CantJugadores=0  WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                                update = "UPDATE salasdejuegos SET Empate=true  WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                                 DBHelper.EjecutarIUD(update);
                                 update = "UPDATE usuariosxsala SET Sigue=false WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                                 DBHelper.EjecutarIUD(update);
@@ -178,11 +178,11 @@ namespace RestApiMinority.Data
                 else
                 {
                     MiResultado.Gano = false;
-                    select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString() ;
+                    select = "SELECT Empate FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString() ;
                     dt = DBHelper.EjecutarSelect(select);
                     row = dt.Rows[0];
-                    int CantJugadores = row.Field<int>("CantJugadores");
-                    if(CantJugadores==0)
+                    bool Empate = row.Field<bool>("Empate");
+                    if(Empate)
                     {
                         MiResultado.Empate = true;
                         MiResultado.CantVotosOpcionA = dtSigueFalse.Rows.Count;
@@ -229,8 +229,6 @@ namespace RestApiMinority.Data
                     DBHelper.EjecutarIUD(delete);
                     delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
                     DBHelper.EjecutarIUD(delete);
-                    update = "UPDATE salasdejuegos SET CantCheckeoResultados=0 WHERE Id=" + MiVotoACalcular.IdSala.ToString();
-                    DBHelper.EjecutarIUD(update);
                 }
             }
             return MiResultado;

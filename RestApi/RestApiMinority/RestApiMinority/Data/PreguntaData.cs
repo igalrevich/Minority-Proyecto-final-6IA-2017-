@@ -32,7 +32,7 @@ namespace RestApiMinority.Data
             {
                 string delete = "DELETE FROM usuariosxsala WHERE Sigue=false AND SalaDeJuego=" + id.ToString();
                 DBHelper.EjecutarIUD(delete);
-                string update = "UPDATE salasdejuegos SET TerminoRonda=false WHERE Id=" + id.ToString();
+                string update = "UPDATE salasdejuegos SET Empate=false,CantCheckeoResultados=0,TerminoRonda=false  WHERE Id=" + id.ToString();
                 DBHelper.EjecutarIUD(update);
             }
             if (dt.Rows.Count > 0)
