@@ -966,7 +966,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         Bundle ElBundle= new Bundle();
         ElBundle.putString("Voto",VotoFinal);
         int CantJugadores= Integer.parseInt(tvCantJugadores.getText().toString());
-        int NRonda= SalaDeJuegoTraida.NRonda;
+        int NRonda= Integer.parseInt(tvNRonda.getText().toString());;
         ElBundle.putInt("CantJugadores",CantJugadores);
         ElBundle.putInt("IdSala",MiRespuesta.Sala);
         ElBundle.putInt("IdPregunta",MiRespuesta.Pregunta);
