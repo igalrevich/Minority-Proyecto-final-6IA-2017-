@@ -43,8 +43,23 @@ namespace RestApiMinority.Data
             {
                 update = "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                 DBHelper.EjecutarIUD(update);
+                select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                dt = DBHelper.EjecutarSelect(select);
+                row = dt.Rows[0];
+                int CantJugadores = row.Field<int>("CantJugadores");
                 select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
                 dt = DBHelper.EjecutarSelect(select);
+                int CantRespuestas = dt.Rows.Count;
+                while (CantJugadores != CantRespuestas)
+                {
+                    select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                    dt = DBHelper.EjecutarSelect(select);
+                    row = dt.Rows[0];
+                    CantJugadores = row.Field<int>("CantJugadores");
+                    select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
+                    dt = DBHelper.EjecutarSelect(select);
+                    CantRespuestas = dt.Rows.Count;
+                }
                 foreach (DataRow Registro in dt.Rows)
                 {
                     MiRespuesta = ObtenerPorRowRespuesta(Registro);

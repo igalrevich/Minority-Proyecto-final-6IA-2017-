@@ -11,6 +11,7 @@
 
 DELETE FROM usuariosxsala;
 UPDATE salasdejuegos SET CantJugadores=0, MontoAGanar=0, NRonda=0,ModificarHComienzo=true, CantCheckeoResultados=0, TerminoRonda=0, Disponible=false;
+SELECT salasdejuegos.CantJugadores AS CantJugadores, respuestas.RespuestaFinal FROM salasdejuegos INNER JOIN respuestas on respuestas.Sala= salasdejuegos.Id WHERE salasdejuegos.Id=5 AND respuestas.Sala=5;
 DELETE FROM respuestas;
 UPDATE salasdejuegos SET Disponible=true WHERE Id=1 OR Id=3;
 UPDATE salasdejuegos SET Disponible=false;
