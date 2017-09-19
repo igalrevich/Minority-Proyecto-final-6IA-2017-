@@ -91,6 +91,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
             super.onPostExecute(MiSalaDeJuego);
             tvSala.setText(MiSalaDeJuego.Nombre);
             tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
+            Log.d("TVNRSetText", "DespuesDePostExecute");
             tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
             tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
             SalaDeJuegoTraida=MiSalaDeJuego;
@@ -167,6 +168,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                     if(QueModifica.equals("NRonda"))
                     {
                         tvTimer.setText("Haciendo ultimos ajustes 2/3");
+                        Log.d("TVNRSetText", "DespuesDeInsertarResultadosNRonda");
                         tvNRonda.setText("1");
                         CambiarBotones(true);
                         BotonesVisibles=true;
@@ -619,6 +621,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         ObtenerReferencias();
         tvSala.setText(SalaDeJuegoTraida.Nombre);
         tvCantJugadores.setText(String.valueOf(SalaDeJuegoTraida.CantJugadores));
+        Log.d("TVNRSetText", "ReestablecerCondicionesLayout");
         tvNRonda.setText(String.valueOf(SalaDeJuegoTraida.NRonda));
         tvMontoGanador.setText(String.valueOf(SalaDeJuegoTraida.MontoAGanar));
         CambiarBotones(BotonesVisibles);
@@ -659,6 +662,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 if(PusoNRonda==false && PrimeraVezQueJuega)
                 {
                     SalaDeJuegoTraida.NRonda=1;
+                    Log.d("TVNRSetText", "DespuesDeTimer30s");
                     tvNRonda.setText("1");
                     PusoNRonda=true;
                 }
@@ -800,6 +804,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                        new TraerIdsInsertarResultados().execute("PUT",url,gson.toJson(MiSalaDeJuego),"CantJugadoresTT");
                        tvTimer.setText("Haciendo ultimos ajustes 2/3");*/
                        Log.d("NRondaAntesDeSetText", tvNRonda.getText().toString());
+                       Log.d("TVNRSetText", "DespuesDeSetearTimerDisponible");
                        tvNRonda.setText("1");
                        Log.d("NRondaDespuesDeSetText1", tvNRonda.getText().toString());
                        CambiarBotones(true);
