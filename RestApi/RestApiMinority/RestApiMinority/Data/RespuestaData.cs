@@ -73,8 +73,8 @@ namespace RestApiMinority.Data
                         MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                         while (dr.Read())
                         {
-                            MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                             MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["VotosOpcionB"]);
+                            MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                             OpcionA = dr["OpcionA"].ToString();
                             OpcionB = dr["OpcionB"].ToString();
 
@@ -207,8 +207,8 @@ namespace RestApiMinority.Data
                 MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dr.Read())
                 {
-                    MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                     MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["VotosOpcionB"]);
+                    MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                     MiResultado.Gano = Convert.ToBoolean(dr["Sigue"]);
                     CantJugadoresQueVotaron = Convert.ToInt32(dr["CantJugadoresQueVotaron"]);
                     CantJugadoresQueCheckearonSuVoto= Convert.ToInt32(dr["CantCheckeoResultados"]);
