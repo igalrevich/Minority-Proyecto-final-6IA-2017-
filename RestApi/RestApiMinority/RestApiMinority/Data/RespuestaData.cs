@@ -42,20 +42,20 @@ namespace RestApiMinority.Data
                 update = "UPDATE salasdejuegos SET TerminoRonda=true WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                 DBHelper.EjecutarIUD(update);
                 select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
-                dt = DBHelper.EjecutarSelect(select);
+                DataTable dtCantJugadores = DBHelper.EjecutarSelect(select);
                 row = dt.Rows[0];
                 int CantJugadores = row.Field<int>("CantJugadores");
                 select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
-                dt = DBHelper.EjecutarSelect(select);
+                DataTable dtCantRespuestas = DBHelper.EjecutarSelect(select);
                 int CantRespuestas = dt.Rows.Count;
                 while (CantJugadores != CantRespuestas)
                 {
                     select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
-                    DataTable dtCantJugadores = DBHelper.EjecutarSelect(select);
+                    dtCantJugadores = DBHelper.EjecutarSelect(select);
                     row = dtCantJugadores.Rows[0];
                     CantJugadores = row.Field<int>("CantJugadores");
                     select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
-                    DataTable dtCantRespuestas = DBHelper.EjecutarSelect(select);
+                    dtCantRespuestas = DBHelper.EjecutarSelect(select);
                     CantRespuestas = dtCantRespuestas.Rows.Count;
                 }
                 foreach (DataRow Registro in dt.Rows)
@@ -73,7 +73,9 @@ namespace RestApiMinority.Data
                         MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                         while (dr.Read())
                         {
-                            MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
+                            select = "SELECT * FROM respuestas WHERE Sala="+ MiVotoACalcular.IdSala.ToString()+" AND NRonda="+MiVotoACalcular.NRonda+ " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+"))";
+                            dt = DBHelper.EjecutarSelect(select);
+                            MiResultado.CantVotosOpcionB = dt.Rows.Count;
                             MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                             OpcionA = dr["OpcionA"].ToString();
                             OpcionB = dr["OpcionB"].ToString();
@@ -207,7 +209,9 @@ namespace RestApiMinority.Data
                 MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dr.Read())
                 {
-                    MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
+                    select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + "))";
+                    dt = DBHelper.EjecutarSelect(select);
+                    MiResultado.CantVotosOpcionB = dt.Rows.Count;
                     MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
                     MiResultado.Gano = Convert.ToBoolean(dr["Sigue"]);
                     CantJugadoresQueVotaron = Convert.ToInt32(dr["CantJugadoresQueVotaron"]);
