@@ -58,7 +58,7 @@ namespace RestApiMinority.Data
                     dtCantRespuestas = DBHelper.EjecutarSelect(select);
                     CantRespuestas = dtCantRespuestas.Rows.Count;
                 }
-                foreach (DataRow Registro in dt.Rows)
+                foreach (DataRow Registro in dtCantRespuestas.Rows)
                 {
                     MiRespuesta = ObtenerPorRowRespuesta(Registro);
                     if (PidioOpcionesPregunta == false)
