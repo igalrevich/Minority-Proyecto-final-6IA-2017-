@@ -19,8 +19,8 @@ namespace RestApiMinority.Data
         public static string IngresarUserSala(int IdUsuario, int IdSala)
         {
             string MensajeARetornar = "";
-            /*MySqlCommand cmd;
-            cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
+            MySqlCommand cmd;
+            /*cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("NombreSala", NombreSala));
             cmd.Connection.Open();
