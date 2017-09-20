@@ -73,7 +73,7 @@ namespace RestApiMinority.Data
                         MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                         while (dr.Read())
                         {
-                            select = "SELECT * FROM respuestas WHERE Sala="+ MiVotoACalcular.IdSala.ToString()+" AND NRonda="+MiVotoACalcular.NRonda+ " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+"))";
+                            select = "SELECT * FROM respuestas WHERE Sala="+ MiVotoACalcular.IdSala.ToString()+" AND NRonda="+MiVotoACalcular.NRonda+ " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+" LIMIT 1))";
                             dt = DBHelper.EjecutarSelect(select);
                             MiResultado.CantVotosOpcionB = dt.Rows.Count;
                             MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
