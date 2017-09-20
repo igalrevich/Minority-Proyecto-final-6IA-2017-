@@ -239,8 +239,8 @@ namespace RestApiMinority.Data
                         DBHelper.EjecutarIUD(delete);
                     }
                 }
-                return MiResultado;
             }
+            return MiResultado;
         }
         public static void DeleteRespuestasSala(int IdSala)
         {
@@ -261,23 +261,23 @@ namespace RestApiMinority.Data
             return MiRespuesta;
         }
 
-        private static void GanoOPerdio( bool  MayoriaOpcionA, string OpcionB, Respuesta MiRespuesta,string OpcionA)
+        private static void GanoOPerdio( bool  MayoriaOpcionA, string OpcionB, Respuesta MiRespuesta,string OpcionA,int SalaDeJuego)
         {
             string update = "";
             if (MayoriaOpcionA)
             {
                 if (MiRespuesta.RespuestaFinal == OpcionB)
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                    update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                     DBHelper.EjecutarIUD(update);
                 }
                 else
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                    update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                     DBHelper.EjecutarIUD(update);
                     if (MiRespuesta.RespuestaFinal == "")
                     {
-                        update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                        update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                         DBHelper.EjecutarIUD(update);
                     }
                 }
@@ -286,16 +286,16 @@ namespace RestApiMinority.Data
             {
                 if (MiRespuesta.RespuestaFinal == OpcionA)
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                    update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                     DBHelper.EjecutarIUD(update);
                 }
                 else
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                    update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                     DBHelper.EjecutarIUD(update);
                     if (MiRespuesta.RespuestaFinal == "")
                     {
-                        update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
+                        update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                         DBHelper.EjecutarIUD(update);
                     }
                 }
@@ -312,7 +312,7 @@ namespace RestApiMinority.Data
                 {
                     if (TerminoRonda == false)
                     {
-                        update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionB + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                        update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionB + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + SalaDeJuego;
                         DBHelper.EjecutarIUD(update);
                     }
                     MiResultado.MayoriaOpcionA = true;
@@ -321,7 +321,7 @@ namespace RestApiMinority.Data
                 {
                     if (TerminoRonda == false)
                     {
-                        update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionA + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                        update = "UPDATE salasdejuegos SET CantJugadores=" + MiResultado.CantVotosOpcionA + ", NRonda=" + NuevoNRonda.ToString() + " WHERE Id=" + SalaDeJuego;
                         DBHelper.EjecutarIUD(update);
                     }
                     MiResultado.MayoriaOpcionA = false;
