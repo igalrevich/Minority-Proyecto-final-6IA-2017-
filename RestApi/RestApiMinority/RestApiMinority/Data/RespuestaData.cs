@@ -80,7 +80,7 @@ namespace RestApiMinority.Data
 
                         }
                         CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
-                        GanoOPerdio(MiResultado.MayoriaOpcionA, OpcionB, MiRespuesta, OpcionA);
+                        GanoOPerdio(MiResultado.MayoriaOpcionA, OpcionB, MiRespuesta, OpcionA,MiVotoACalcular.IdSala);
                         dr.Close();
                         cmd.Connection.Close();
 

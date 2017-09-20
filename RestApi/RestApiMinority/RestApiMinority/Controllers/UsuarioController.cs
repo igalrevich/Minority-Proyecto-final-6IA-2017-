@@ -69,7 +69,7 @@ namespace RestApiMinority.Controllers
         [ResponseType(typeof(Usuariosxsala))]
         public IHttpActionResult IngresarUserSala(Usuariosxsala MiUsuariosxsala)
         {
-            string MensajeEntrarASala=UsuarioData.IngresarUserSala(MiUsuariosxsala.Usuario, MiUsuariosxsala.NombreSalaDeJuego);
+            string MensajeEntrarASala=UsuarioData.IngresarUserSala(MiUsuariosxsala.Usuario, MiUsuariosxsala.SalaDeJuego);
             return Ok(MensajeEntrarASala);
             
         }

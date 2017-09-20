@@ -16,26 +16,26 @@ namespace RestApiMinority.Data
             DBHelper.EjecutarIUD(delete);
         }
 
-        public static string IngresarUserSala(int IdUsuario, string NombreSala)
+        public static string IngresarUserSala(int IdUsuario, int IdSala)
         {
             string MensajeARetornar = "";
-            MySqlCommand cmd;
+            /*MySqlCommand cmd;
             cmd = new MySqlCommand("ObtenerIdSala", new MySqlConnection(DBHelper.ConnectionString));
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.Add(new MySqlParameter("NombreSala", NombreSala));
             cmd.Connection.Open();
             MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            int IdSala = 0;
+            int IdSala = 0;*/
             int CantJugadoresSala = 0;
             int MonedasUsuario = 0;
             bool ExisteUsuarioEnSala=false;
             int UsuarioUXS = 0;
-            while (dr.Read())
+            /*while (dr.Read())
             {
               IdSala = Convert.ToInt32(dr["Id"]);
             }
             dr.Close();
-            cmd.Connection.Close();
+            cmd.Connection.Close();*/
 
 
             string select = "SELECT Monedas FROM usuarios WHERE Id=" + IdUsuario.ToString();
