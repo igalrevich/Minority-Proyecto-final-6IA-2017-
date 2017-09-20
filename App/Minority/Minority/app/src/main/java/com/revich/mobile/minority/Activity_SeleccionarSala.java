@@ -544,7 +544,7 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
            }
             IndiceVecBotonesAPasar=IndiceVecBotones;
             Usuariosxsala MiUsuariosxsala= new Usuariosxsala();
-            MiUsuariosxsala.LlenarDatos(DatosImportantesApp.GetIdUsuario(),NombresSalas[IndiceVecBotones]);
+            MiUsuariosxsala.LlenarDatos(DatosImportantesApp.GetIdUsuario(),IdsSalas[IndiceVecBotones]);
             gson=new Gson();
             String url="http://apiminorityproyecto.azurewebsites.net/api/usuario/IngresarUserSala";
             new IngresarUserSala().execute("POST",url,gson.toJson(MiUsuariosxsala));

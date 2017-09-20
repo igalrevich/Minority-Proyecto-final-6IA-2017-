@@ -13,12 +13,12 @@ public class Usuariosxsala {
     public boolean Sigue;
     public boolean VotoEnBlanco;
 
-    public void LlenarDatos(int usuario, String nombreSalaDeJuego)
+    public void LlenarDatos(int usuario, int salaDeJuego)
     {
         this.Id=0;
         this.Usuario=usuario;
-        this.NombreSalaDeJuego=nombreSalaDeJuego;
-        this.SalaDeJuego=0;
+        this.NombreSalaDeJuego="";
+        this.SalaDeJuego=salaDeJuego;
         this.Sigue=false;
         this.VotoEnBlanco=false;
     }
