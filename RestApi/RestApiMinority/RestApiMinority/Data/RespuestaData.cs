@@ -87,14 +87,15 @@ namespace RestApiMinority.Data
                             dt = DBHelper.EjecutarSelect(select);
                             row = dt.Rows[0];
                             OpcionA = row.Field<string>("OpcionB");
-                          /*MiResultado.CantVotosOpcionB = dt.Rows.Count;
-                        MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
-                        MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
-                        OpcionB = Convert.ToString(dr["OpcionB"]);
-                        OpcionA = Convert.ToString(dr["OpcionA"]);
+                            CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
+                        /*MiResultado.CantVotosOpcionB = dt.Rows.Count;
+                      MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
+                      MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
+                      OpcionB = Convert.ToString(dr["OpcionB"]);
+                      OpcionA = Convert.ToString(dr["OpcionA"]);
 
-                        }*/
-                        
+                      }*/
+
                         /*dr.Close();
                         cmd.Connection.Close();
 
@@ -182,7 +183,6 @@ namespace RestApiMinority.Data
                             }
                         }*/
                     }
-                    CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
                     GanoOPerdio(MiResultado.MayoriaOpcionA, OpcionB, MiRespuesta, OpcionA, MiVotoACalcular.IdSala);
                 }
 
@@ -277,6 +277,8 @@ namespace RestApiMinority.Data
                         DBHelper.EjecutarIUD(delete);
                         delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
                         DBHelper.EjecutarIUD(delete);
+                        update = "UPDATE salasdejuegos SET TerminoRonda=false, CantCheckeoResultados=0 WHERE Id=" + MiVotoACalcular.IdSala.ToString();
+                        DBHelper.EjecutarIUD(update);
                     }
                 }
             }
