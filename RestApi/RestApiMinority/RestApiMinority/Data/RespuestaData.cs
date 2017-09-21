@@ -73,12 +73,13 @@ namespace RestApiMinority.Data
                         MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                         while (dr.Read())
                         {
-                            select = "SELECT * FROM respuestas WHERE Sala="+ MiVotoACalcular.IdSala.ToString()+" AND NRonda="+MiVotoACalcular.NRonda+ " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+" LIMIT 1))";
+                            /*select = "SELECT * FROM respuestas WHERE Sala="+ MiVotoACalcular.IdSala.ToString()+" AND NRonda="+MiVotoACalcular.NRonda+ " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+" LIMIT 1))";
                             dt = DBHelper.EjecutarSelect(select);
-                            MiResultado.CantVotosOpcionB = dt.Rows.Count;
+                            MiResultado.CantVotosOpcionB = dt.Rows.Count;*/
                             MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
-                            OpcionA = Convert.ToString(dr["OpcionA"]);
+                            MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
                             OpcionB = Convert.ToString(dr["OpcionB"]);
+                            OpcionA = Convert.ToString(dr["OpcionA"]);
 
                         }
                         CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
@@ -209,14 +210,15 @@ namespace RestApiMinority.Data
                 MySqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 while (dr.Read())
                 {
-                    select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + "))";
+                    /*select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + " AND RespuestaFinal=(SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda + "))";
                     dt = DBHelper.EjecutarSelect(select);
-                    MiResultado.CantVotosOpcionB = dt.Rows.Count;
+                    MiResultado.CantVotosOpcionB = dt.Rows.Count;*/
                     MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
-                    MiResultado.Gano = Convert.ToBoolean(dr["Sigue"]);
+                    MiResultado.CantVotosOpcionB = Convert.ToInt32(dr["CantVotosOpcionB"]);
                     CantJugadoresQueVotaron = Convert.ToInt32(dr["CantJugadoresQueVotaron"]);
-                    CantJugadoresQueCheckearonSuVoto= Convert.ToInt32(dr["CantCheckeoResultados"]);
-                    CantJugadoresQueQuedanEnSala= Convert.ToInt32(dr["CantJugadores"]);
+                    CantJugadoresQueCheckearonSuVoto = Convert.ToInt32(dr["CantCheckeoResultados"]);
+                    CantJugadoresQueQuedanEnSala = Convert.ToInt32(dr["CantJugadores"]);
+                    MiResultado.Gano = Convert.ToBoolean(dr["Sigue"]);
 
                 }
                 CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
