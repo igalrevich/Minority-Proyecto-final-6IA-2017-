@@ -948,15 +948,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 VotoFinal=Opcion2;
             }
         }
-        MiRespuesta=new Respuesta();
-        MiRespuesta.RespuestaParcial=VotoFinal;
-        MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
-        MiRespuesta.Sala=IdSala;
-        MiRespuesta.Usuario=DatosImportantesApp.GetIdUsuario();
-        MiRespuesta.Pregunta=DatosImportantesApp.GetIdPreguntaSala(MiRespuesta.Sala);
-        MiRespuesta.NRonda=SalaDeJuegoTraida.NRonda;
-        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
-        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
+        InsertarRespuestaBD(VotoFinal);
         /*url="http://apiminorityproyecto.azurewebsites.net/api/usuario/GetIdByNombre/usuarios/"+Usuario;
         new TraerIdsInsertarResultados().execute("GET",url,"Usuario");*/
     }
@@ -994,5 +986,18 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         MiIntent.putExtras(ElBundle);
         startActivity(MiIntent);
         finish();
+    }
+
+    private void InsertarRespuestaBD(String VotoJugador)
+    {
+        MiRespuesta=new Respuesta();
+        MiRespuesta.RespuestaParcial=VotoJugador;
+        MiRespuesta.RespuestaFinal=MiRespuesta.RespuestaParcial;
+        MiRespuesta.Sala=IdSala;
+        MiRespuesta.Usuario=DatosImportantesApp.GetIdUsuario();
+        MiRespuesta.Pregunta=DatosImportantesApp.GetIdPreguntaSala(MiRespuesta.Sala);
+        MiRespuesta.NRonda=SalaDeJuegoTraida.NRonda;
+        url ="http://apiminorityproyecto.azurewebsites.net/api/respuesta/InsertarRespuesta";
+        new TraerIdsInsertarResultados().execute("POST",url,gson.toJson(MiRespuesta));
     }
 }
