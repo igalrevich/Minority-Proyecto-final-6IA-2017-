@@ -77,8 +77,8 @@ namespace RestApiMinority.Data
                             dt = DBHelper.EjecutarSelect(select);
                             MiResultado.CantVotosOpcionB = dt.Rows.Count;
                             MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
-                            OpcionA = dr["OpcionA"].ToString();
-                            OpcionB = dr["OpcionB"].ToString();
+                            OpcionA = Convert.ToString(dr["OpcionA"]);
+                            OpcionB = Convert.ToString(dr["OpcionB"]);
 
                         }
                         CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
