@@ -86,7 +86,7 @@ namespace RestApiMinority.Data
                             select = "SELECT OpcionB FROM preguntas WHERE Id=(SELECT Pregunta FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda+" LIMIT 1)";
                             dt = DBHelper.EjecutarSelect(select);
                             row = dt.Rows[0];
-                            OpcionA = row.Field<string>("OpcionB");
+                            OpcionB = row.Field<string>("OpcionB");
                             CalculandoMinoria(ref MiResultado, NuevoNRonda, TerminoRonda, MiVotoACalcular.IdSala);
                         /*MiResultado.CantVotosOpcionB = dt.Rows.Count;
                       MiResultado.CantVotosOpcionA = Convert.ToInt32(dr["CantVotosOpcionA"]);
