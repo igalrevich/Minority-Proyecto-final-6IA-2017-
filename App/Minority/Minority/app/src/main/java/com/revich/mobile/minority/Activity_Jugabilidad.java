@@ -673,6 +673,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
 
             public void onFinish() {
                 Log.d("SetearTimer","finish");
+                if(VotoFinalmente==false)
+                {
+                    InsertarRespuestaBD("");
+                }
                 IniciarActivityResultados();
             }
         }.start();
