@@ -227,6 +227,13 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 }
 
             }
+            else
+            {
+                if(VotoFinalmente==false)
+                {
+                    IniciarActivityResultados();
+                }
+            }
 
 
         }
@@ -677,7 +684,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 {
                     InsertarRespuestaBD("");
                 }
-                IniciarActivityResultados();
+                else
+                {
+                    IniciarActivityResultados();
+                }
             }
         }.start();
     }

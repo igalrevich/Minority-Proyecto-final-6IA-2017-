@@ -198,7 +198,7 @@ public class Activity_Resultados extends AppCompatActivity {
                 }
                 GanoOPerdio(MiResultado.Gano);
              }
-             //Esperar5SegundosAntesDeActualizar(MiResultado.Gano);
+             Esperar5SegundosAntesDeActualizar(MiResultado.Gano);
             /*if (CantVotos != -1 && CantVotos != -3) {
                 if (CantVotos != -2) {
                     switch (Opcion) {
