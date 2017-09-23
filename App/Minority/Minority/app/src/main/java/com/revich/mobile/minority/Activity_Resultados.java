@@ -320,12 +320,12 @@ public class Activity_Resultados extends AppCompatActivity {
         NRonda = ElBundle.getInt("NRonda");
         VotoACalcular MiVotoACalcular= new VotoACalcular();
         MiVotoACalcular.LlenarDatos(DatosImportantesApp.GetIdUsuario(),Opcion1,Opcion1,VotoJugador,Sala,NRonda);
-        Log.d("OpcionA", MiVotoACalcular.OpcionA);
+        /*Log.d("OpcionA", MiVotoACalcular.OpcionA);
         Log.d("OpcionB", MiVotoACalcular.OpcionB);
         Log.d("VotoJugador", MiVotoACalcular.VotoJugador);
         Log.d("IdUsuario", String.valueOf(MiVotoACalcular.IdUsuario));
         Log.d("IdSala", String.valueOf(MiVotoACalcular.IdSala));
-        Log.d("NRonda", String.valueOf(MiVotoACalcular.NRonda));
+        Log.d("NRonda", String.valueOf(MiVotoACalcular.NRonda));*/
         gson=new Gson();
         /*CantJugadores = ElBundle.getInt("CantJugadores");
         MonedasUsuario= ElBundle.getInt("Monedas");
