@@ -129,7 +129,8 @@ public class Activity_Login extends AppCompatActivity {
                 return parsearResultado(jsonStr);
 
             } catch (IOException | JSONException e) {
-                Log.d("Error", e.getMessage());
+                String err = (e.getMessage()==null)?"Fallo Login":e.getMessage();
+                Log.d("Error :", err);
                 return new Usuario();
             }
         }

@@ -90,11 +90,14 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         protected void onPostExecute(SalasDeJuego MiSalaDeJuego) {
             super.onPostExecute(MiSalaDeJuego);
             tvSala.setText(MiSalaDeJuego.Nombre);
-            tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
             Log.d("TVNRSetText", "DespuesDePostExecute");
             tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
-            tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
-            SalaDeJuegoTraida=MiSalaDeJuego;
+            if(MiSalaDeJuego.CantJugadores!=0 && MiSalaDeJuego.MontoAGanar!=0)
+            {
+                tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
+                tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
+                SalaDeJuegoTraida=MiSalaDeJuego;
+            }
             if(TrajoSalaPrimeraVez==false)
             {
                 if(MiSalaDeJuego.CantJugadores<3 && PrimeraVezQueJuega==false)
@@ -125,7 +128,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 return parsearResultado(jsonStr);
 
             } catch (IOException | JSONException e) {
-                Log.d("Error", e.getMessage());
+                String err = (e.getMessage()==null)?"Fallo ParsearSalas":e.getMessage();
+                Log.d("Error :", err);
                 return new SalasDeJuego();
             }
         }

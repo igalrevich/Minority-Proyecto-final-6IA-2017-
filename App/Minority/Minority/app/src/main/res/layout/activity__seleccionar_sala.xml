@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -85,22 +81,6 @@
             android:layout_marginTop="-30dp"
             android:textSize="25dp" />
 
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaA"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="25dp" />
-
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="225dp"
-            android:layout_marginTop="-30dp"
-            android:textSize="25dp" />
-
         <Button
             android:id="@+id/btnSalaA"
             android:layout_width="135dp"
@@ -145,22 +125,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="-30dp"
-            android:textSize="25dp" />
-
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="25dp" />
-
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaD"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="225dp"
             android:layout_marginTop="-30dp"
             android:textSize="25dp" />
 
@@ -209,22 +173,6 @@
             android:layout_marginTop="-30dp"
             android:textSize="25dp" />
 
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:textSize="25dp" />
-
-        <TextView
-            android:id="@+id/tvTiempoEnJuegoSalaF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="225dp"
-            android:layout_marginTop="-30dp"
-            android:textSize="25dp" />
-
         <Button
             android:id="@+id/btnSalaE"
             android:layout_width="135dp"
@@ -255,5 +203,3 @@
     </LinearLayout>
 
  </RelativeLayout>
-
-</ScrollView>
