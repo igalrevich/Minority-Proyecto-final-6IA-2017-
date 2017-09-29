@@ -440,8 +440,9 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                 String [] HoraComienzoSalaDividida= HoraComienzoSala.split(" ");
                 String TiempoComienzoSala= HoraComienzoSalaDividida[1];*/
                 VecEstadosSalas[i].setText(TiempoDiferenciaSala);
-                VecTiempoEnJuegoSalas[i].setText("");
+                //VecTiempoEnJuegoSalas[i].setText("");
                 VecEstadosSalas[i].setTextColor(Color.parseColor("#8ef686"));
+                VecBotones[i].setText("Sala "+NombresSalas[i]);
                 VecBotones[i].setEnabled(true);
                 DisponibilidadSalas[i]=true;
                 TiempoALlegar[i]=HoraComienzoSalaDateTime;

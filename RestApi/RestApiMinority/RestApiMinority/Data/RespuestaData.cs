@@ -273,6 +273,27 @@ namespace RestApiMinority.Data
                     CantJugadoresQueQuedanEnSala = row.Field<int>("CantJugadores");*/
                     if (CantJugadoresQueQuedanEnSala < 3)
                     {
+                        select = "SELECT MontoAGanar FROM `salasdejuegos` WHERE Id="+MiVotoACalcular.IdSala.ToString();
+                        dt = DBHelper.EjecutarSelect(select);
+                        row = dt.Rows[0];
+                        int MontoAGanar = row.Field<int>("MontoAGanar");
+                        select = "SELECT * FROM `usuariosxsala` WHERE Sigue=true";
+                        dt = DBHelper.EjecutarSelect(select);
+                        int CantGanadores = dt.Rows.Count;
+                        if(MiResultado.Gano)
+                        {
+                            switch(CantGanadores)
+                            {
+                                case 1:
+                                    update = "UPDATE usuarios SET Monedas=Monedas+" + MontoAGanar.ToString()+ " WHERE Id="+MiVotoACalcular.IdUsuario.ToString();
+                                    DBHelper.EjecutarIUD(update);
+                                    break;
+                                case 2:
+                                    update = "UPDATE usuarios SET Monedas=Monedas+" + (MontoAGanar/2).ToString() + " WHERE Id=" + MiVotoACalcular.IdUsuario.ToString();
+                                    DBHelper.EjecutarIUD(update);
+                                    break;
+                            }
+                        }
                         string delete = "DELETE FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString();
                         DBHelper.EjecutarIUD(delete);
                         delete = "DELETE FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString();
