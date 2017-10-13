@@ -30,7 +30,7 @@ namespace RestApiMinority.Data
             else
             {
                 MensajeARetornar = "Se ha registrado con exito";
-                string sInsert = "INSERT INTO `usuarios`(`Nombre`, `Mail`, `password`, `Monedas`) VALUES ('"+MiUsuario.Nombre+"','"+MiUsuario.Mail+ "','PASSWORD('" +MiUsuario.Password+"'),"+MiUsuario.Monedas+")";
+                string sInsert = "INSERT INTO `usuarios`(`Nombre`, `Mail`, `password`, `Monedas`) VALUES ('"+MiUsuario.Nombre+"','"+MiUsuario.Mail+ "',PASSWORD('" +MiUsuario.Password+"'),"+MiUsuario.Monedas+")";
                 DBHelper.EjecutarIUD(sInsert);
             }
             return MensajeARetornar;

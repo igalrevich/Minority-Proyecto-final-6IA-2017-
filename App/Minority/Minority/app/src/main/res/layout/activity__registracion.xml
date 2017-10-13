@@ -67,7 +67,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="0."
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/textView7"
@@ -86,7 +86,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="0."
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/textView8"
@@ -105,7 +105,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="0."
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btnRegistracion"

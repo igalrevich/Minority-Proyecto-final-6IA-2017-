@@ -14,7 +14,7 @@ public class Activity_LoginRegistracion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__login_registracion);
         getSupportActionBar().hide();
-
+        ObtenerReferenciasYSetearListeners();
     }
 
     private void ObtenerReferenciasYSetearListeners()

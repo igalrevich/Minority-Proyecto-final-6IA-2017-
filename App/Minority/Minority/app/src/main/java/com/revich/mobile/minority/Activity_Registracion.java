@@ -26,7 +26,7 @@ import okhttp3.Response;
 public class Activity_Registracion extends AppCompatActivity {
     EditText txtMailR, txtContrasenaR, txtNombreUsuario, txtConfirmacionContrasena;
     Button btnRegistracion;
-    ProgressDialog MiProgressDialog = new ProgressDialog(this);
+    ProgressDialog MiProgressDialog ;
     Toast msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class Activity_Registracion extends AppCompatActivity {
         setContentView(R.layout.activity__registracion);
         getSupportActionBar().hide();
         ObtenerReferencias();
+        MiProgressDialog= new ProgressDialog(this);
     }
 
     private void ObtenerReferencias()
