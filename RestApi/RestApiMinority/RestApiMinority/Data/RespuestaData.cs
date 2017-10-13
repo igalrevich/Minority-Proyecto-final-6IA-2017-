@@ -183,7 +183,7 @@ namespace RestApiMinority.Data
                             }
                         }*/
                     }
-                    GanoOPerdio(MiResultado.MayoriaOpcionA, OpcionB, MiRespuesta, OpcionA, MiVotoACalcular.IdSala);
+                    GanoOPerdio(MiResultado.MayoriaOpcionA, OpcionB, MiRespuesta, OpcionA, MiVotoACalcular.IdSala,MiResultado.Empate);
                 }
 
                 select = "SELECT Sigue FROM usuariosxsala WHERE SalaDeJuego=" + MiVotoACalcular.IdSala.ToString() + " AND Usuario=" + MiVotoACalcular.IdUsuario.ToString();
@@ -324,7 +324,7 @@ namespace RestApiMinority.Data
             return MiRespuesta;
         }
 
-        private static void GanoOPerdio( bool  MayoriaOpcionA, string OpcionB, Respuesta MiRespuesta,string OpcionA,int SalaDeJuego)
+        private static void GanoOPerdio( bool  MayoriaOpcionA, string OpcionB, Respuesta MiRespuesta,string OpcionA,int SalaDeJuego, bool Empate)
         {
             string update = "";
             if (MayoriaOpcionA)
@@ -347,21 +347,30 @@ namespace RestApiMinority.Data
             }
             else
             {
-                if (MiRespuesta.RespuestaFinal == OpcionA)
+                if (Empate)
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
+                    update = "UPDATE usuarios SET Monedas= Monedas+1 WHERE Id=" + MiRespuesta.Usuario.ToString() ;
                     DBHelper.EjecutarIUD(update);
                 }
                 else
                 {
-                    update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
-                    DBHelper.EjecutarIUD(update);
-                    if (MiRespuesta.RespuestaFinal == "")
+                    if (MiRespuesta.RespuestaFinal == OpcionA)
                     {
-                        update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
+                        update = "UPDATE usuariosxsala SET Sigue=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
                         DBHelper.EjecutarIUD(update);
                     }
+                    else
+                    {
+                        update = "UPDATE usuariosxsala SET Sigue=false WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
+                        DBHelper.EjecutarIUD(update);
+                        if (MiRespuesta.RespuestaFinal == "")
+                        {
+                            update = "UPDATE usuariosxsala SET VotoEnBlanco=true WHERE Usuario=" + MiRespuesta.Usuario.ToString() + " AND SalaDeJuego=" + SalaDeJuego;
+                            DBHelper.EjecutarIUD(update);
+                        }
+                    }
                 }
+                
             }
         }
 

@@ -74,6 +74,15 @@ namespace RestApiMinority.Controllers
             
         }
 
+        // POST: api/usuario/AgregarUsuario
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult AgregarUsuario(Usuario MiUsuario)
+        {
+            string MensajeEntrarASala = UsuarioData.AgregarUsuario(MiUsuario);
+            return Ok(MensajeEntrarASala);
+
+        }
+
 
 
     }

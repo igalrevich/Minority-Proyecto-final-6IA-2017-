@@ -103,8 +103,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 if(MiSalaDeJuego.CantJugadores<3 && PrimeraVezQueJuega==false)
                 {
                     TrajoSalaPrimeraVez=true;
-                    IniciarActivitySeleccionarSalas();
-                    //IniciarActivityPremiacion(IdSala,MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
+                    IniciarActivityPremiacion(MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
                 }
                 else
                 {
@@ -994,11 +993,10 @@ public class Activity_Jugabilidad extends AppCompatActivity {
         finish();
     }
 
-    private void IniciarActivityPremiacion(int IdSala, int MontoGanador, int CantJugadores)
+    private void IniciarActivityPremiacion(int MontoGanador, int CantJugadores)
     {
         Intent MiIntent = new Intent(Activity_Jugabilidad.this, Activity_Premiacion.class);
         Bundle ElBundle= new Bundle();
-        ElBundle.putInt("IdSala",IdSala);
         ElBundle.putInt("MontoAGanar",MontoGanador);
         ElBundle.putInt("CantJugadores",CantJugadores);
         MiIntent.putExtras(ElBundle);

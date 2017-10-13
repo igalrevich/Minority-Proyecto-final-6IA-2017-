@@ -23,14 +23,18 @@
         <activity
             android:name=".Activity_Login"
             android:configChanges="orientation|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activity_OlvideMiContrasena" />
-        <activity android:name=".Activity_Premiacion"></activity>
+        <activity android:name=".Activity_Premiacion" />
+        <activity android:name=".Activity_LoginRegistracion">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+        <activity android:name=".Activity_Registracion"></activity>
     </application>
 
 </manifest>
