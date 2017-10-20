@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="94dp"
             android:src="@drawable/logominority"
-            android:layout_weight="0.3"
+            android:layout_weight="0"
 
             />
 
@@ -35,69 +35,96 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="30dp"
+                android:layout_weight="1"
                 android:text="Sala: "
                 android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/tvSala"
+                    android:text="A"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
+                android:layout_weight="0.06"
                 android:layout_height="wrap_content"
                 android:text="CantJugadores:"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tvSala"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp" />
 
-            <TextView
+                <TextView
                 android:id="@+id/tvCantJugadores"
                 android:layout_width="wrap_content"
+                android:layout_weight="0.1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:text="35"
                 android:textSize="20dp" />
+
+           </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Monto a ganar:"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tvMontoGanador"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="-20dp"
-                android:textSize="20dp" />
 
-            <ImageView
+                <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="58dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="-25dp"
+                android:layout_weight="1"
                 android:src="@drawable/monedasnuevo" />
+
+                <TextView
+                    android:id="@+id/tvMontoGanador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="34"
+                    android:layout_weight="0.1"
+                    android:textSize="20dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_weight="0.4"
                 android:text="Timer: 00:"
                 android:textSize="20dp" />
 
@@ -105,70 +132,62 @@
                 android:id="@+id/tvSegundosTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginStart="130dp"
-                android:layout_marginTop="-24dp"
+                android:layout_weight="1"
+                android:text="30"
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="-23dp"
+                android:layout_weight="0"
                 android:text="N°Ronda: "
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tvNRonda"
                 android:layout_width="wrap_content"
+                android:layout_weight="0.05"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="-23dp"
+                android:text="1"
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tvVotoFinal"
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="0dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
                 android:textSize="25dp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="2">
 
             <Button
                 android:id="@+id/btnOpcion2"
-                android:layout_width="79dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal|right"
-                android:layout_marginBottom="-11dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="0dp"
+                android:layout_weight="1"
                 android:background="#ffffff"
                 android:gravity="center"
                 android:textSize="25dp" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"/>
+
             <Button
                 android:id="@+id/btnOpcion1"
-                android:layout_width="79dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:layout_marginBottom="0dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="-180dp"
                 android:background="#ffffff"
                 android:clickable="false"
                 android:gravity="center"
@@ -184,20 +203,17 @@
             android:id="@+id/tvTimer"
             android:layout_width="108dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
             android:textSize="25dp" />
 
         <Button
-            android:layout_width="123dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="Votar"
             android:id="@+id/btnVotar"
             android:textColor="#ffffff"
             android:background="#000000"
-            android:layout_marginBottom="0dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:textSize="25dp" />
 
