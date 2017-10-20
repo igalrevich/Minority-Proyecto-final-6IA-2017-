@@ -26,66 +26,70 @@
         <ImageView
             android:id="@+id/LogoMinority"
             android:layout_width="match_parent"
-            android:layout_height="94dp"
-            android:layout_weight="0."
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
             android:src="@drawable/logominority"
             />
 
 
         <TextView
             android:id="@+id/tvIngreseSuMail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:text="Ingrese su mail:"
             android:textSize="30dp" />
 
         <EditText
             android:id="@+id/txtMail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="0."
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/tvIngreseSuContrasena"
-            android:layout_width="306dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:text="Ingrese su contrasena:"
             android:textSize="30dp" />
 
         <EditText
             android:id="@+id/txtContrasena"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="0."
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:ems="10"
             android:inputType="textPassword" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.09"/>
 
         <Button
             android:id="@+id/btnOlvideMiContrasena"
             android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:background="@android:color/black"
             android:text="Olvide mi contrasena"
             android:textColor="@android:color/background_light"
             android:textSize="30dp" />
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"/>
+
+
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="227dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:background="@android:color/black"
             android:text="Login"
             android:textColor="@android:color/background_light"
