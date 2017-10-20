@@ -26,9 +26,18 @@
             android:id="@+id/LogoMinority"
             android:layout_width="match_parent"
             android:layout_height="94dp"
-            android:layout_weight="0."
+            android:layout_weight="0"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/logominority"
             />
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_weight="0.2"
+            android:textSize="35dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,47 +47,70 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="90dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAlignment="center"
+                android:layout_weight="1"
                 android:text="Resultados"
                 android:textSize="30dp" />
 
-            <TextView
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvOpcion1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Barcelona"
+                    android:layout_weight="1"
+                    android:textSize="35dp" />
+
+
+                <TextView
                 android:id="@+id/tvOpcion2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_weight="1"
+                android:text="Real Madrid"
                 android:textSize="35dp" />
 
-            <TextView
-                android:id="@+id/tvOpcion1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="-45dp"
-                android:textSize="35dp" />
 
-            <TextView
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_weight="1.7"
+                    android:textSize="35dp" />
+
+                <TextView
                 android:id="@+id/tvVotosOpcion1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
-                android:layout_marginTop="20dp"
+                android:text="2"
+                android:layout_weight="5"
                 android:textSize="35dp" />
 
             <TextView
                 android:id="@+id/tvVotosOpcion2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="48dp"
-                android:layout_marginTop="-40dp"
+                android:text="1"
+                android:layout_weight="2"
                 android:textSize="35dp" />
+
+                </LinearLayout>
         </LinearLayout>
 
        <LinearLayout
@@ -91,7 +123,7 @@
                android:id="@+id/tvGanastePerdiste"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginTop="10dp"
+               android:layout_weight="1"
                android:gravity="center"
                android:text="Calculando Resultados"
                android:textAllCaps="false"
@@ -101,7 +133,7 @@
                android:id="@+id/tvIndicacion1"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginTop="10dp"
+               android:layout_weight="1"
                android:gravity="center"
                android:textSize="25dp" />
 
@@ -109,7 +141,7 @@
                android:id="@+id/tvIndicacion2"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginTop="5dp"
+               android:layout_weight="1"
                android:gravity="center"
                android:textSize="25dp" />
            </LinearLayout>
