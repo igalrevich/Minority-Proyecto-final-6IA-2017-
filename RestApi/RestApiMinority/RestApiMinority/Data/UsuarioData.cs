@@ -19,9 +19,9 @@ namespace RestApiMinority.Data
         public static string AgregarUsuario(Usuario MiUsuario)
         {
             string MensajeARetornar = "";
-            string select = "SELECT * FROM usuarios WHERE Mail="+ MiUsuario.Mail;
+            string select = "SELECT * FROM usuarios WHERE Mail='"+ MiUsuario.Mail + "'";
             DataTable dtMail = DBHelper.EjecutarSelect(select);
-            select = "SELECT * FROM usuarios WHERE Nombre=" + MiUsuario.Nombre;
+            select = "SELECT * FROM usuarios WHERE Nombre='" + MiUsuario.Nombre + "'";
             DataTable dtNombre = DBHelper.EjecutarSelect(select);
             if(dtMail.Rows.Count>0 || dtNombre.Rows.Count>0)
             {
