@@ -88,6 +88,10 @@ public class Activity_Login extends AppCompatActivity {
                     txtContrasena.setText("atlantacampeon");
                     break;
                 case "igalrevich@hotmail.com":
+                    txtMail.setText("carinarud@hotmail.com");
+                    txtContrasena.setText("keila");
+                    break;
+                case "carinarud@hotmail.com":
                     txtMail.setText("afrevich@gmail.com");
                     txtContrasena.setText("igalkeila");
                     break;

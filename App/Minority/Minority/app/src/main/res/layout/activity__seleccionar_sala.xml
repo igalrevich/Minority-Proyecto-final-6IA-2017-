@@ -19,9 +19,9 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteY="16dp"
         tools:layout_editor_absoluteX="16dp"
+        android:weightSum="1"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="-32dp"
                 android:layout_weight="0.21"
-                android:text="49"
+                android:text=""
                 android:textColor="#ffffff"
                 android:textSize="25dp" />
 

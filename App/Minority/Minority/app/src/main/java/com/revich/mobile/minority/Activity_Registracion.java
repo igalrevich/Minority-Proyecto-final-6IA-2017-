@@ -89,7 +89,7 @@ public class Activity_Registracion extends AppCompatActivity {
             MiProgressDialog.cancel();
             msg=Toast.makeText(getApplicationContext(),MensajeDevuelto,Toast.LENGTH_SHORT);
             msg.show();
-            if(NumeroRetornado==1 && MensajeDevuelto.equals("Se ha registrado con exito"))
+            if(NumeroRetornado==1 && MensajeDevuelto.equals("\"Se ha registrado con exito\""))
             {
                 IniciarActivity_Login();
             }
