@@ -103,7 +103,8 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                 if(MiSalaDeJuego.CantJugadores<3 && PrimeraVezQueJuega==false)
                 {
                     TrajoSalaPrimeraVez=true;
-                    IniciarActivityPremiacion(MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
+                    IniciarActivitySeleccionarSalas();
+                    //IniciarActivityPremiacion(MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
                 }
                 else
                 {
