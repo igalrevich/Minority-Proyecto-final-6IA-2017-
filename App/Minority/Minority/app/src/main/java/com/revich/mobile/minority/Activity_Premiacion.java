@@ -62,7 +62,7 @@ public class Activity_Premiacion extends AppCompatActivity {
 
             public void onFinish()
             {
-                IniciarActivitySeleccionarSalas();
+                //IniciarActivitySeleccionarSalas();
             }
         }
         .start();
@@ -81,8 +81,10 @@ public class Activity_Premiacion extends AppCompatActivity {
             super.onPostExecute(MonedasActual);
             if(MonedasActual!=-1)
             {
+                Log.d("Monedas que tenia antes", String.valueOf(DatosImportantesApp.GetMonedasUsuario()));
+                Log.d("Monedas que tiene ahora", String.valueOf(MonedasActual));
                 int MonedasGanadas= MonedasActual - DatosImportantesApp.GetMonedasUsuario();
-                tvCuantasMonedasGano.setText(String.valueOf(MonedasGanadas));
+                tvCuantasMonedasGano.setText("Ganaste "+String.valueOf(MonedasGanadas)+ " monedas");
                 DatosImportantesApp.SetMonedasUsuario(MonedasActual);
             }
 

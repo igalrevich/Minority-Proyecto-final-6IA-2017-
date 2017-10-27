@@ -94,7 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textAlignment="center"
-            android:text="Ganaste 30 monedas"
             android:layout_weight="1"
             android:textColor="#8ef686"
             android:textSize="30dp" />

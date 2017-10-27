@@ -245,7 +245,8 @@ public class Activity_Resultados extends AppCompatActivity {
                 return parsearResultado(jsonStr);
 
             } catch (IOException | JSONException e) {
-                Log.d("Error :", e.getMessage());
+                String err = (e.getMessage()==null)?"Fallo traer resultados":e.getMessage();
+                Log.d("Error :", err);
                 return new Resultado();
             }
 
