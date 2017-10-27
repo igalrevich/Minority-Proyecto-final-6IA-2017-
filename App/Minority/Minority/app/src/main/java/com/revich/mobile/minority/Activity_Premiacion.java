@@ -26,13 +26,14 @@ public class Activity_Premiacion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__premiacion);
         getSupportActionBar().hide();
+        ObtenerReferencias();
+        new BuscarMonedasUsuario().execute("http://apiminorityproyecto.azurewebsites.net/api/usuario/GetMonedas/"+DatosImportantesApp.GetIdUsuario());
+        /*
         Intent ElIntentQueVino= getIntent();
         Bundle ElBundleQueVino= ElIntentQueVino.getExtras();
         int CantJugadores= ElBundleQueVino.getInt("CantJugadores");
         int MontoGanador= ElBundleQueVino.getInt("MontoAGanar");
-        ObtenerReferencias();
-
-        /*if(CantJugadores==1)
+        if(CantJugadores==1)
         {
             tvStatusGanador.setText("Sos el ganador de la sala");
             tvCuantasMonedasGano.setText("Ganaste "+String.valueOf(MontoGanador)+" monedas");
@@ -76,32 +77,14 @@ public class Activity_Premiacion extends AppCompatActivity {
     private class BuscarMonedasUsuario extends AsyncTask<String, Void, Integer> {
         private OkHttpClient client= new OkHttpClient();
         @Override
-        protected void onPostExecute(Integer Monedas) {
-            super.onPostExecute(Monedas);
-            tvSala.setText(MiSalaDeJuego.Nombre);
-            Log.d("TVNRSetText", "DespuesDePostExecute");
-            tvNRonda.setText(String.valueOf(MiSalaDeJuego.NRonda));
-            if(MiSalaDeJuego.CantJugadores!=0 && MiSalaDeJuego.MontoAGanar!=0)
+        protected void onPostExecute(Integer MonedasActual) {
+            super.onPostExecute(MonedasActual);
+            if(MonedasActual!=-1)
             {
-                tvCantJugadores.setText(String.valueOf(MiSalaDeJuego.CantJugadores));
-                tvMontoGanador.setText(String.valueOf(MiSalaDeJuego.MontoAGanar));
-                SalaDeJuegoTraida=MiSalaDeJuego;
+                int MonedasGanadas= MonedasActual - DatosImportantesApp.GetMonedasUsuario();
+                tvCuantasMonedasGano.setText(String.valueOf(MonedasGanadas));
+                DatosImportantesApp.SetMonedasUsuario(MonedasActual);
             }
-            if(TrajoSalaPrimeraVez==false)
-            {
-                if(MiSalaDeJuego.CantJugadores<3 && PrimeraVezQueJuega==false)
-                {
-                    TrajoSalaPrimeraVez=true;
-                    IniciarActivitySeleccionarSalas();
-                    //IniciarActivityPremiacion(MiSalaDeJuego.MontoAGanar,MiSalaDeJuego.CantJugadores);
-                }
-                else
-                {
-                    TrajoSalaPrimeraVez=true;
-                    SetearTimerSegundosDisponibles();
-                }
-            }
-
 
         }
 
