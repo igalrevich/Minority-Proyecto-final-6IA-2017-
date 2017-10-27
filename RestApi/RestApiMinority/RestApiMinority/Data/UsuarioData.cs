@@ -37,6 +37,15 @@ namespace RestApiMinority.Data
 
         }
 
+        public static int PreguntarMonedasUsuario( int id)
+        {
+            string select = "SELECT Monedas FROM usuarios WHERE Id =" + id.ToString();
+            DataTable dt = DBHelper.EjecutarSelect(select);
+            DataRow row = dt.Rows[0];
+            int MonedasUsuario = row.Field<int>("Monedas");
+            return MonedasUsuario;
+        }
+
         public static string IngresarUserSala(int IdUsuario, int IdSala)
         {
             string MensajeARetornar = "";

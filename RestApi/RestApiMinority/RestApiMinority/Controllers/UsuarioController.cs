@@ -13,6 +13,15 @@ namespace RestApiMinority.Controllers
     public class UsuarioController : ApiController
     {
 
+        // GET: api/Usuario/GetMonedas
+        [ResponseType(typeof(Usuario))]
+        public IHttpActionResult GetMonedas(int id)
+        {
+            int MonedasUsuario = UsuarioData.PreguntarMonedasUsuario(id);
+            return Ok(MonedasUsuario);
+        }
+
+
         // GET: api/Usuario/GetExisteUsuario/Mail/Password
         [Route("api/usuario/GetExisteUsuario/{mail}/{password}")]
         public IHttpActionResult GetExisteUsuario(string mail, string password)
