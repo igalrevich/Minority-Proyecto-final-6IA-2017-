@@ -177,7 +177,7 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                         CambiarBotones(true);
                         BotonesVisibles=true;
                         SalaDeJuegoTraida.NRonda=1;
-                        BuscarPreguntaConVec();
+                        //BuscarPreguntaConVec();
                     }
                     else
                     {

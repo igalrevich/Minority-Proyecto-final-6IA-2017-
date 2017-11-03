@@ -342,7 +342,8 @@ public class Activity_SeleccionarSala extends AppCompatActivity {
                     return Integer.parseInt(jsonStr);
 
                 } catch (IOException e) {
-                    Log.d("Error :", e.getMessage());
+                    String err = (e.getMessage()==null)?"Fallo api/sala/Get Estado a cambiar":e.getMessage();
+                    Log.d("Error", err);
                     return 0;
                 }
             }
