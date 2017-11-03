@@ -48,7 +48,7 @@ namespace RestApiMinority.Data
                 select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
                 DataTable dtCantRespuestas = DBHelper.EjecutarSelect(select);
                 int CantRespuestas = dtCantRespuestas.Rows.Count;
-                /*while (CantJugadores != CantRespuestas)
+                while (CantJugadores != CantRespuestas)
                 {
                     select = "SELECT CantJugadores FROM salasdejuegos WHERE Id=" + MiVotoACalcular.IdSala.ToString();
                     dtCantJugadores = DBHelper.EjecutarSelect(select);
@@ -57,7 +57,7 @@ namespace RestApiMinority.Data
                     select = "SELECT * FROM respuestas WHERE Sala=" + MiVotoACalcular.IdSala.ToString() + " AND NRonda=" + MiVotoACalcular.NRonda.ToString();
                     dtCantRespuestas = DBHelper.EjecutarSelect(select);
                     CantRespuestas = dtCantRespuestas.Rows.Count;
-                }*/
+                }
                 foreach (DataRow Registro in dtCantRespuestas.Rows)
                 {
                     MiRespuesta = ObtenerPorRowRespuesta(Registro);

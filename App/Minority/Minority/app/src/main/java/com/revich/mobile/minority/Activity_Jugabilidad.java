@@ -807,7 +807,15 @@ public class Activity_Jugabilidad extends AppCompatActivity {
                {
                    //tvTimer.setText("Verificando CantJugadores 100%");
                    String CantJugadoresSalaString= tvCantJugadores.getText().toString();
-                   int CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
+                   int CantJugadoresSala=0;
+                   try
+                   {
+                        CantJugadoresSala= Integer.parseInt(CantJugadoresSalaString);
+                   }
+                   catch (Exception e)
+                   {
+                       Log.e("ParseError", e.getMessage(),e );
+                   }
                    String MontoAGanarString= tvMontoGanador.getText().toString();
                    int MontoAGanar= Integer.parseInt(MontoAGanarString);
                    SalaDeJuegoTraida.CantJugadores=CantJugadoresSala;
