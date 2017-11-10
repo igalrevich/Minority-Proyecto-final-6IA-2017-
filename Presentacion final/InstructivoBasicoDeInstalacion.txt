@@ -1,0 +1,25 @@
+Instructivo basico de instalacion "Minority" - Proyecto Final Igal Revich 6IA :
+
+Android :
+
+. Clonar de github el repositorio https://github.com/igalrevich/Minority-Proyecto-final-6IA-2017-
+
+. Bajar la aplicacion "Minority" que se encuentra en el directorio App\Minority
+
+
+Azure :
+
+. Hacerse una cuenta 
+
+. Loguearse en portal.azure.com
+
+. Crear un "App service"(API) que permita administrar una Base de datos en MySql
+
+. Crear una Base de datos en PhpMyAdmin en la seccion "MySql en aplicacion" del portal.
+
+. En "Opciones de implementacion" poner con que vincular el App Service creado ( Una buena opcion es vincularlo con un repositorio de Github).
+
+. En VisualStudio, crear un proyecto en ASP.NET que sirva como un "Rest Service" entre la base de datos de Azure y la aplicacion en android, y subirlo a 
+la herramienta elegida en el paso previo . ( IMPORTANTE: No subir la carpeta "Packages" a dicha herramienta)
+
+. Obtener el link de la API y agregarle el nombre del Controller y del Action al que se quiere llamar ( EJ: http://apiminorityproyecto.azurewebsites.net/api/sala(Controller)/Get(Action)).
